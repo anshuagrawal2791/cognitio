@@ -3,6 +3,8 @@ package com.example.anshu.cognitio;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,41 +14,59 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginSignupActivity extends AppCompatActivity {
 
     Button loginbutton;
     Button signup;
-    Button mBtnFb;
+    //Button mBtnFb;
     String usernametxt;
     String passwordtxt;
     EditText password;
     EditText username;
+    TextView tv;
 
-    String email;
+    CircleImageView mProfileImage;
+    Button mBtnFb;
+    TextView mUsername, mEmailID;
+    Profile mFbProfile;
+
     ParseUser parseUser;
+    String name = null, email = null;
 
     public static final List<String> mPermissions = new ArrayList<String>() {{
 
+        add("public_profile");
         add("email");
+
     }};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +83,13 @@ public class LoginSignupActivity extends AppCompatActivity {
         signup = (Button) findViewById(R.id.signup);
         mBtnFb = (Button)findViewById(R.id.mBtnFb);
 
+        tv = (TextView)findViewById(R.id.tv);
+
+
+
+
+      //  mBtnFb = (Button) findViewById(R.id.btn_fb_login);
+
         // Login Button Click Listener
         loginbutton.setOnClickListener(new View.OnClickListener() {
 
@@ -70,6 +97,12 @@ public class LoginSignupActivity extends AppCompatActivity {
                 // Retrieve the text entered from the EditText
                 usernametxt = username.getText().toString();
                 passwordtxt = password.getText().toString();
+
+                if (usernametxt.equals("") || passwordtxt.equals("")) {
+                    Toast.makeText(getApplicationContext(),
+                            "Please complete the details",
+                            Toast.LENGTH_LONG).show();}
+                    else{
 
                 // Send data to Parse.com for verification
                 ParseUser.logInInBackground(usernametxt, passwordtxt,
@@ -92,7 +125,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_LONG).show();
                                 }
                             }
-                        });
+                        });}
             }
         });
 
@@ -104,7 +137,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 passwordtxt = password.getText().toString();
 
                 // Force user to fill up the form
-                if (usernametxt.equals("") && passwordtxt.equals("")) {
+                if (usernametxt.equals("") || passwordtxt.equals("")) {
                     Toast.makeText(getApplicationContext(),
                             "Please complete the sign up form",
                             Toast.LENGTH_LONG).show();
@@ -143,20 +176,23 @@ public class LoginSignupActivity extends AppCompatActivity {
                     @Override
                     public void done(ParseUser user, ParseException err) {
                         if (user == null) {
-                            Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                            Log.e("MyApp", "Uh oh. The user cancelled the Facebook login.");
                         } else if (user.isNew()) {
-                            Log.d("MyApp", "User signed up and logged in through Facebook!");
+                            Log.e("MyApp", "User signed up and logged in through Facebook!");
                             getUserDetailsFromFB();
+                            //saveNewUser();
                         } else {
-                            Log.d("MyApp", "User logged in through Facebook!");
+                            Log.e("MyApp", "User logged in through Facebook!");
                             getUserDetailsFromParse();
                         }
                     }
                 });
             }
-        });
+        });}
 
-    }
+
+
+
 
     private void getUserDetailsFromFB() {
         new GraphRequest(
@@ -167,57 +203,27 @@ public class LoginSignupActivity extends AppCompatActivity {
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
            /* handle the result */
+                        Intent intent = new Intent(
+                                LoginSignupActivity.this,
+                                MainActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(),
+                                "Successfully Logged in",
+                                Toast.LENGTH_LONG).show();
+                        finish();
 
-                        parseUser = new ParseUser();
-                        parseUser.setEmail(email);
-                        parseUser.signUpInBackground(new SignUpCallback() {
-                            public void done(ParseException e) {
-                                if (e == null) {
-                                    // Show a simple Toast message upon successful registration
-                                    Intent intent = new Intent(
-                                            LoginSignupActivity.this,
-                                            MainActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getApplicationContext(),
-                                            "Successfully Logged In",
-                                            Toast.LENGTH_LONG).show();
-                                    finish();
-                                } else {
-                                    Toast.makeText(getApplicationContext(),
-                                            e.toString(), Toast.LENGTH_LONG)
-                                            .show();
-                                }
-                            }
-                        });
 
-                        try {
-                            parseUser = new ParseUser();
-                            email = response.getJSONObject().getString("email");
+                        try{
+                            email=response.getJSONObject().getString("email");
+                            tv.setText(email);
+                            parseUser=ParseUser.getCurrentUser();
                             parseUser.setEmail(email);
-                            parseUser.signUpInBackground(new SignUpCallback() {
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        // Show a simple Toast message upon successful registration
-                                        Intent intent = new Intent(
-                                                LoginSignupActivity.this,
-                                                MainActivity.class);
-                                        startActivity(intent);
-                                        Toast.makeText(getApplicationContext(),
-                                                "Successfully Logged In",
-                                                Toast.LENGTH_LONG).show();
-                                        finish();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(),
-                                                e.toString(), Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                }
-                            });
+
                         } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(),
-                                    "2"+ e.toString(), Toast.LENGTH_LONG)
-                                    .show();
+                           Log.e("my",e.toString());
                         }
+
+//
                     }
                 }
         ).executeAsync();
@@ -230,15 +236,8 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
     private void getUserDetailsFromParse() {
-       parseUser = new ParseUser();
-//Fetch profile photo
-//        try {
-//            ParseFile parseFile = parseUser.getParseFile("profileThumb");
-//            byte[] data = parseFile.getData();
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-//            mProfileImage.setImageBitmap(bitmap);
-//        } catch (Exception e) {
-//            e.printStackTrace();
+       parseUser = ParseUser.getCurrentUser();
+//
 //        }
         email = (parseUser.getEmail());
        // name = (parseUser.getUsername());
@@ -247,7 +246,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 MainActivity.class);
         startActivity(intent);
         Toast.makeText(getApplicationContext(),
-                "aa",
+                "Welcome Back",
                 Toast.LENGTH_LONG).show();
 
 
