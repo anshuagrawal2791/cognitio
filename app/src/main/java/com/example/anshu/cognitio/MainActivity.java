@@ -1,13 +1,17 @@
 package com.example.anshu.cognitio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,12 +22,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+
             }
         });
     }
@@ -45,6 +52,29 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if(id == R.id.logout){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            ParseUser.logOut();
+            ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
+            if(currentUserafterlogout==null){
+                Intent intent = new Intent(MainActivity.this,LoginSignupActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        if (id == R.id.change_password){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser!=null){
+                startActivity(new Intent(MainActivity.this,ChangePassword.class));
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Cannot change password. Please Try Again.", Toast.LENGTH_LONG).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);

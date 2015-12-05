@@ -56,10 +56,10 @@
         <activity
             android:name=".LoginSignupActivity"
             android:label="@string/title_activity_login_signup"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -72,6 +72,10 @@
         <activity
             android:name=".ForgotPassword"
             android:label="@string/title_activity_forgot_password"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChangePassword"
+            android:label="@string/title_activity_change_password"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

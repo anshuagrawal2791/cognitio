@@ -19,4 +19,10 @@
     </string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_forgot_password">ForgotPassword</string>
+    <string name="title_activity_change_password">ChangePassword</string>
+    <string name="send_res_link">Send Me Reset Password Link</string>
+    <string name="current_pwd">Current Password</string>
+    <string name="new_pwd">New Password</string>
+    <string name="var_new_pwd">Type New Password Again</string>
+    <string name="chan_pwd">Change Password</string>
 </resources>
