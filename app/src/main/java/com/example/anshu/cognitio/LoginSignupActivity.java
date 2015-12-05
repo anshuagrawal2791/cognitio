@@ -195,14 +195,14 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
     private void getUserDetailsFromFB() {
-        new GraphRequest(
+        /*new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
-                "/me",
+                "/me?fields=email",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
-           /* handle the result */
+           *//* handle the result *//*
                         Intent intent = new Intent(
                                 LoginSignupActivity.this,
                                 MainActivity.class);
@@ -214,9 +214,9 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
                         try{
-                            email=response.getJSONObject().getString("email");
+                            email = response.getJSONObject().getString("email");
                             tv.setText(email);
-                            parseUser=ParseUser.getCurrentUser();
+                            parseUser = ParseUser.getCurrentUser();
                             parseUser.setEmail(email);
 
                         } catch (JSONException e) {
@@ -226,7 +226,38 @@ public class LoginSignupActivity extends AppCompatActivity {
 //
                     }
                 }
-        ).executeAsync();
+        ).executeAsync();*/
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(),
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try{
+                            //What to do after Facebook Login is successful
+                            email = response.getJSONObject().getString("email");
+                            tv.setText(email);
+                            parseUser = ParseUser.getCurrentUser();
+                            parseUser.setEmail(email);
+                            /*Intent intent = new Intent(
+                                    LoginSignupActivity.this,
+                                    MainActivity.class);
+                            startActivity(intent);*/
+                            Toast.makeText(getApplicationContext(),
+                                    "Successfully Logged in",
+                                    Toast.LENGTH_LONG).show();
+                            //finish();
+
+                        } catch (JSONException e) {
+                            //If anything goes wrong
+                            Log.e("my",e.toString());
+                        }
+                    }
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "name,email");
+        request.setParameters(parameters);
+        request.executeAsync();
 
 
 
