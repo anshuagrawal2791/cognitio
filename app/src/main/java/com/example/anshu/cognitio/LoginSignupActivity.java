@@ -1,13 +1,7 @@
 package com.example.anshu.cognitio;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,22 +19,14 @@ import com.facebook.Profile;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginSignupActivity extends AppCompatActivity {
@@ -55,7 +41,7 @@ public class LoginSignupActivity extends AppCompatActivity {
     TextView tv;
 
     CircleImageView mProfileImage;
-    Button mBtnFb;
+    Button mBtnFb,fgtpwd;
     TextView mUsername, mEmailID;
     Profile mFbProfile;
 
@@ -82,11 +68,20 @@ public class LoginSignupActivity extends AppCompatActivity {
         loginbutton = (Button) findViewById(R.id.login);
         signup = (Button) findViewById(R.id.signup);
         mBtnFb = (Button)findViewById(R.id.mBtnFb);
+        fgtpwd = (Button)findViewById(R.id.fgtpwd);   // fgtpwd = forgot password
+
 
         tv = (TextView)findViewById(R.id.tv);
 
 
+// forgot  password click listener
 
+        fgtpwd.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View arg0){
+                Intent intent = new Intent(LoginSignupActivity.this,ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
 
       //  mBtnFb = (Button) findViewById(R.id.btn_fb_login);
 
