@@ -28,11 +28,13 @@ import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
@@ -214,36 +216,52 @@ public class LoginSignupActivity extends AppCompatActivity {
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
+                    public void onCompleted(final JSONObject object, GraphResponse response) {
                         try{
                             //What to do after Facebook Login is successful
                             email = response.getJSONObject().getString("email");
                             name = response.getJSONObject().getString("name");
                             tv.setText(email + "   " + name);
-                            ParseUser user = new ParseUser();
-                            user.setEmail(email);
-                            user.setUsername(name);
 
-                            StringBuffer str = new StringBuffer(name);
-                            str.substring(0, 6);
-                            user.setPassword(str.toString());
-                            /*Intent intent = new Intent(
-                                    LoginSignupActivity.this,
-                                    MainActivity.class);
-                            startActivity(intent);*/
-                            user.signUpInBackground(new SignUpCallback() {
-                                public void done(ParseException e) {
+                            ParseQuery<ParseUser> query = ParseUser.getQuery();
+                            query.whereEqualTo("email", email);
+                            query.findInBackground(new FindCallback<ParseUser>() {
+                                public void done(List<ParseUser> objects, ParseException e) {
                                     if (e == null) {
-                                        // Hooray! Let them use the app now.
-                                        Toast.makeText(getApplicationContext(), "Done, Dude!!", Toast.LENGTH_LONG).show();
+                                        // The query was successful.
+                                        //Toast.makeText(getApplicationContext(), "In", Toast.LENGTH_LONG).show();
+                                        if(objects.isEmpty()) {
+                                            //Sign up
+                                            ParseUser user = new ParseUser();
+                                            user.setEmail(email);
+                                            user.setUsername(name);
+                                            //user.setAuthData();
+
+                                            StringBuffer str = new StringBuffer(name);
+                                            str.substring(0, 6);
+                                            user.setPassword(str.toString());
+                                            user.signUpInBackground(new SignUpCallback() {
+                                                public void done(ParseException e) {
+                                                    if (e == null) {
+                                                        // Hooray! Let them use the app now.
+                                                        Toast.makeText(getApplicationContext(), "Done, Dude!! You signed up", Toast.LENGTH_LONG).show();
+                                                    } else {
+                                                        // Sign up didn't succeed. Look at the ParseException
+                                                        // to figure out what went wrong
+                                                        Toast.makeText(getApplicationContext(), "Error!! Unable to send data to parse", Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            //Login
+                                            Toast.makeText(getApplicationContext(), "Already Exists. Logging in... Welcome!", Toast.LENGTH_LONG).show();
+                                        }
                                     } else {
-                                        // Sign up didn't succeed. Look at the ParseException
-                                        // to figure out what went wrong
-                                        Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_LONG).show();
+                                        // Something went wrong.
+                                        Toast.makeText(getApplicationContext(), "Error!! Cannot fetch from facebook!!", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
-                            //finish();
 
                         } catch (JSONException e) {
                             //If anything goes wrong
