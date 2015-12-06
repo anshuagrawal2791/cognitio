@@ -18,14 +18,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
@@ -55,12 +62,16 @@ public class LoginSignupActivity extends AppCompatActivity {
     TextView tv;
 
     CircleImageView mProfileImage;
-    Button mBtnFb;
+    LoginButton mBtnFb;
     TextView mUsername, mEmailID;
     Profile mFbProfile;
 
+    CallbackManager callbackManager;
+
     ParseUser parseUser;
     String name = null, email = null;
+
+    Button fbTest;
 
     public static final List<String> mPermissions = new ArrayList<String>() {{
 
@@ -75,18 +86,40 @@ public class LoginSignupActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
 
         loginbutton = (Button) findViewById(R.id.login);
-        signup = (Button) findViewById(R.id.signup);
-        mBtnFb = (Button)findViewById(R.id.mBtnFb);
+        callbackManager = CallbackManager.Factory.create();
 
+        signup = (Button) findViewById(R.id.signup);
+        mBtnFb = (LoginButton)findViewById(R.id.mBtnFb);
+        mBtnFb.setReadPermissions("email");
         tv = (TextView)findViewById(R.id.tv);
 
 
+        mBtnFb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                getUserDetailsFromFB();
+            }
 
+            @Override
+            public void onCancel() {
+                // App code
+                Log.v("LoginActivity", "cancel");
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Log.v("LoginActivity", exception.getCause().toString());
+            }
+        });
 
       //  mBtnFb = (Button) findViewById(R.id.btn_fb_login);
 
@@ -145,7 +178,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 } else {
                     // Save new user data into Parse.com Data Storage
                     ParseUser user = new ParseUser();
-                    user.setUsername(usernametxt);
+                    user.setEmail(usernametxt);
                     user.setPassword(passwordtxt);
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
@@ -165,68 +198,18 @@ public class LoginSignupActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-        mBtnFb.setOnClickListener(new View.OnClickListener() {
+        fbTest = (Button) findViewById(R.id.fbsignuptest);
+        fbTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ParseFacebookUtils.logInWithReadPermissionsInBackground(LoginSignupActivity.this, mPermissions, new LogInCallback() {
-                    @Override
-                    public void done(ParseUser user, ParseException err) {
-                        if (user == null) {
-                            Log.e("MyApp", "Uh oh. The user cancelled the Facebook login.");
-                        } else if (user.isNew()) {
-                            Log.e("MyApp", "User signed up and logged in through Facebook!");
-                            getUserDetailsFromFB();
-                            //saveNewUser();
-                        } else {
-                            Log.e("MyApp", "User logged in through Facebook!");
-                            getUserDetailsFromParse();
-                        }
-                    }
-                });
+                Intent i = new Intent(LoginSignupActivity.this, login3.class);
+                startActivity(i);
             }
-        });}
+        });
 
-
-
-
+    }
 
     private void getUserDetailsFromFB() {
-        /*new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me?fields=email",
-                null,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
-           *//* handle the result *//*
-                        Intent intent = new Intent(
-                                LoginSignupActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(getApplicationContext(),
-                                "Successfully Logged in",
-                                Toast.LENGTH_LONG).show();
-                        finish();
-
-
-                        try{
-                            email = response.getJSONObject().getString("email");
-                            tv.setText(email);
-                            parseUser = ParseUser.getCurrentUser();
-                            parseUser.setEmail(email);
-
-                        } catch (JSONException e) {
-                           Log.e("my",e.toString());
-                        }
-
-//
-                    }
-                }
-        ).executeAsync();*/
         GraphRequest request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
@@ -235,16 +218,31 @@ public class LoginSignupActivity extends AppCompatActivity {
                         try{
                             //What to do after Facebook Login is successful
                             email = response.getJSONObject().getString("email");
-                            tv.setText(email);
-                            parseUser = ParseUser.getCurrentUser();
-                            parseUser.setEmail(email);
+                            name = response.getJSONObject().getString("name");
+                            tv.setText(email + "   " + name);
+                            ParseUser user = new ParseUser();
+                            user.setEmail(email);
+                            user.setUsername(name);
+
+                            StringBuffer str = new StringBuffer(name);
+                            str.substring(0, 6);
+                            user.setPassword(str.toString());
                             /*Intent intent = new Intent(
                                     LoginSignupActivity.this,
                                     MainActivity.class);
                             startActivity(intent);*/
-                            Toast.makeText(getApplicationContext(),
-                                    "Successfully Logged in",
-                                    Toast.LENGTH_LONG).show();
+                            user.signUpInBackground(new SignUpCallback() {
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        // Hooray! Let them use the app now.
+                                        Toast.makeText(getApplicationContext(), "Done, Dude!!", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        // Sign up didn't succeed. Look at the ParseException
+                                        // to figure out what went wrong
+                                        Toast.makeText(getApplicationContext(), "Error!!", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
                             //finish();
 
                         } catch (JSONException e) {
@@ -282,10 +280,11 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
