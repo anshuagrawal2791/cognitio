@@ -26,10 +26,13 @@ public class ForgotPassword extends AppCompatActivity {
 
 
         Button send_res_link = (Button) findViewById(R.id.send_res_link);
+    //  final   EditText email_for_reset = (EditText) findViewById(R.id.email_for_reset);
+        final String email = ((EditText) findViewById(R.id.email_for_reset)).getText().toString();
+
         send_res_link.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                EditText email_for_reset = (EditText) findViewById(R.id.email_for_reset);
-                String email = email_for_reset.getText().toString();
+
+                final int e = Log.e("reset password", email);
                 ParseUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
                     @Override
                     public void done(ParseException e) {

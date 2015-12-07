@@ -1,10 +1,13 @@
 package com.example.anshu.cognitio;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 import com.parse.SignUpCallback;
 
 import org.json.JSONException;
@@ -76,10 +80,52 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 // forgot  password click listener
 
-        fgtpwd.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View arg0){
-                Intent intent = new Intent(LoginSignupActivity.this,ForgotPassword.class);
-                startActivity(intent);
+        fgtpwd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+           //     Intent intent = new Intent(LoginSignupActivity.this, ForgotPassword.class);
+             //   startActivity(intent);
+               // EditText emailforlink = (EditText) findViewById(R.id.email_for_reset_send);
+                // String emailsend = emailforlink.toString();
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginSignupActivity.this);
+                builder.setTitle(R.string.title_activity_forgot_password);
+                LayoutInflater inflater = LoginSignupActivity.this.getLayoutInflater();
+                 View forgot = inflater.inflate(R.layout.fgtpwd, null);
+                builder.setView(forgot);
+                builder.setPositiveButton(R.string.send_res_link, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        View forgot = (LoginSignupActivity.this.getLayoutInflater()).inflate(R.layout.fgtpwd, null);
+                        EditText emailforlink = (EditText) forgot.findViewById(R.id.email_for_reset_send);
+                        if(emailforlink!=null){
+                            String emailsend = emailforlink.toString();
+                            Log.d("mayank debug",emailsend);
+                            final int e = Log.e("reset password", emailsend);
+                            ParseUser.requestPasswordResetInBackground(emailsend, new RequestPasswordResetCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Toast.makeText(getApplicationContext(), "Reset Link Successfully Sent", Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Something went wrong.Please Try Again", Toast.LENGTH_LONG).show();
+                                        Log.e("reset password", "link not sent", e);
+                                    }
+                                }
+                            });
+                        }
+                        else{
+                            Log.d("mayank123","null edit text" );
+                        }
+
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.create().show();
             }
         });
 
@@ -96,31 +142,32 @@ public class LoginSignupActivity extends AppCompatActivity {
                 if (usernametxt.equals("") || passwordtxt.equals("")) {
                     Toast.makeText(getApplicationContext(),
                             "Please complete the details",
-                            Toast.LENGTH_LONG).show();}
-                    else{
+                            Toast.LENGTH_LONG).show();
+                } else {
 
-                // Send data to Parse.com for verification
-                ParseUser.logInInBackground(usernametxt, passwordtxt,
-                        new LogInCallback() {
-                            public void done(ParseUser user, ParseException e) {
-                                if (user != null) {
-                                    // If user exist and authenticated, send user to Welcome.class
-                                    Intent intent = new Intent(
-                                            LoginSignupActivity.this,
-                                            MainActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getApplicationContext(),
-                                            "Successfully Logged in",
-                                            Toast.LENGTH_LONG).show();
-                                    finish();
-                                } else {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "No such user exist, please signup",
-                                            Toast.LENGTH_LONG).show();
+                    // Send data to Parse.com for verification
+                    ParseUser.logInInBackground(usernametxt, passwordtxt,
+                            new LogInCallback() {
+                                public void done(ParseUser user, ParseException e) {
+                                    if (user != null) {
+                                        // If user exist and authenticated, send user to Welcome.class
+                                        Intent intent = new Intent(
+                                                LoginSignupActivity.this,
+                                                MainActivity.class);
+                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(),
+                                                "Successfully Logged in",
+                                                Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(
+                                                getApplicationContext(),
+                                                "No such user exist, please signup",
+                                                Toast.LENGTH_LONG).show();
+                                    }
                                 }
-                            }
-                        });}
+                            });
+                }
             }
         });
 
