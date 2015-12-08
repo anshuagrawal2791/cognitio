@@ -15,6 +15,7 @@ import com.parse.ParseUser;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import android.content.pm.Signature;
+import android.view.View;
 
 /**
  * Created by anshu on 02/12/15.
@@ -25,17 +26,22 @@ public class splashscreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
+        findViewById(R.id.loading).setVisibility(View.VISIBLE);
+
         Thread timerThread = new Thread(){
             public void run(){
                 try{
                     sleep(3000);
+
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
+
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     if (currentUser != null) {
                         // Send logged in users to Welcome.class
                         Intent intent = new Intent(splashscreen.this, MainActivity.class);
+                        findViewById(R.id.loading).setVisibility(View.GONE);
                         startActivity(intent);
                         finish();
                     } else {
