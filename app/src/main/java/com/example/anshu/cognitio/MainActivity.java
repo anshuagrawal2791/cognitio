@@ -1,5 +1,6 @@
 package com.example.anshu.cognitio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -51,6 +52,21 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if(id == R.id.logout){
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            ParseUser.logOut();
+            ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
+            if(currentUserafterlogout==null){
+                Intent intent = new Intent(MainActivity.this,LoginSignupActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
+            }
+
         }
 
         return super.onOptionsItemSelected(item);

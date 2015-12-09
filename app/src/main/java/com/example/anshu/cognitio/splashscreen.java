@@ -41,7 +41,7 @@ public class splashscreen extends Activity {
                     if (currentUser != null) {
                         // Send logged in users to Welcome.class
                         Intent intent = new Intent(splashscreen.this, MainActivity.class);
-                        findViewById(R.id.loading).setVisibility(View.GONE);
+                        //findViewById(R.id.loading).setVisibility(View.GONE);
                         startActivity(intent);
                         finish();
                     } else {
@@ -56,6 +56,7 @@ public class splashscreen extends Activity {
             }
         };
         timerThread.start();
+
 
 
     }

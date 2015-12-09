@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -151,31 +152,45 @@ public class LoginSignupActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Please complete the details",
                             Toast.LENGTH_LONG).show();}
-                    else{
+                else{
 
-                // Send data to Parse.com for verification
-                ParseUser.logInInBackground(usernametxt, passwordtxt,
-                        new LogInCallback() {
-                            public void done(ParseUser user, ParseException e) {
-                                if (user != null) {
-                                    // If user exist and authenticated, send user to Welcome.class
-                                    Intent intent = new Intent(
-                                            LoginSignupActivity.this,
-                                            MainActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getApplicationContext(),
-                                            "Successfully Logged in",
-                                            Toast.LENGTH_LONG).show();
-                                    finish();
-                                } else {
-                                    Toast.makeText(
-                                            getApplicationContext(),
-                                            "No such user exist, please signup",
-                                            Toast.LENGTH_LONG).show();
-                                }
+                    ParseQuery<ParseUser> query = ParseUser.getQuery();
+                    query.whereEqualTo("email", usernametxt);
+                    query.findInBackground(new FindCallback<ParseUser>() {
+                        @Override
+                        public void done(List<ParseUser> objects, ParseException e) {
+                            if(!objects.isEmpty()) {
+                                ParseUser.logInInBackground(usernametxt, passwordtxt,
+                                        new LogInCallback() {
+                                            public void done(ParseUser user, ParseException e) {
+                                                if (user != null) {
+                                                    // If user exist and authenticated, send user to Welcome.class
+                                                    Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Successfully Logged in",
+                                                            Toast.LENGTH_LONG).show();
+                                                    //finish();
+                                                } else {
+                                                    Toast.makeText(
+                                                            getApplicationContext(),
+                                                            "Wrong Password!!",
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        "No such user exist, please signup",
+                                        Toast.LENGTH_LONG).show();
                             }
-                        });}
-            }
+                        }
+                    });
+                }
+
+
+        }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -195,6 +210,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                     // Save new user data into Parse.com Data Storage
                     ParseUser user = new ParseUser();
                     user.setEmail(usernametxt);
+                    user.setUsername(usernametxt);
                     user.setPassword(passwordtxt);
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
@@ -207,6 +223,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "Sign up Error", Toast.LENGTH_LONG)
                                         .show();
+                                Log.e("sig",e.toString());
                             }
                         }
                     });
@@ -234,7 +251,7 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 // Set up the input
                 final EditText input = new EditText(LoginSignupActivity.this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+// Specify the type of input expected; this, for example, sets the input as email
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 builder.setView(input,20,50,20,20);
                 input.setHint("Email");
@@ -253,7 +270,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                         Log.e("ft", emailforlink);
 
                         if (emailforlink != null) {
-                            String emailsend = emailforlink.toString();
+                            String emailsend = emailforlink;
                             Log.e("mayank debug", emailsend);
                             final int e = Log.e("reset password", emailsend);
                             ParseUser.requestPasswordResetInBackground(emailsend, new RequestPasswordResetCallback() {
@@ -343,15 +360,35 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
+
+                                            ParseUser.logInInBackground(email, id,
+                                                    new LogInCallback() {
+                                                        public void done(ParseUser user, ParseException e) {
+                                                            if (user != null) {
+                                                                // If user exist and authenticated, send user to Welcome.class
+                                                                Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+                                                                startActivity(intent);
+                                                                Toast.makeText(getApplicationContext(),
+                                                                        "Welcome Back "+name,
+                                                                        Toast.LENGTH_LONG).show();
+                                                                //finish();
+                                                            } else {
+                                                                Toast.makeText(
+                                                                        getApplicationContext(),
+                                                                        "Error",
+                                                                        Toast.LENGTH_LONG).show();
+                                                            }
+                                                        }
+                                                    });
                                             //Login
                                             //Toast.makeText(getApplicationContext(), "Already Exists. Logging in... Welcome!", Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(
-                                                    LoginSignupActivity.this,
-                                                    MainActivity.class);
-                                            startActivity(intent);
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Welcome Back",
-                                                    Toast.LENGTH_LONG).show();
+//                                            Intent intent = new Intent(
+//                                                    LoginSignupActivity.this,
+//                                                    MainActivity.class);
+//                                            startActivity(intent);
+//                                            Toast.makeText(getApplicationContext(),
+//                                                    "Welcome Back",
+//                                                    Toast.LENGTH_LONG).show();
                                         }
                                     } else {
                                         // Something went wrong.
