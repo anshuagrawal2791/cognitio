@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        ParseUser user  = ParseUser.getCurrentUser();
+        Toast.makeText(getApplicationContext(), " "+user.getEmail()+" "+user.get("name"), Toast.LENGTH_LONG);
     }
 
     @Override
