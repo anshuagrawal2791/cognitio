@@ -1,5 +1,6 @@
 package com.example.anshu.cognitio;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -154,12 +155,20 @@ public class LoginSignupActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();}
                 else{
 
+
+
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("email", usernametxt);
                     query.findInBackground(new FindCallback<ParseUser>() {
                         @Override
                         public void done(List<ParseUser> objects, ParseException e) {
                             if(!objects.isEmpty()) {
+                                final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
+                                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                dialog.setMessage("Logging In...");
+                                dialog.setIndeterminate(true);
+                                dialog.setCanceledOnTouchOutside(false);
+                                dialog.show();
                                 ParseUser.logInInBackground(usernametxt, passwordtxt,
                                         new LogInCallback() {
                                             public void done(ParseUser user, ParseException e) {
@@ -170,12 +179,14 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                     Toast.makeText(getApplicationContext(),
                                                             "Successfully Logged in",
                                                             Toast.LENGTH_LONG).show();
+                                                    dialog.dismiss();
                                                     //finish();
                                                 } else {
                                                     Toast.makeText(
                                                             getApplicationContext(),
                                                             "Wrong Password!!",
                                                             Toast.LENGTH_LONG).show();
+                                                    dialog.dismiss();
                                                 }
                                             }
                                         });
@@ -207,6 +218,13 @@ public class LoginSignupActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
 
                 } else {
+
+                    final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
+                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog.setMessage("Signing Up...");
+                    dialog.setIndeterminate(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
                     // Save new user data into Parse.com Data Storage
                     ParseUser user = new ParseUser();
                     user.setEmail(usernametxt);
@@ -219,11 +237,13 @@ public class LoginSignupActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),
                                         "Successfully Signed up, please log in.",
                                         Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
                             } else {
                                 Toast.makeText(getApplicationContext(),
                                         "Sign up Error", Toast.LENGTH_LONG)
                                         .show();
-                                Log.e("sig",e.toString());
+                                Log.e("sig", e.toString());
+                                dialog.dismiss();
                             }
                         }
                     });
@@ -265,7 +285,7 @@ public class LoginSignupActivity extends AppCompatActivity {
 // Set up the buttons
                 builder.setPositiveButton("Send Reset Link", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, int which) {
                         emailforlink = input.getText().toString();
                         Log.e("ft", emailforlink);
 
@@ -273,15 +293,23 @@ public class LoginSignupActivity extends AppCompatActivity {
                             String emailsend = emailforlink;
                             Log.e("mayank debug", emailsend);
                             final int e = Log.e("reset password", emailsend);
+                            final ProgressDialog dialog1 = new ProgressDialog(LoginSignupActivity.this);
+                            dialog1.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            dialog1.setMessage("Sending Reset Link...");
+                            dialog1.setIndeterminate(true);
+                            dialog1.setCanceledOnTouchOutside(false);
+                            dialog1.show();
                             ParseUser.requestPasswordResetInBackground(emailsend, new RequestPasswordResetCallback() {
                                 @Override
                                 public void done(ParseException e) {
                                     if (e == null) {
                                         Toast.makeText(getApplicationContext(), "Reset Link Successfully Sent", Toast.LENGTH_LONG).show();
+                                        dialog1.dismiss();
 
                                     } else {
                                         Toast.makeText(getApplicationContext(), "Something went wrong.Please Try Again", Toast.LENGTH_LONG).show();
                                         Log.e("reset password", "link not sent", e);
+                                        dialog1.dismiss();
                                     }
                                 }
                             });
@@ -336,6 +364,12 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.setPassword(id);
                                             //user.setAuthData();
 
+                                            final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
+                                            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                            dialog.setMessage("Logging In...");
+                                            dialog.setIndeterminate(true);
+                                            dialog.setCanceledOnTouchOutside(false);
+                                            dialog.show();
 
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
@@ -350,16 +384,24 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                         Toast.makeText(getApplicationContext(),
                                                                 "Successfully Logged in",
                                                                 Toast.LENGTH_LONG).show();
+                                                        dialog.dismiss();
 
                                                         //Toast.makeText(getApplicationContext(), "Done, Dude!! You signed up", Toast.LENGTH_LONG).show();
                                                     } else {
                                                         // Sign up didn't succeed. Look at the ParseException
                                                         // to figure out what went wrong
                                                         Toast.makeText(getApplicationContext(), "Unable to connect. Try Again", Toast.LENGTH_LONG).show();
+                                                         dialog.dismiss();
                                                     }
                                                 }
                                             });
                                         } else {
+                                            final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
+                                            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                            dialog.setMessage("Logging In...");
+                                            dialog.setIndeterminate(true);
+                                            dialog.setCanceledOnTouchOutside(false);
+                                            dialog.show();
 
                                             ParseUser.logInInBackground(email, id,
                                                     new LogInCallback() {
@@ -371,6 +413,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                                 Toast.makeText(getApplicationContext(),
                                                                         "Welcome Back "+name,
                                                                         Toast.LENGTH_LONG).show();
+                                                                dialog.dismiss();
                                                                 //finish();
                                                             } else {
                                                                 Toast.makeText(

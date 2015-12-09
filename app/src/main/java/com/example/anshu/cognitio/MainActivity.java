@@ -1,5 +1,6 @@
 package com.example.anshu.cognitio;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -55,15 +56,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(id == R.id.logout){
+            ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("Logging Out...");
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
             ParseUser currentUser = ParseUser.getCurrentUser();
             ParseUser.logOut();
             ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
+
             if(currentUserafterlogout==null){
                 Intent intent = new Intent(MainActivity.this,LoginSignupActivity.class);
                 startActivity(intent);
+                //dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
             }
             else {
+                //dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
             }
 
