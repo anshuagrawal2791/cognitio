@@ -10,11 +10,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
+import it.gmariotti.cardslib.library.cards.actions.BaseSupplementalAction;
+import it.gmariotti.cardslib.library.cards.actions.IconSupplementalAction;
+import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.view.CardViewNative;
+
 public class MainActivity extends AppCompatActivity {
+
+    MaterialSpinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,17 +36,129 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+
+        ParseUser user  = ParseUser.getCurrentUser();
+        Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
+
+
+
+        String[] ITEMS = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelfth"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner = (MaterialSpinner) findViewById(R.id.spinner);
+        spinner.setAdapter(adapter);
+
+
+
+
+
+        MaterialLargeImageCard card =
+                MaterialLargeImageCard.with(MainActivity.this)
+                        .setTextOverImage("English")
+                        .setTitle("English")
+                        .useDrawableId(R.drawable.splash)
+                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                        .build();
+MaterialLargeImageCard card2 =
+                MaterialLargeImageCard.with(MainActivity.this)
+                        .setTextOverImage("Maths").setTitle("Maths")
+                        .useDrawableId(R.drawable.splash)
+                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                        .build();
+MaterialLargeImageCard card3 =
+                MaterialLargeImageCard.with(MainActivity.this)
+                        .setTextOverImage("Social Studies").setTitle("Social Studies")
+                        .useDrawableId(R.drawable.splash)
+                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                        .build();
+MaterialLargeImageCard card4 =
+                MaterialLargeImageCard.with(MainActivity.this)
+                        .setTextOverImage("Science").setTitle("Science")
+                        .useDrawableId(R.drawable.splash)
+                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                        .build();
+
+
+
+//        actions = new ArrayList<BaseSupplementalAction>();
+//
+//        actions = new ArrayList<BaseSupplementalAction>();
+//
+//        IconSupplementalAction t1 = new IconSupplementalAction(MainActivity.this, R.id.ic1);
+//        t1.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
+//            @Override
+//            public void onClick(Card card, View view) {
+//                Toast.makeText(MainActivity.this," Click on Text SHARE ",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        actions.add(t1);
+//
+//        IconSupplementalAction t2 = new IconSupplementalAction(MainActivity.this, R.id.ic2);
+//        t2.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
+//            @Override
+//            public void onClick(Card card, View view) {
+//                Toast.makeText(MainActivity.this," Click on Text LEARN ",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        actions.add(t2);
+
+
+
+
+
+
+
+        card.setOnClickListener(new Card.OnCardClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(Card card, View view) {
+                if(spinner.getSelectedItemPosition()==0)
+                    spinner.setError("Select a Class");
+                else
+                {
+                    Intent intent = new Intent(MainActivity.this,TopicActivity.class);
+                    intent.putExtra("Class",spinner.getSelectedItemPosition());
+                    intent.putExtra("Subject",card.getTitle());
+                    startActivity(intent);
+                }
+                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+card2.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                if(spinner.getSelectedItemPosition()==0)
+                    spinner.setError("Select a Class");
+                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+card3.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                if(spinner.getSelectedItemPosition()==0)
+                    spinner.setError("Select a Class");
+                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+card4.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                if(spinner.getSelectedItemPosition()==0)
+                    spinner.setError("Select a Class");
+                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        ParseUser user  = ParseUser.getCurrentUser();
-        Toast.makeText(getApplicationContext(), " "+user.getEmail()+" "+user.get("name"), Toast.LENGTH_LONG);
+        CardViewNative cardView = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage);
+        cardView.setCard(card);
+        CardViewNative cardView2 = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage2);
+        cardView2.setCard(card2);
+        CardViewNative cardView3 = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage3);
+        cardView3.setCard(card3);
+        CardViewNative cardView4 = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage4);
+        cardView4.setCard(card4);
+
+
     }
 
     @Override
