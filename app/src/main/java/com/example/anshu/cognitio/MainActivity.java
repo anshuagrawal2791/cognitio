@@ -17,6 +17,16 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.RecyclerViewCacheUtil;
+
 import fr.ganfra.materialspinner.MaterialSpinner;
 import it.gmariotti.cardslib.library.cards.actions.BaseSupplementalAction;
 import it.gmariotti.cardslib.library.cards.actions.IconSupplementalAction;
@@ -29,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
     MaterialSpinner spinner;
 
+    private static final int PROFILE_SETTING = 1;
+    private AccountHeader headerResult = null;
+    private Drawer result = null;
+    IProfile profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ParseUser user  = ParseUser.getCurrentUser();
-        Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
+       // Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
 
 
 
@@ -141,13 +156,13 @@ card3.setOnClickListener(new Card.OnCardClickListener() {
             }
         });
 card4.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                if(spinner.getSelectedItemPosition()==0)
-                    spinner.setError("Select a Class");
-                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public void onClick(Card card, View view) {
+        if (spinner.getSelectedItemPosition() == 0)
+            spinner.setError("Select a Class");
+        Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+    }
+});
 
         CardViewNative cardView = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage);
         cardView.setCard(card);
@@ -159,7 +174,55 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
         cardView4.setCard(card4);
 
 
+        if(user.get("name")!=null){
+            profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
+                .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);}
+
+        else
+        {profile = new ProfileDrawerItem().withEmail(user.getUsername())
+                    .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);}
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.mipmap.splash).addProfiles(profile).withSavedInstance(savedInstanceState).build();
+        result = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withHasStableIds(true)
+                .withAccountHeader(headerResult)
+                .addDrawerItems(new PrimaryDrawerItem().withName(R.string.logout).
+                        withDescription("Logout from your account")
+                        .withIcon(R.mipmap.splash).withIdentifier(1).withSelectable(false))
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            if (drawerItem.getIdentifier() == 1) {
+                                ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+                                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                dialog.setMessage("Logging Out...");
+                                dialog.setIndeterminate(true);
+                                dialog.setCanceledOnTouchOutside(false);
+                                dialog.show();
+                                ParseUser currentUser = ParseUser.getCurrentUser();
+                                ParseUser.logOut();
+                                ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
+
+                                if (currentUserafterlogout == null) {
+                                    Intent intent = new Intent(MainActivity.this, LoginSignupActivity.class);
+                                    startActivity(intent);
+                                    //dialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
+                                } else {
+                                    //dialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        }
+                        return false;
+                    }
+                }).withSavedInstance(savedInstanceState).withShowDrawerOnFirstLaunch(true)
+                .build();
+        RecyclerViewCacheUtil.getInstance().withCacheSize(2).init(result);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -180,7 +243,7 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
             return true;
         }
 
-        if(id == R.id.logout){
+        if (id == R.id.logout) {
             ProgressDialog dialog = new ProgressDialog(MainActivity.this);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage("Logging Out...");
@@ -191,13 +254,12 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
             ParseUser.logOut();
             ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
 
-            if(currentUserafterlogout==null){
-                Intent intent = new Intent(MainActivity.this,LoginSignupActivity.class);
+            if (currentUserafterlogout == null) {
+                Intent intent = new Intent(MainActivity.this, LoginSignupActivity.class);
                 startActivity(intent);
                 //dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
-            }
-            else {
+            } else {
                 //dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
             }
@@ -207,3 +269,4 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
         return super.onOptionsItemSelected(item);
     }
 }
+

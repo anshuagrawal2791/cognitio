@@ -33,6 +33,10 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.ganfra:material-spinner:1.1.1'
     compile 'com.github.gabrielemariotti.cards:cardslib-cards:2.1.0'
+    compile('com.mikepenz:materialdrawer:4.5.7@aar') {
+        transitive = true
+    }
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
 
 
 }
