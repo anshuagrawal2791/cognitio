@@ -34,7 +34,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Start Match" />
+                android:text="Start Match"
+                android:id="@+id/startmatch"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
