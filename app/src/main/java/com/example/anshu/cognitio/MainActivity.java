@@ -144,6 +144,13 @@ card2.setOnClickListener(new Card.OnCardClickListener() {
             public void onClick(Card card, View view) {
                 if(spinner.getSelectedItemPosition()==0)
                     spinner.setError("Select a Class");
+                else
+                {
+                    Intent intent = new Intent(MainActivity.this,TopicActivity.class);
+                    intent.putExtra("Class",spinner.getSelectedItemPosition());
+                    intent.putExtra("Subject",card.getTitle());
+                    startActivity(intent);
+                }
                 Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -152,6 +159,14 @@ card3.setOnClickListener(new Card.OnCardClickListener() {
             public void onClick(Card card, View view) {
                 if(spinner.getSelectedItemPosition()==0)
                     spinner.setError("Select a Class");
+                else
+                {
+                    Intent intent = new Intent(MainActivity.this,TopicActivity.class);
+                    intent.putExtra("Class",spinner.getSelectedItemPosition());
+                    intent.putExtra("Subject",card.getTitle());
+                    startActivity(intent);
+                }
+
                 Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -160,6 +175,13 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
     public void onClick(Card card, View view) {
         if (spinner.getSelectedItemPosition() == 0)
             spinner.setError("Select a Class");
+        else
+        {
+            Intent intent = new Intent(MainActivity.this,TopicActivity.class);
+            intent.putExtra("Class",spinner.getSelectedItemPosition());
+            intent.putExtra("Subject",card.getTitle());
+            startActivity(intent);
+        }
         Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
     }
 });

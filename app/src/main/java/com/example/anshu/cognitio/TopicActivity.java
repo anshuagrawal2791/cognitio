@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class TopicActivity extends Activity {
             Subject = extras.getString("Subject");
             Class = extras.getInt("Class");
             topictv.setText(Subject);
+            Class+=5;
+            Toast.makeText(this,""+Class,Toast.LENGTH_LONG).show();
 
         }
         else
