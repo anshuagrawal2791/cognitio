@@ -27,22 +27,15 @@ public class ProfileActivity extends AppCompatActivity {
     private Bitmap Image= null;
 
     private static final int GALLERY = 1;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
         if(findViewById(R.id.dpfragment_container)!=null){
             if(savedInstanceState!=null){
                 return;
@@ -109,15 +102,17 @@ public class ProfileActivity extends AppCompatActivity {
 
             Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
-            if(cursor!=null){
+            imageView = (ImageView) findViewById(R.id.dp);
+            if(cursor!=null && imageView.getDrawable()==null){
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String picturePath = cursor.getString(columnIndex);
                 cursor.close();
 
-                ImageView imageView = (ImageView) findViewById(R.id.dp);
+
                 imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
             }
             else {
                 Log.d("mayank","null cursor");

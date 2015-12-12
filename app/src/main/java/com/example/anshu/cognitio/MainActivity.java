@@ -198,19 +198,23 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
 
         if(user.get("name")!=null){
             profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
-                .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);}
+                    .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);}
 
         else
         {profile = new ProfileDrawerItem().withEmail(user.getUsername())
-                    .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);}
+                .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);}
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.mipmap.splash).addProfiles(profile).withSavedInstance(savedInstanceState).build();
+                .withHeaderBackground(R.mipmap.header).addProfiles(profile).withSavedInstance(savedInstanceState).build();
         result = new DrawerBuilder().withActivity(this).withToolbar(toolbar).withHasStableIds(true)
                 .withAccountHeader(headerResult)
                 .addDrawerItems(new PrimaryDrawerItem().withName(R.string.logout).
-                        withDescription("Logout from your account")
-                        .withIcon(R.mipmap.splash).withIdentifier(1).withSelectable(false))
+                                withDescription("Logout from your account")
+                                .withIcon(R.mipmap.splash).withIdentifier(1).withSelectable(false),
+                        new PrimaryDrawerItem().withName(R.string.Profile).
+                                withDescription("View and Update Your Profile")
+                                .withIcon(R.mipmap.splash).withIdentifier(2).withSelectable(false)
+                )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -236,6 +240,9 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
                                     Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
                                 }
 
+                            }
+                            if (drawerItem.getIdentifier() == 2) {
+                                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
                             }
                         }
                         return false;

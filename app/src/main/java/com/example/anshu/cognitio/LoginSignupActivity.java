@@ -85,7 +85,7 @@ public class LoginSignupActivity extends AppCompatActivity {
     CallbackManager callbackManager;
 
     ParseUser parseUser;
-    String name = null, email = null,id=null;
+    String name = null, email = null,id=null,picture=null;
 
     Button fbTest;
 
@@ -159,34 +159,38 @@ public class LoginSignupActivity extends AppCompatActivity {
 
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("email", usernametxt);
+                    final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
+                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog.setMessage("Logging In...");
+                    dialog.setIndeterminate(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
                     query.findInBackground(new FindCallback<ParseUser>() {
                         @Override
                         public void done(List<ParseUser> objects, ParseException e) {
                             if(!objects.isEmpty()) {
-                                final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
-                                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                dialog.setMessage("Logging In...");
-                                dialog.setIndeterminate(true);
-                                dialog.setCanceledOnTouchOutside(false);
-                                dialog.show();
+
                                 ParseUser.logInInBackground(usernametxt, passwordtxt,
                                         new LogInCallback() {
                                             public void done(ParseUser user, ParseException e) {
+                                                dialog.dismiss();
                                                 if (user != null) {
                                                     // If user exist and authenticated, send user to Welcome.class
                                                     Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                     startActivity(intent);
                                                     Toast.makeText(getApplicationContext(),
                                                             "Successfully Logged in",
                                                             Toast.LENGTH_LONG).show();
-                                                    dialog.dismiss();
+                                                    //dialog.dismiss();
                                                     //finish();
                                                 } else {
                                                     Toast.makeText(
                                                             getApplicationContext(),
                                                             "Wrong Password!!",
                                                             Toast.LENGTH_LONG).show();
-                                                    dialog.dismiss();
+                                                    //dialog.dismiss();
                                                 }
                                             }
                                         });
@@ -195,6 +199,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                         getApplicationContext(),
                                         "No such user exist, please signup",
                                         Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
                             }
                         }
                     });
@@ -232,18 +237,19 @@ public class LoginSignupActivity extends AppCompatActivity {
                     user.setPassword(passwordtxt);
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
+                            dialog.dismiss();
                             if (e == null) {
                                 // Show a simple Toast message upon successful registration
                                 Toast.makeText(getApplicationContext(),
                                         "Successfully Signed up, please log in.",
                                         Toast.LENGTH_LONG).show();
-                                dialog.dismiss();
+                                //dialog.dismiss();
                             } else {
                                 Toast.makeText(getApplicationContext(),
                                         "Sign up Error", Toast.LENGTH_LONG)
                                         .show();
                                 Log.e("sig", e.toString());
-                                dialog.dismiss();
+                                //dialog.dismiss();
                             }
                         }
                     });
@@ -345,11 +351,20 @@ public class LoginSignupActivity extends AppCompatActivity {
                             //What to do after Facebook Login is successful
                             email = response.getJSONObject().getString("email");
                             name = response.getJSONObject().getString("name");
+                            picture = response.toString();
+                            Log.e("Pic",picture);
                             //tv.setText(email + "   " + name);
                             id = response.getJSONObject().getString("id");
 
                             ParseQuery<ParseUser> query = ParseUser.getQuery();
                             query.whereEqualTo("email", email);
+                            final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
+                            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            dialog.setMessage("Logging In...");
+                            dialog.setIndeterminate(true);
+                            dialog.setCanceledOnTouchOutside(false);
+                            dialog.show();
+
                             query.findInBackground(new FindCallback<ParseUser>() {
                                 public void done(List<ParseUser> objects, ParseException e) {
                                     if (e == null) {
@@ -360,60 +375,54 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             ParseUser user = new ParseUser();
                                             user.setEmail(email);
                                             user.setUsername(email);
-                                            user.put("name",name);
+                                            user.put("name", name);
                                             user.setPassword(id);
                                             //user.setAuthData();
 
-                                            final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
-                                            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                            dialog.setMessage("Logging In...");
-                                            dialog.setIndeterminate(true);
-                                            dialog.setCanceledOnTouchOutside(false);
-                                            dialog.show();
 
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
+                                                    dialog.dismiss();
                                                     if (e == null) {
                                                         // Hooray! Let them use the app now.
-                                                        Log.e("fblogin","Done, Dude!! You signed up");
+                                                        Log.e("fblogin", "Done, Dude!! You signed up");
 
                                                         Intent intent = new Intent(
                                                                 LoginSignupActivity.this,
                                                                 MainActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                         startActivity(intent);
                                                         Toast.makeText(getApplicationContext(),
                                                                 "Successfully Logged in",
                                                                 Toast.LENGTH_LONG).show();
-                                                        dialog.dismiss();
+                                                        //dialog.dismiss();
 
                                                         //Toast.makeText(getApplicationContext(), "Done, Dude!! You signed up", Toast.LENGTH_LONG).show();
                                                     } else {
                                                         // Sign up didn't succeed. Look at the ParseException
                                                         // to figure out what went wrong
                                                         Toast.makeText(getApplicationContext(), "Unable to connect. Try Again", Toast.LENGTH_LONG).show();
-                                                         dialog.dismiss();
+                                                        // dialog.dismiss();
                                                     }
                                                 }
                                             });
                                         } else {
-                                            final ProgressDialog dialog = new ProgressDialog(LoginSignupActivity.this);
-                                            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                            dialog.setMessage("Logging In...");
-                                            dialog.setIndeterminate(true);
-                                            dialog.setCanceledOnTouchOutside(false);
-                                            dialog.show();
 
                                             ParseUser.logInInBackground(email, id,
                                                     new LogInCallback() {
                                                         public void done(ParseUser user, ParseException e) {
+                                                            dialog.dismiss();
                                                             if (user != null) {
                                                                 // If user exist and authenticated, send user to Welcome.class
                                                                 Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                                 startActivity(intent);
                                                                 Toast.makeText(getApplicationContext(),
                                                                         "Welcome Back "+name,
                                                                         Toast.LENGTH_LONG).show();
-                                                                dialog.dismiss();
+                                                                //dialog.dismiss();
                                                                 //finish();
                                                             } else {
                                                                 Toast.makeText(
@@ -434,6 +443,7 @@ public class LoginSignupActivity extends AppCompatActivity {
 //                                                    Toast.LENGTH_LONG).show();
                                         }
                                     } else {
+                                        dialog.dismiss();
                                         // Something went wrong.
                                         Toast.makeText(getApplicationContext(), "Error! Try Again", Toast.LENGTH_LONG).show();
                                     }
@@ -448,7 +458,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 });
 
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "name,email");
+        parameters.putString("fields", "name,email,picture");
         request.setParameters(parameters);
         request.executeAsync();
 

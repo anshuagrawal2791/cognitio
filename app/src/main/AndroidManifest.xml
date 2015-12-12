@@ -76,7 +76,10 @@
             android:label="@string/title_activity_topic" />
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile"></activity>
+            android:label="@string/title_activity_profile" />
+        <activity
+            android:name=".QuizActivity"
+            android:label="@string/title_activity_quiz"></activity>
     </application>
 
 </manifest>

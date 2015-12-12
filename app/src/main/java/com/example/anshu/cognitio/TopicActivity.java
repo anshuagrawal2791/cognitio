@@ -1,5 +1,7 @@
 package com.example.anshu.cognitio;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -9,7 +11,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class TopicActivity extends Activity {
     String Subject;
@@ -19,6 +27,7 @@ public class TopicActivity extends Activity {
     DbHandler mdbHandler;
     ArrayList<Question> Questions;
     ArrayList<String> QuestionsPlayed;
+    String parsetable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +62,9 @@ public class TopicActivity extends Activity {
                 if(Class==6)
                 {
                     if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromvienglish();
+                    {
+                        QuestionsPlayed = mdbHandler.getfromvienglish();
+                    }
                     else if(Subject.equals("Maths"))
                         QuestionsPlayed=mdbHandler.getfromvimaths();
                     else if(Subject.equals("Science"))
@@ -134,13 +145,65 @@ public class TopicActivity extends Activity {
 
                 }
 
-                while(Questions.size()<10)
-                {
 
-                }
+                parsetable = Subject.toLowerCase()+Class+"th";
+                QuestionsPlayed.add("6bZ2GaXnvA");
+                //mdbHandler.addtovienglish(QuestionsPlayed);
 
 
-//                ArrayList<String> played = new ArrayList<String>();
+                ParseQuery<ParseObject> query = ParseQuery.getQuery(parsetable);
+                query.setLimit(1000);
+                final ProgressDialog dialog = new ProgressDialog(TopicActivity.this);
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setMessage("Loading Questions..");
+                dialog.setIndeterminate(true);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+                query.findInBackground(new FindCallback<ParseObject>() {
+
+                    @Override
+                    public void done(List<ParseObject> question, ParseException e) {
+                       // dialog.dismiss();
+                        if (e == null) {
+                            // If there are results, update the list of posts
+                            // and notify the adapter
+                            for(int i=0;i<question.size();i++)
+                            {
+                                if(!QuestionsPlayed.contains(question.get(i).getObjectId().toString())) {
+                                    Question question1;
+                                    question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString());
+                                    Questions.add(question1);
+                                }
+
+
+                            }
+                            dialog.dismiss();
+
+
+                            Log.e("qu", "" + Questions.size());
+
+                            Intent intent = new Intent(TopicActivity.this,QuizActivity.class);
+                            intent.putParcelableArrayListExtra("Questions", Questions);
+                            startActivity(intent);
+
+
+
+                        } else {
+                            Log.e("Error: " , e.getMessage());
+                        }
+                    }
+                });
+
+
+
+//                while(Questions.size()<10)
+//                {
+//
+//                }
+
+
+                //ArrayList<String> played = new ArrayList<String>();
+                Log.e("fd",QuestionsPlayed.toString());
 //                played.add("dfkf");
 //                played.add("dfkdff");
 //                played.add("dfswerekf");
