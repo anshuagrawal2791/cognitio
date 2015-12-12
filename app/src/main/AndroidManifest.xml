@@ -74,6 +74,9 @@
         <activity
             android:name=".TopicActivity"
             android:label="@string/title_activity_topic" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"></activity>
     </application>
 
 </manifest>
