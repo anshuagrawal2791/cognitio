@@ -28,6 +28,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -62,6 +63,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginSignupActivity extends AppCompatActivity {
@@ -85,8 +88,11 @@ public class LoginSignupActivity extends AppCompatActivity {
     CallbackManager callbackManager;
 
     ParseUser parseUser;
-    String name = null, email = null,id=null,picture=null;
+    String name = null, email = null;
+    public static String id ;
 
+
+    //ParseFile parseFile3;
     Button fbTest;
 
     public static final List<String> mPermissions = new ArrayList<String>() {{
@@ -97,6 +103,7 @@ public class LoginSignupActivity extends AppCompatActivity {
     }};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String fbid =  LoginSignupActivity.id;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_signup);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -351,8 +358,8 @@ public class LoginSignupActivity extends AppCompatActivity {
                             //What to do after Facebook Login is successful
                             email = response.getJSONObject().getString("email");
                             name = response.getJSONObject().getString("name");
-                            picture = response.toString();
-                            Log.e("Pic",picture);
+//                            picture = response.toString();
+//                            Log.e("Pic",picture);
                             //tv.setText(email + "   " + name);
                             id = response.getJSONObject().getString("id");
 
@@ -377,6 +384,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.setUsername(email);
                                             user.put("name", name);
                                             user.setPassword(id);
+                                            //user.put("fbdp",parseFile3);
                                             //user.setAuthData();
 
 
@@ -397,6 +405,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                                 "Successfully Logged in",
                                                                 Toast.LENGTH_LONG).show();
                                                         //dialog.dismiss();
+                                                        new getbmglide().execute(id);
 
                                                         //Toast.makeText(getApplicationContext(), "Done, Dude!! You signed up", Toast.LENGTH_LONG).show();
                                                     } else {
@@ -490,6 +499,33 @@ public class LoginSignupActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public class getbmglide extends AsyncTask<String,Void,Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+
+            try {
+                Bitmap fbdp = Glide.
+                        with(LoginSignupActivity.this).
+                        load("http://graph.facebook.com/" + params[0] + "/picture?type=large").
+                        asBitmap().
+                        into(-1, -1).
+                        get();
+                byte[] fbarray = util.getbytearray(fbdp);
+                ParseUser user = ParseUser.getCurrentUser();
+                ParseFile parseFilefb = new ParseFile("fb_dp.png",fbarray);
+                parseFilefb.saveInBackground();
+                user.put("dp",parseFilefb);
+                user.saveInBackground();
+                Log.d("mayank","asynctask2 successful");
+            } catch (final ExecutionException |InterruptedException  e) {
+                Log.e("mayank", e.getMessage());
+            }
+            return null;
+        }
+
     }
 
 
