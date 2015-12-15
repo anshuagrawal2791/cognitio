@@ -38,7 +38,7 @@ public class QuizActivity extends Activity {
     Button buttonD;
     ParseUser user;
     MyCountDownTimer countDownTimer;
-
+    int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +72,7 @@ public class QuizActivity extends Activity {
         else
             playername.setText(user.getUsername().toString());
 
-        setup(0);
+        setup(i);
 
     }
 
@@ -170,14 +170,12 @@ public class QuizActivity extends Activity {
         }
 
         public void onFinish() {
-            if(i<9){
-                countDownTimer.cancel();
-                setup(i+1);}
+            if(i<9)
+                setup(i);
             else
             {
                 Log.e("dfd","queiz over");
             }
-
         }
         @Override
         public void onTick(long millisUntilFinished) {
