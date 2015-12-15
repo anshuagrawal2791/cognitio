@@ -121,7 +121,6 @@ public class QuizActivity extends Activity {
 
     public void setup(int j)
     {
-
         countDownTimer = new MyCountDownTimer(11000 /* 20 Sec */,
                 1000);
         final String rightoption = Questions.get(j).getAnswer();
