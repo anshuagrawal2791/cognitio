@@ -4,27 +4,16 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,16 +25,13 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
@@ -55,12 +41,6 @@ import com.parse.SignUpCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -362,6 +342,7 @@ public class LoginSignupActivity extends AppCompatActivity {
 //                            Log.e("Pic",picture);
                             //tv.setText(email + "   " + name);
                             id = response.getJSONObject().getString("id");
+                            Log.d("mayank",id);
 
                             ParseQuery<ParseUser> query = ParseUser.getQuery();
                             query.whereEqualTo("email", email);
@@ -390,22 +371,18 @@ public class LoginSignupActivity extends AppCompatActivity {
 
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
-                                                    dialog.dismiss();
+
                                                     if (e == null) {
                                                         // Hooray! Let them use the app now.
+                                                        new getbmglide().execute(id);
                                                         Log.e("fblogin", "Done, Dude!! You signed up");
 
-                                                        Intent intent = new Intent(
-                                                                LoginSignupActivity.this,
-                                                                MainActivity.class);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                        startActivity(intent);
-                                                        Toast.makeText(getApplicationContext(),
-                                                                "Successfully Logged in",
-                                                                Toast.LENGTH_LONG).show();
+
+                                                       //
+
+
                                                         //dialog.dismiss();
-                                                        new getbmglide().execute(id);
+
 
                                                         //Toast.makeText(getApplicationContext(), "Done, Dude!! You signed up", Toast.LENGTH_LONG).show();
                                                     } else {
@@ -421,9 +398,14 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             ParseUser.logInInBackground(email, id,
                                                     new LogInCallback() {
                                                         public void done(ParseUser user, ParseException e) {
-                                                            dialog.dismiss();
+
                                                             if (user != null) {
+                                                                //new getbmglide().execute(id);
                                                                 // If user exist and authenticated, send user to Welcome.class
+
+                                                             //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                               // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                                                                 Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -431,7 +413,8 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                                 Toast.makeText(getApplicationContext(),
                                                                         "Welcome Back "+name,
                                                                         Toast.LENGTH_LONG).show();
-                                                                //dialog.dismiss();
+                                                                dialog.dismiss();
+
                                                                 //finish();
                                                             } else {
                                                                 Toast.makeText(
@@ -516,14 +499,45 @@ public class LoginSignupActivity extends AppCompatActivity {
                 byte[] fbarray = util.getbytearray(fbdp);
                 ParseUser user = ParseUser.getCurrentUser();
                 ParseFile parseFilefb = new ParseFile("fb_dp.png",fbarray);
+
+
                 parseFilefb.saveInBackground();
-                user.put("dp",parseFilefb);
-                user.saveInBackground();
-                Log.d("mayank","asynctask2 successful");
+
+                user.put("dp", parseFilefb);
+               user.saveInBackground();
+
+                Thread timerThread = new Thread(){
+                    public void run(){
+                        try{
+                            ParseUser user= ParseUser.getCurrentUser();
+                            while(user.getParseFile("dp").getUrl()==null)
+                            sleep(2000);
+
+                        }catch(InterruptedException e){
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                timerThread.start();
+                timerThread.join();
+
+                Log.e("mayank", "asynctask2 successful");
             } catch (final ExecutionException |InterruptedException  e) {
                 Log.e("mayank", e.getMessage());
             }
             return null;
+        }
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(),
+                    "Successfully Logged in",
+                    Toast.LENGTH_LONG).show();
+
         }
 
     }

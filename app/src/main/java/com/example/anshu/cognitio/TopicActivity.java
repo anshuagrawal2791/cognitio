@@ -28,6 +28,8 @@ public class TopicActivity extends Activity {
     ArrayList<Question> Questions;
     ArrayList<String> QuestionsPlayed;
     String parsetable;
+    TextView leveltv;
+    int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class TopicActivity extends Activity {
         setContentView(R.layout.activity_topic);
 
         topictv=(TextView)findViewById(R.id.topictv);
+        leveltv = (TextView)findViewById(R.id.leveltv);
         startmatch=(Button)findViewById(R.id.startmatch);
         mdbHandler = DbHandler.getInstance(this);
 
@@ -53,101 +56,105 @@ public class TopicActivity extends Activity {
         {
             Toast.makeText(this,"ERROR",Toast.LENGTH_LONG).show();
         }
+        if(Class==6)
+        {
+            if(Subject.equals("English"))
+            {
+                QuestionsPlayed = mdbHandler.getfromvienglish();
+            }
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromvimaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromviscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromvissc();
+        }
+        else if(Class==7)
+        {
+            if(Subject.equals("English"))
+                QuestionsPlayed=mdbHandler.getfromviienglish();
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromviimaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromviiscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromviissc();
+
+        }
+        else if(Class==8)
+        {
+            if(Subject.equals("English"))
+                QuestionsPlayed=mdbHandler.getfromviiienglish();
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromviiimaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromviiiscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromviiissc();
+
+        }
+        else if(Class==9)
+        {
+            if(Subject.equals("English"))
+                QuestionsPlayed=mdbHandler.getfromixenglish();
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromixmaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromixscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromixssc();
+
+        }
+        else if(Class==10) {
+            if(Subject.equals("English"))
+                QuestionsPlayed=mdbHandler.getfromxenglish();
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromxmaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromxscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromxssc();
+
+        }
+        else if(Class==11)
+        {
+            if(Subject.equals("English"))
+                QuestionsPlayed=mdbHandler.getfromxienglish();
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromximaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromxiscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromxissc();
+
+        }
+        else if(Class==12)
+        {
+            if(Subject.equals("English"))
+                QuestionsPlayed=mdbHandler.getfromxiienglish();
+            else if(Subject.equals("Maths"))
+                QuestionsPlayed=mdbHandler.getfromxiimaths();
+            else if(Subject.equals("Science"))
+                QuestionsPlayed=mdbHandler.getfromxiiscience();
+            else if(Subject.equals("Social Studies"))
+                QuestionsPlayed = mdbHandler.getfromxiissc();
+
+        }
+        level = QuestionsPlayed.size()%10+1;
+        leveltv.setText("Level "+level);
+
+
 
         startmatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Questions = new ArrayList<Question>(10);
-                if(Class==6)
-                {
-                    if(Subject.equals("English"))
-                    {
-                        QuestionsPlayed = mdbHandler.getfromvienglish();
-                    }
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromvimaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromviscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromvissc();
-                }
-                else if(Class==7)
-                {
-                    if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromviienglish();
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromviimaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromviiscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromviissc();
-
-                }
-                else if(Class==8)
-                {
-                    if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromviiienglish();
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromviiimaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromviiiscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromviiissc();
-
-                }
-                else if(Class==9)
-                {
-                    if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromixenglish();
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromixmaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromixscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromixssc();
-
-                }
-                else if(Class==10)
-                {
-                    if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromxenglish();
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromxmaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromxscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromxssc();
-
-                }
-                else if(Class==11)
-                {
-                    if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromxienglish();
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromximaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromxiscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromxissc();
-
-                }
-                else if(Class==12)
-                {
-                    if(Subject.equals("English"))
-                        QuestionsPlayed=mdbHandler.getfromxiienglish();
-                    else if(Subject.equals("Maths"))
-                        QuestionsPlayed=mdbHandler.getfromxiimaths();
-                    else if(Subject.equals("Science"))
-                        QuestionsPlayed=mdbHandler.getfromxiiscience();
-                    else if(Subject.equals("Social Studies"))
-                        QuestionsPlayed = mdbHandler.getfromxiissc();
-
-                }
-
 
                 parsetable = Subject.toLowerCase()+Class+"th";
-                QuestionsPlayed.add("6bZ2GaXnvA");
+                //QuestionsPlayed.add("6bZ2GaXnvA");
+
+
                 //mdbHandler.addtovienglish(QuestionsPlayed);
 
 
@@ -184,6 +191,7 @@ public class TopicActivity extends Activity {
 
                             Intent intent = new Intent(TopicActivity.this,QuizActivity.class);
                             intent.putParcelableArrayListExtra("Questions", Questions);
+                            intent.putExtra("level",level);
                             startActivity(intent);
 
 

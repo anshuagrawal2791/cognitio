@@ -5,24 +5,17 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
-import com.mikepenz.materialdrawer.util.DrawerImageLoader;
-import com.parse.ParseUser;
-
-import java.util.ArrayList;
-
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -31,14 +24,14 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.RecyclerViewCacheUtil;
+import com.parse.ParseUser;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
-import it.gmariotti.cardslib.library.cards.actions.BaseSupplementalAction;
-import it.gmariotti.cardslib.library.cards.actions.IconSupplementalAction;
 import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ParseUser user  = ParseUser.getCurrentUser();
-       // Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
+        // Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
 
 
 
@@ -79,25 +72,25 @@ public class MainActivity extends AppCompatActivity {
                         .setTextOverImage("English")
                         .setTitle("English")
                         .useDrawableId(R.drawable.splash)
-                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
                         .build();
-MaterialLargeImageCard card2 =
+        MaterialLargeImageCard card2 =
                 MaterialLargeImageCard.with(MainActivity.this)
                         .setTextOverImage("Maths").setTitle("Maths")
                         .useDrawableId(R.drawable.splash)
-                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
                         .build();
-MaterialLargeImageCard card3 =
+        MaterialLargeImageCard card3 =
                 MaterialLargeImageCard.with(MainActivity.this)
                         .setTextOverImage("Social Studies").setTitle("Social Studies")
                         .useDrawableId(R.drawable.splash)
-                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
                         .build();
-MaterialLargeImageCard card4 =
+        MaterialLargeImageCard card4 =
                 MaterialLargeImageCard.with(MainActivity.this)
                         .setTextOverImage("Science").setTitle("Science")
                         .useDrawableId(R.drawable.splash)
-                        //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
+                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
                         .build();
 
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
@@ -157,7 +150,7 @@ MaterialLargeImageCard card4 =
                 Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
-card2.setOnClickListener(new Card.OnCardClickListener() {
+        card2.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
                 if(spinner.getSelectedItemPosition()==0)
@@ -172,37 +165,35 @@ card2.setOnClickListener(new Card.OnCardClickListener() {
                 Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
-card3.setOnClickListener(new Card.OnCardClickListener() {
+        card3.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
-                if(spinner.getSelectedItemPosition()==0)
+                if (spinner.getSelectedItemPosition() == 0)
                     spinner.setError("Select a Class");
-                else
-                {
-                    Intent intent = new Intent(MainActivity.this,TopicActivity.class);
-                    intent.putExtra("Class",spinner.getSelectedItemPosition());
-                    intent.putExtra("Subject",card.getTitle());
+                else {
+                    Intent intent = new Intent(MainActivity.this, TopicActivity.class);
+                    intent.putExtra("Class", spinner.getSelectedItemPosition());
+                    intent.putExtra("Subject", card.getTitle());
                     startActivity(intent);
                 }
 
                 Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
-card4.setOnClickListener(new Card.OnCardClickListener() {
-    @Override
-    public void onClick(Card card, View view) {
-        if (spinner.getSelectedItemPosition() == 0)
-            spinner.setError("Select a Class");
-        else
-        {
-            Intent intent = new Intent(MainActivity.this,TopicActivity.class);
-            intent.putExtra("Class",spinner.getSelectedItemPosition());
-            intent.putExtra("Subject",card.getTitle());
-            startActivity(intent);
-        }
-        Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
-    }
-});
+        card4.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                if (spinner.getSelectedItemPosition() == 0)
+                    spinner.setError("Select a Class");
+                else {
+                    Intent intent = new Intent(MainActivity.this, TopicActivity.class);
+                    intent.putExtra("Class", spinner.getSelectedItemPosition());
+                    intent.putExtra("Subject", card.getTitle());
+                    startActivity(intent);
+                }
+                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         CardViewNative cardView = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage);
         cardView.setCard(card);
@@ -214,23 +205,38 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
         cardView4.setCard(card4);
 
         String fbid =  LoginSignupActivity.id;
-        if(user.get("name")!=null)
+        Log.e("vv", user.getString("name"));
+        Log.e("vv", user.getParseFile("dp").getUrl());
+
+        //Log.e("vv",user.getParseFile("dp"));
+
+        if(user.get("name")!=null&&user.getParseFile("dp")!=null)
 
         {
             //    profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
             //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
 
-            profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
+            String name2 = (user.get("name")).toString();
+            profile = new ProfileDrawerItem().withName(name2).withEmail(user.getUsername())
                     .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
         }
-        else
+        else if(user.get("name")!=null) {
+            profile = new ProfileDrawerItem().withName(user.getString("name")).withEmail(user.getUsername())
+                    .withIcon(R.drawable.userdefault).withIdentifier(100);
+        }
 
-        {
+
             //    profile = new ProfileDrawerItem().withEmail(user.getUsername())
             //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
-            profile = new ProfileDrawerItem().withEmail(user.getUsername())
-                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
-        }
+
+
+        else
+        {
+                profile = new ProfileDrawerItem().withEmail(user.getUsername())
+                        .withIdentifier(100);
+
+            }
+
 
         headerResult=new
 
@@ -428,4 +434,3 @@ card4.setOnClickListener(new Card.OnCardClickListener() {
         return super.onOptionsItemSelected(item);
     }
 }
-
