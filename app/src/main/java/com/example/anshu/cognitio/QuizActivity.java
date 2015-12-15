@@ -4,10 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Parcelable;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +25,7 @@ public class QuizActivity extends Activity {
     ArrayList<Question> Questions;
     ArrayList<Question> Right;
     ArrayList<Question> Wrong;
-    int score=0;
+    long score=0;
     int compscore=0;
     int level;
     DbHandler dbHandler;
@@ -37,7 +40,15 @@ public class QuizActivity extends Activity {
     Button buttonC;
     Button buttonD;
     ParseUser user;
+    long instscore;
+    int numcompright;
+    ProgressBar playerprogressbar;
+    ProgressBar compprogressbar;
+    ArrayList<Integer> comprightanswers = new ArrayList<>();
+    ArrayList<Integer> companswerset;
+    private Handler mHandler = new Handler();
     MyCountDownTimer countDownTimer;
+
     int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +65,9 @@ public class QuizActivity extends Activity {
         buttonC = (Button) findViewById(R.id.optionC);
         buttonD = (Button) findViewById(R.id.optionD);
         timer = (TextView) findViewById(R.id.timer);
+        playerprogressbar = (ProgressBar)findViewById(R.id.playerprogressbar);
+        compprogressbar = (ProgressBar)findViewById(R.id.compprogressbar);
+
 
 
         Bundle extras = getIntent().getExtras();
@@ -72,23 +86,59 @@ public class QuizActivity extends Activity {
         else
             playername.setText(user.getUsername().toString());
 
+        if(level<=8)
+        numcompright = (int)(Math.random() * (level+3));
+        else
+        numcompright=(int)(Math.random() * 11);
+
+        while(comprightanswers.size()<numcompright)
+        {
+            int n = (int)(Math.random() * (10));
+            if(!comprightanswers.contains(n))
+                comprightanswers.add(n);
+        }
+
+        companswerset = new ArrayList<>();
+
+        for(int k=0;k<10;k++)
+            companswerset.add(0);
+
+        for(int k=0;k<10;k++)
+        {
+            if(comprightanswers.contains(k))
+                companswerset.set(k,(int)(Math.random() * (11)));
+            else
+                companswerset.set(k,0);
+        }
+
+
+
+
+        Log.e("Companswers",companswerset.toString());
         setup(0);
 
     }
 
-    public void setup(int i)
+    public void setup(int j)
     {
-        countDownTimer = new MyCountDownTimer(10000 /* 20 Sec */,
+
+        countDownTimer = new MyCountDownTimer(11000 /* 20 Sec */,
                 1000);
-        final String rightoption = Questions.get(i).getAnswer();
+        final String rightoption = Questions.get(j).getAnswer();
         Log.e("rig",rightoption);
         playerscoretv.setText("" + score);
+        playerprogressbar.setProgress((int)score);
         compscoretv.setText("" + compscore);
-        Question.setText(Questions.get(i).getQuestion().toString());
-        buttonA.setText(Questions.get(i).getOptionA().toString());
-        buttonB.setText(Questions.get(i).getOptionB().toString());
-        buttonC.setText(Questions.get(i).getOptionC().toString());
-        buttonD.setText(Questions.get(i).getOptionD().toString());
+        compprogressbar.setProgress((int)(compscore));
+        Question.setText(Questions.get(j).getQuestion().toString());
+        buttonA.setText(Questions.get(j).getOptionA().toString());
+        buttonA.setBackgroundColor(Color.GRAY);
+        buttonB.setBackgroundColor(Color.GRAY);
+        buttonC.setBackgroundColor(Color.GRAY);
+        buttonD.setBackgroundColor(Color.GRAY);
+        buttonB.setText(Questions.get(j).getOptionB().toString());
+        buttonC.setText(Questions.get(j).getOptionC().toString());
+        buttonD.setText(Questions.get(j).getOptionD().toString());
 
 
 
@@ -98,9 +148,14 @@ public class QuizActivity extends Activity {
             public void onClick(View v) {
                 if (rightoption.equals("a")) {
                     buttonA.setBackgroundColor(Color.GREEN);
-                    score += Integer.parseInt(timer.getText().toString()) / 1000;
+                    score += instscore;
+                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    buttonB.setClickable(false);
+                    buttonC.setClickable(false);
+                    buttonD.setClickable(false);
                     countDownTimer.onFinish();
+
 
                 } else {
                     buttonA.setBackgroundColor(Color.RED);
@@ -114,8 +169,12 @@ public class QuizActivity extends Activity {
             public void onClick(View v) {
                 if (rightoption .equals("b")) {
                     buttonB.setBackgroundColor(Color.GREEN);
-                    score += Integer.parseInt(timer.getText().toString()) / 1000;
+                    score += instscore;
+                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    buttonA.setClickable(false);
+                    buttonC.setClickable(false);
+                    buttonD.setClickable(false);
                     countDownTimer.onFinish();
 
                 } else {
@@ -130,8 +189,12 @@ public class QuizActivity extends Activity {
             public void onClick(View v) {
                 if (rightoption .equals("c")) {
                     buttonC.setBackgroundColor(Color.GREEN);
-                    score += Integer.parseInt(timer.getText().toString()) / 1000;
+                    score += instscore;
+                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    buttonB.setClickable(false);
+                    buttonA.setClickable(false);
+                    buttonD.setClickable(false);
                     countDownTimer.onFinish();
 
                 } else {
@@ -144,10 +207,14 @@ public class QuizActivity extends Activity {
         buttonD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (rightoption .equals("e")) {
+                if (rightoption .equals("d")) {
                     buttonD.setBackgroundColor(Color.GREEN);
-                    score += Integer.parseInt(timer.getText().toString()) / 1000;
+                    score += instscore;
+                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    buttonB.setClickable(false);
+                    buttonC.setClickable(false);
+                    buttonA.setClickable(false);
                     countDownTimer.onFinish();
 
                 } else {
@@ -170,16 +237,27 @@ public class QuizActivity extends Activity {
         }
 
         public void onFinish() {
-            if(i<9)
-                setup(i);
-            else
-            {
-                Log.e("dfd","queiz over");
-            }
+            countDownTimer.cancel();
+            compscore+=companswerset.get(i);
+//            compscoretv.setText(compscore);
+            mHandler.postDelayed(new Runnable() {
+                public void run() {
+                    i++;
+
+                    if (i <= 9)
+                        setup(i);
+                    else {
+                        Log.e("dfd", "queiz over");
+                    }
+
+                }
+            }, 2000);
+
         }
         @Override
         public void onTick(long millisUntilFinished) {
             timer.setText(""+millisUntilFinished/1000);
+            instscore=millisUntilFinished/1000;
         }
 
     }
