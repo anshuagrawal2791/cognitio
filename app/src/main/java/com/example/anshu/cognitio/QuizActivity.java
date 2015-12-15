@@ -1,5 +1,6 @@
 package com.example.anshu.cognitio;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
@@ -86,8 +87,8 @@ public class QuizActivity extends Activity {
         else
             playername.setText(user.getUsername().toString());
 
-        if(level<=8)
-        numcompright = (int)(Math.random() * (level+3));
+        if(level<=6)
+        numcompright = (int)(Math.random() * (level+5));
         else
         numcompright=(int)(Math.random() * 11);
 
@@ -124,11 +125,11 @@ public class QuizActivity extends Activity {
         countDownTimer = new MyCountDownTimer(11000 /* 20 Sec */,
                 1000);
         final String rightoption = Questions.get(j).getAnswer();
-        Log.e("rig",rightoption);
+        Log.e("rig", rightoption);
         playerscoretv.setText("" + score);
-        playerprogressbar.setProgress((int)score);
+        playerprogressbar.setProgress((int) score);
+        compprogressbar.setProgress((int) (compscore));
         compscoretv.setText("" + compscore);
-        compprogressbar.setProgress((int)(compscore));
         Question.setText(Questions.get(j).getQuestion().toString());
         buttonA.setText(Questions.get(j).getOptionA().toString());
         buttonA.setBackgroundColor(Color.GRAY);
@@ -150,6 +151,9 @@ public class QuizActivity extends Activity {
                     score += instscore;
                     Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    playerprogressbar.setProgress((int) score);
+                    compprogressbar.setProgress((int) (compscore));
+                    compscoretv.setText("" + compscore);
                     buttonB.setClickable(false);
                     buttonC.setClickable(false);
                     buttonD.setClickable(false);
@@ -158,6 +162,9 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonA.setBackgroundColor(Color.RED);
+                    buttonB.setClickable(false);
+                    buttonC.setClickable(false);
+                    buttonD.setClickable(false);
                     countDownTimer.onFinish();
                 }
 
@@ -171,6 +178,9 @@ public class QuizActivity extends Activity {
                     score += instscore;
                     Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    playerprogressbar.setProgress((int) score);
+                    compprogressbar.setProgress((int) (compscore));
+                    compscoretv.setText("" + compscore);
                     buttonA.setClickable(false);
                     buttonC.setClickable(false);
                     buttonD.setClickable(false);
@@ -178,6 +188,9 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonB.setBackgroundColor(Color.RED);
+                    buttonA.setClickable(false);
+                    buttonC.setClickable(false);
+                    buttonD.setClickable(false);
                     countDownTimer.onFinish();
                 }
 
@@ -191,6 +204,9 @@ public class QuizActivity extends Activity {
                     score += instscore;
                     Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    playerprogressbar.setProgress((int) score);
+                    compprogressbar.setProgress((int) (compscore));
+                    compscoretv.setText("" + compscore);
                     buttonB.setClickable(false);
                     buttonA.setClickable(false);
                     buttonD.setClickable(false);
@@ -198,6 +214,9 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonC.setBackgroundColor(Color.RED);
+                    buttonB.setClickable(false);
+                    buttonA.setClickable(false);
+                    buttonD.setClickable(false);
                     countDownTimer.onFinish();
                 }
 
@@ -211,6 +230,9 @@ public class QuizActivity extends Activity {
                     score += instscore;
                     Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
+                    playerprogressbar.setProgress((int) score);
+                    compprogressbar.setProgress((int) (compscore));
+                    compscoretv.setText("" + compscore);
                     buttonB.setClickable(false);
                     buttonC.setClickable(false);
                     buttonA.setClickable(false);
@@ -218,6 +240,9 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonD.setBackgroundColor(Color.RED);
+                    buttonB.setClickable(false);
+                    buttonC.setClickable(false);
+                    buttonA.setClickable(false);
                     countDownTimer.onFinish();
                 }
 
@@ -246,7 +271,22 @@ public class QuizActivity extends Activity {
                     if (i <= 9)
                         setup(i);
                     else {
+                        //compscore+=companswerset.get(9);
+                        compprogressbar.setProgress((int) (compscore));
+                        compscoretv.setText("" + compscore);
+
+
                         Log.e("dfd", "queiz over");
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        },2000);
+
                     }
 
                 }
