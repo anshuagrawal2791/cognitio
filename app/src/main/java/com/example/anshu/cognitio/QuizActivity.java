@@ -72,7 +72,7 @@ public class QuizActivity extends Activity {
         else
             playername.setText(user.getUsername().toString());
 
-        setup(i);
+        setup(0);
 
     }
 
