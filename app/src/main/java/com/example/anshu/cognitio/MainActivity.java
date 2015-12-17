@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(user.get("name")!=null) {
             profile = new ProfileDrawerItem().withName(user.getString("name")).withEmail(user.getUsername())
-                    .withIcon(R.drawable.userdefault).withIdentifier(100);
+                    /*.withIcon(R.drawable.userdefault)*/.withIdentifier(100);
         }
 
 
