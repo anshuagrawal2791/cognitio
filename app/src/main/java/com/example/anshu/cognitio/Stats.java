@@ -3,6 +3,8 @@ package com.example.anshu.cognitio;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -32,6 +34,7 @@ public class Stats extends AppCompatActivity {
         l.setYEntrySpace(0f);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColorTransparent(true);
+        pieChart.setCenterText(generateCenterSpannableText());
 
         pieChart.setTransparentCircleColor(Color.WHITE);
         pieChart.setTransparentCircleAlpha(110);
@@ -57,9 +60,9 @@ public class Stats extends AppCompatActivity {
         xVals.add("Matches Played");
         xVals.add("Matches Won");
         xVals.add("Matches Lost");
-        yVals.add(new Entry(5,0));
-        yVals.add(new Entry(10,1));
-        yVals.add(new Entry(10,2));
+        yVals.add(new Entry(5, 0));
+        yVals.add(new Entry(10, 1));
+        yVals.add(new Entry(10, 2));
         PieDataSet dataSet = new PieDataSet(yVals,"Match Statistics");
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
@@ -74,6 +77,17 @@ public class Stats extends AppCompatActivity {
         pieChart.setData(pieData);
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
+    }
+    private SpannableString generateCenterSpannableText() {
+
+        SpannableString s = new SpannableString("Your Quizzing Statistics");
+        s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
+      //  s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
+       // s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
+       // s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
+      //  s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
+      //  s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
+        return s;
     }
 
 }
