@@ -1,6 +1,8 @@
 package com.example.anshu.cognitio;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,13 +13,17 @@ import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+
 
 
 public class QuizActivity extends Activity {
@@ -49,12 +55,16 @@ public class QuizActivity extends Activity {
     ArrayList<Integer> companswerset;
     private Handler mHandler = new Handler();
     MyCountDownTimer countDownTimer;
+    ArrayList<Integer> Response = new ArrayList<>();
+    int level2;
+
 
     int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
 
         user = ParseUser.getCurrentUser();
         playerscoretv = (TextView) findViewById(R.id.playerscore);
@@ -71,21 +81,40 @@ public class QuizActivity extends Activity {
 
 
 
+        ImageView image = (ImageView) findViewById(R.id.playerdp);
+        ParseUser user = ParseUser.getCurrentUser();
+        ParseFile pf;
+        pf = user.getParseFile("dp");
+        byte[] bitmapdata = new byte[0];
+        try {
+            bitmapdata = pf.getData();
+        } catch (ParseException e) {
+            Log.e("dfd",e.toString());
+        }
+
+        if(pf!=null)
+        {Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+            image.setImageBitmap(bitmap);}
+        else
+        image.setImageResource(R.drawable.userdefault);
+        ImageView image2 = (ImageView)findViewById(R.id.compdp);
+        image2.setImageResource(R.drawable.userdefault);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Questions = extras.getParcelableArrayList("Questions");
 
             Log.e("dfjd", "" + Questions.size());
-            level = extras.getInt("level");
+            level2 = extras.getInt("level");
 
         } else {
             Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
         }
+        level=(level2%10)+1;
 
         if (user.getString("name") != null)
             playername.setText(user.getString("name"));
         else
-            playername.setText(user.getUsername().toString());
+            playername.setText("You");
 
         if(level<=6)
         numcompright = (int)(Math.random() * (level+5));
@@ -102,12 +131,18 @@ public class QuizActivity extends Activity {
         companswerset = new ArrayList<>();
 
         for(int k=0;k<10;k++)
+        {
             companswerset.add(0);
+            Response.add(0);
+        }
 
         for(int k=0;k<10;k++)
         {
-            if(comprightanswers.contains(k))
-                companswerset.set(k,(int)(Math.random() * (11)));
+            if(comprightanswers.contains(k)){
+                if(level<=10)
+                companswerset.set(k,level+(int)(Math.random() * (11-level)));
+            else
+            companswerset.set(k,level+(int)Math.random()*(1));}
             else
                 companswerset.set(k,0);
         }
@@ -120,7 +155,7 @@ public class QuizActivity extends Activity {
 
     }
 
-    public void setup(int j)
+    public void setup(final int j)
     {
         countDownTimer = new MyCountDownTimer(11000 /* 20 Sec */,
                 1000);
@@ -149,7 +184,8 @@ public class QuizActivity extends Activity {
                 if (rightoption.equals("a")) {
                     buttonA.setBackgroundColor(Color.GREEN);
                     score += instscore;
-                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
+                    Response.set(j,(int)instscore);
+                    Toast.makeText(QuizActivity.this,""+Response.get(j), Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
                     playerprogressbar.setProgress((int) score);
                     compprogressbar.setProgress((int) (compscore));
@@ -162,6 +198,13 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonA.setBackgroundColor(Color.RED);
+                    Response.set(j,-1);
+                    if(rightoption.equals("b"))
+                        buttonB.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("c"))
+                        buttonC.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("d"))
+                        buttonD.setBackgroundColor(Color.GREEN);
                     buttonB.setClickable(false);
                     buttonC.setClickable(false);
                     buttonD.setClickable(false);
@@ -176,7 +219,8 @@ public class QuizActivity extends Activity {
                 if (rightoption .equals("b")) {
                     buttonB.setBackgroundColor(Color.GREEN);
                     score += instscore;
-                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
+                    Response.set(j,(int)instscore);
+                    Toast.makeText(QuizActivity.this,""+Response.get(j), Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
                     playerprogressbar.setProgress((int) score);
                     compprogressbar.setProgress((int) (compscore));
@@ -188,6 +232,13 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonB.setBackgroundColor(Color.RED);
+                    Response.set(j, -1);
+                    if(rightoption.equals("a"))
+                        buttonA.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("c"))
+                        buttonC.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("d"))
+                        buttonD.setBackgroundColor(Color.GREEN);
                     buttonA.setClickable(false);
                     buttonC.setClickable(false);
                     buttonD.setClickable(false);
@@ -202,7 +253,8 @@ public class QuizActivity extends Activity {
                 if (rightoption .equals("c")) {
                     buttonC.setBackgroundColor(Color.GREEN);
                     score += instscore;
-                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
+                    Response.set(j,(int)instscore);
+                    Toast.makeText(QuizActivity.this,""+Response.get(j), Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
                     playerprogressbar.setProgress((int) score);
                     compprogressbar.setProgress((int) (compscore));
@@ -214,6 +266,13 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonC.setBackgroundColor(Color.RED);
+                    Response.set(j, -1);
+                    if(rightoption.equals("b"))
+                        buttonB.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("a"))
+                        buttonA.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("d"))
+                        buttonD.setBackgroundColor(Color.GREEN);
                     buttonB.setClickable(false);
                     buttonA.setClickable(false);
                     buttonD.setClickable(false);
@@ -228,7 +287,8 @@ public class QuizActivity extends Activity {
                 if (rightoption .equals("d")) {
                     buttonD.setBackgroundColor(Color.GREEN);
                     score += instscore;
-                    Toast.makeText(QuizActivity.this,""+score, Toast.LENGTH_LONG).show();
+                    Response.set(j,(int)instscore);
+                    Toast.makeText(QuizActivity.this,""+Response.get(j), Toast.LENGTH_LONG).show();
                     playerscoretv.setText("" + score);
                     playerprogressbar.setProgress((int) score);
                     compprogressbar.setProgress((int) (compscore));
@@ -240,6 +300,13 @@ public class QuizActivity extends Activity {
 
                 } else {
                     buttonD.setBackgroundColor(Color.RED);
+                    Response.set(j, -1);
+                    if(rightoption.equals("b"))
+                        buttonB.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("a"))
+                        buttonA.setBackgroundColor(Color.GREEN);
+                    else if(rightoption.equals("c"))
+                        buttonC.setBackgroundColor(Color.GREEN);
                     buttonB.setClickable(false);
                     buttonC.setClickable(false);
                     buttonA.setClickable(false);
@@ -283,6 +350,11 @@ public class QuizActivity extends Activity {
                                 Intent intent = new Intent(QuizActivity.this,ResultActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.putExtra("compscore", compscore);
+                                intent.putParcelableArrayListExtra("Questions",Questions);
+                                intent.putExtra("level",level2);
+                               // intent.putExtra("score",score);
+                                intent.putIntegerArrayListExtra("response",Response);
                                 startActivity(intent);
                             }
                         },2000);

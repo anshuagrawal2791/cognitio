@@ -29,7 +29,7 @@ public class TopicActivity extends Activity {
     ArrayList<String> QuestionsPlayed;
     String parsetable;
     TextView leveltv;
-    int level;
+    int level2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +140,8 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed = mdbHandler.getfromxiissc();
 
         }
-        level = QuestionsPlayed.size()%10+1;
-        leveltv.setText("Level "+level);
+        level2 = QuestionsPlayed.size();
+        leveltv.setText("Level "+(level2%10)+1);
 
 
 
@@ -191,7 +191,7 @@ public class TopicActivity extends Activity {
 
                             Intent intent = new Intent(TopicActivity.this,QuizActivity.class);
                             intent.putParcelableArrayListExtra("Questions", Questions);
-                            intent.putExtra("level",level);
+                            intent.putExtra("level",level2);
                             startActivity(intent);
 
 
