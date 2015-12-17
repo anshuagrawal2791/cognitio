@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+        android:layout_marginTop="5dp">
 
         <TextView
         android:layout_width="wrap_content"
@@ -41,15 +42,31 @@
             android:singleLine="false"
             android:gravity="left"
             />
-
-        <TextView
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:background_progressbar_color="#FFCDD2"
+            app:background_progressbar_width="3dp"
+            app:progressbar_color="#F44336"
+            app:progressbar_width="3dp"
             android:id="@+id/timer"
-            android:text="10"
-            android:layout_weight="1"
+
             android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"/>
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textSize="9dp"
+                android:id="@+id/timertv"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

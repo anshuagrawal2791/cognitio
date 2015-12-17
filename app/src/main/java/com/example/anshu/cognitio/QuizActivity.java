@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -40,7 +41,7 @@ public class QuizActivity extends Activity {
     TextView playerscoretv;
     TextView compscoretv;
 
-    TextView timer;
+    CircularProgressBar timer;
     TextView Question;
     Button buttonA;
     Button buttonB;
@@ -57,6 +58,7 @@ public class QuizActivity extends Activity {
     MyCountDownTimer countDownTimer;
     ArrayList<Integer> Response = new ArrayList<>();
     int level2;
+    TextView timertv;
 
 
     int i;
@@ -75,9 +77,10 @@ public class QuizActivity extends Activity {
         buttonB = (Button) findViewById(R.id.optionB);
         buttonC = (Button) findViewById(R.id.optionC);
         buttonD = (Button) findViewById(R.id.optionD);
-        timer = (TextView) findViewById(R.id.timer);
+        timer = (CircularProgressBar) findViewById(R.id.timer);
         playerprogressbar = (ProgressBar)findViewById(R.id.playerprogressbar);
         compprogressbar = (ProgressBar)findViewById(R.id.compprogressbar);
+        timertv=(TextView)findViewById(R.id.timertv);
 
 
 
@@ -351,7 +354,7 @@ public class QuizActivity extends Activity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra("compscore", compscore);
-                                intent.putParcelableArrayListExtra("Questions",Questions);
+                                intent.putParcelableArrayListExtra("Questions", Questions);
                                 intent.putExtra("level",level2);
                                // intent.putExtra("score",score);
                                 intent.putIntegerArrayListExtra("response",Response);
@@ -367,7 +370,8 @@ public class QuizActivity extends Activity {
         }
         @Override
         public void onTick(long millisUntilFinished) {
-            timer.setText(""+millisUntilFinished/1000);
+            timer.setProgressWithAnimation((millisUntilFinished/100)-10);
+            timertv.setText(""+millisUntilFinished/1000);
             instscore=millisUntilFinished/1000;
         }
 

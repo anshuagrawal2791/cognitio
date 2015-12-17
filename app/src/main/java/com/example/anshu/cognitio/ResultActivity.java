@@ -40,6 +40,7 @@ public class ResultActivity extends Activity {
     TextView playername2;
     ParseUser user;
     private Handler mHandler = new Handler();
+    TextView leveltv;
 
 
     @Override
@@ -51,6 +52,7 @@ public class ResultActivity extends Activity {
         resulttv = (TextView) findViewById(R.id.resulttv);
         playerdp2 = (CircleImageView) findViewById(R.id.playerdp2);
         compdp2 = (CircleImageView) findViewById(R.id.compdp2);
+        leveltv = (TextView)findViewById(R.id.leveltv);
 
         ParseUser user = ParseUser.getCurrentUser();
         ParseFile pf;
@@ -92,7 +94,7 @@ public class ResultActivity extends Activity {
         } else {
             Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
         }
-        level = level2 % 10 + 1;
+
         for (int i = 0; i < 10; i++) {
             if (Response.get(i) != -1) {
                 score += Response.get(i);
@@ -124,47 +126,18 @@ public class ResultActivity extends Activity {
         // Create background track
 
         level2 = 54;
-//        arcView.addSeries(new SeriesItem.Builder(Color.argb(1, 255, 255, 255))
-//                .setRange(0, 100, 100)
-//                .setInitialVisibility(true)
-//                .setLineWidth(32f)
-//                .build());
+        level = level2 % 10 + 1;
+        leveltv.setText("Level "+level);
+//
 
-//
-////Create data series track
-//        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(1,165,93,233))
-//                .setRange(0, 100, 0)
-//                .setLineWidth(32f)
-//                .build();
-//
-//        int series1Index = arcView.addSeries(seriesItem1);
-////        arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
-////                .setDelay(1000)
-////                .setDuration(2000)
-////                .build());
-//
-//        arcView.addEvent(new DecoEvent.Builder((level2 % 10) * 10).setColor(Color.parseColor("#a55de9")).setIndex(series1Index).setDelay(1000).build());
-//
-//        SeriesItem seriesItem2 = new SeriesItem.Builder(Color.argb(0,210, 177, 244))
-//                .setRange(0, 100,0)
-//                .setLineWidth(32f)
-//                .build();
-//
-//        int series2Index = arcView.addSeries(seriesItem1);
-//        arcView.addEvent(new DecoEvent.Builder(((level2 % 10) * 10)+Questionsansweredrightly.size() * 10).setDisplayText("Level 1").setColor(Color.parseColor("#d2b1f4")).setIndex(series2Index).setDelay(4000).build());
-//
 
         final CircularProgressBar circularProgressBar = (CircularProgressBar) findViewById(R.id.yourCircularProgressbar);
-        //circularProgressBar.setColor(ContextCompat.getColor(this, R.color.progressBarColor));
-        //circularProgressBar.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundProgressBarColor));
-        //circularProgressBar.setProgressBarWidth(getResources().getDimension(R.dimen.progressBarWidth));
-        //circularProgressBar.setBackgroundProgressBarWidth(getResources().getDimension(R.dimen.backgroundProgressBarWidth));
-        int animationDuration = 2500; // 2500ms = 2,5s
+
 
         circularProgressBar.setColor(Color.parseColor("#a55de9"));
         circularProgressBar.setBackgroundColor(Color.parseColor("#FFFFFF"));
         circularProgressBar.setProgress((level2 % 10) * 10);// Default duration = 1500ms
-        //if((level2%10)*10+Questionsansweredrightly.size()<=100)
+
 
         circularProgressBar.setColor(Color.parseColor("#a55de9"));
         if ((level2 % 10) * 10 + Questionsansweredrightly.size() * 10 < 100)
@@ -175,6 +148,7 @@ public class ResultActivity extends Activity {
                 @Override
                 public void run() {
                     circularProgressBar.setProgress(0);
+                    leveltv.setText("Level "+(level+1));
                     circularProgressBar.setProgressWithAnimation((level2 % 10) * 10 + (Questionsansweredrightly.size() * 10) - 100);
                 }
             }, 1600);
