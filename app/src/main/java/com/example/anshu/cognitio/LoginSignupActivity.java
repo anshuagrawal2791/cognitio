@@ -35,7 +35,6 @@ import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import org.json.JSONException;
@@ -222,6 +221,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                     user.setEmail(usernametxt);
                     user.setUsername(usernametxt);
                     user.setPassword(passwordtxt);
+                    user.put("total_score",0);
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
                             dialog.dismiss();
@@ -365,6 +365,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.setUsername(email);
                                             user.put("name", name);
                                             user.setPassword(id);
+                                            user.put("total_score",0);
                                             //user.put("fbdp",parseFile3);
                                             //user.setAuthData();
 

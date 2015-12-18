@@ -55,7 +55,6 @@ public class ResultActivity extends Activity {
     String Subject;
     int Class;
 
-
     DbHandler mdbHandler;
     ArrayList<Question> Questions;
     ArrayList<String> QuestionsPlayed;

@@ -72,5 +72,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_quiz">QuizActivity</string>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_statistics">Statistics</string>
+    <string name="title_activity_ranking">Ranking</string>
 
 </resources>
