@@ -2,6 +2,7 @@ package com.example.anshu.cognitio;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -55,11 +56,19 @@ public class ResultActivity extends Activity {
     String Subject;
     int Class;
 
+    SharedPreferences sp ;
+    SharedPreferences.Editor editor;
+
     DbHandler mdbHandler;
     ArrayList<Question> Questions;
     ArrayList<String> QuestionsPlayed;
     String parsetable;
     int sizequesrightlyanswered;
+
+    int matchesplayed;
+    int matcheswon;
+    int matcheslost;
+    int matchestied;
 
 
     @Override
@@ -78,6 +87,19 @@ public class ResultActivity extends Activity {
         home=(Button)findViewById(R.id.home);
         mdbHandler = DbHandler.getInstance(this);
         Questionsansweredrightly = new ArrayList<>();
+        sp = getSharedPreferences("Details", MODE_PRIVATE);
+        editor = sp.edit();
+        matchesplayed = sp.getInt("matchesplayed", 0);
+        matcheswon = sp.getInt("matcheswon",0);
+        matcheslost = sp.getInt("matcheslost", 0);
+        matchestied = sp.getInt("matchestied", 0);
+
+
+        Log.e("ststs1",""+matchesplayed);
+        Log.e("ststs1",""+matcheswon);
+        Log.e("ststs1",""+matchestied);
+        Log.e("ststs1",""+matcheslost);
+
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,20 +170,33 @@ public class ResultActivity extends Activity {
             }
 
         }
+        editor.putInt("matchesplayed",(matchesplayed+1));
         if (score > compscore) {
             resulttv.setText("YOU WIN!");
+            editor.putInt("matcheswon",matcheswon+1);
             playerdp2.setBorderColor(Color.GREEN);
             compdp2.setBorderColor(Color.RED);
 
+
         } else if (score == compscore) {
             resulttv.setText("IT'S A TIE!");
+            editor.putInt("matchestied",matchestied+1);
             playerdp2.setBorderColor(Color.WHITE);
             compdp2.setBorderColor(Color.WHITE);
         } else {
+            editor.putInt("matcheslost",matcheslost+1);
             resulttv.setText("YOU LOSE!");
             playerdp2.setBorderColor(Color.RED);
             compdp2.setBorderColor(Color.GREEN);
         }
+        editor.commit();
+
+        Log.e("ststs2",""+sp.getInt("matchesplayed",0));
+        Log.e("ststs2",""+sp.getInt("matcheswon",0));
+        Log.e("ststs2", "" + sp.getInt("matchestied",0));
+        Log.e("ststs2", "" + sp.getInt("matcheslost",0));
+
+
         Log.e("Response", "" + score);
         Log.e("Response", Questionsansweredrightly.toString());
         Log.e("Response", level2 + "");
@@ -295,7 +330,8 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoxiissc(Questionsansweredrightly);
 
         }
-        
+
+
         
 
 
