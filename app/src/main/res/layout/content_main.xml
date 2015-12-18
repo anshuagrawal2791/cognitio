@@ -18,7 +18,7 @@
 
 
     <fr.ganfra.materialspinner.MaterialSpinner
-        android:id="@+id/spinner"
+        android:id="@+id/classsp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         app:ms_multiline="false"
@@ -41,7 +41,7 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/classsp"
         >
 
         <LinearLayout
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         card:card_layout_resourceID="@layout/native_material_largeimage_card"
         style="@style/card_external"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/classsp"
 
         />
 

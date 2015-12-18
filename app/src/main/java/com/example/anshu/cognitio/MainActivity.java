@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         String[] ITEMS = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelfth"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = (MaterialSpinner) findViewById(R.id.spinner);
+        spinner = (MaterialSpinner) findViewById(R.id.classsp);
         spinner.setAdapter(adapter);
 
 

@@ -13,7 +13,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -24,8 +26,12 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import fr.ganfra.materialspinner.MaterialSpinner;
+
 public class ProfileActivity extends AppCompatActivity {
     static String picturePath1;
+    MaterialSpinner spinner1;
+    MaterialSpinner spinner2;
 
     private static final int GALLERY = 1;
 
@@ -38,6 +44,25 @@ public class ProfileActivity extends AppCompatActivity {
 
         //    }
         ParseUser user = ParseUser.getCurrentUser();
+        String name = ((EditText) findViewById(R.id.name)).getText().toString();
+
+        String[] ITEMSforcity = {"AJmer", "SIkar", "Jaipur"};
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforcity);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1 = (MaterialSpinner) findViewById(R.id.citysp);
+        spinner1.setAdapter(adapter1);
+        String[] ITEMSforclass = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelth"};;
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforclass);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2 = (MaterialSpinner) findViewById(R.id.classsp);
+        spinner2.setAdapter(adapter2);
+        String userclass =  spinner2.getSelectedItem().toString();
+        String city =  spinner1.getSelectedItem().toString();
+
+                user.put("name",name);
+        user.put("class",userclass);
+        user.put("city",city);
+        user.saveInBackground();
         //  Drawable dr = LoginSignupActivity
         // fbimage();
         ImageView imageView = (ImageView) findViewById(R.id.dp);
@@ -49,7 +74,9 @@ public class ProfileActivity extends AppCompatActivity {
         }
         Button update_dp = (Button) findViewById(R.id.update_dp);
         Button stats = (Button) findViewById(R.id.stats);
-        Button ranking = (Button) findViewById(R.id.ranking);
+        Button updateprofile = (Button) findViewById(R.id.updateprofile);
+
+
         if(user!=null){
             update_dp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,15 +101,32 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(
                             ProfileActivity.this,Statistics.class);
-                   startActivity(intent);
+                    startActivity(intent);
                 }
             });
-            ranking.setOnClickListener(new View.OnClickListener() {
+            updateprofile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(
-                            ProfileActivity.this, Ranking.class);
-                    startActivity(intent);
+                    String name = ((EditText) findViewById(R.id.name)).getText().toString();
+                    ParseUser user = ParseUser.getCurrentUser();
+                    String[] ITEMSforcity = {"AJmer", "SIkar", "Jaipur"};
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_spinner_item, ITEMSforcity);
+                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner1 = (MaterialSpinner) findViewById(R.id.citysp);
+                    spinner1.setAdapter(adapter1);
+                    String[] ITEMSforclass = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelth"};;
+                    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_spinner_item, ITEMSforclass);
+                    adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2 = (MaterialSpinner) findViewById(R.id.classsp);
+                    spinner2.setAdapter(adapter2);
+                    String userclass =  spinner2.getSelectedItem().toString();
+                    String city =  spinner1.getSelectedItem().toString();
+
+                    user.put("name",name);
+                    user.put("class",userclass);
+                    user.put("city",city);
+                    user.saveInBackground();
+
                 }
             });
         }
@@ -92,35 +136,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-   /* private void fbimage(){
-        ImageView imageView = (ImageView) findViewById(R.id.dp);
-        if(imageView!=null){
-               Bundle mayank123 = getIntent().getExtras();
-            if(mayank123==null){
-                Log.d("mayank","null intent bundle");
-            }
-            else {
-                Log.d("mayank","null not intent bundle");
-            }
-                String fbid =  LoginSignupActivity.id;
-           // if(fbid!=null){
-                 //Glide.with(this).load("http://graph.facebook.com/1615242245409408/picture?type=large").into(imageView);
-                Glide.with(this).load("http://graph.facebook.com/" + fbid + "/picture?type=large").into(imageView);
-                Log.d("mayank", LoginSignupActivity.id);
-            imageView.buildDrawingCache(true);
-            Bitmap fbbitmap2 = imageView.getDrawingCache(true);
-          //  fbbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
-            //  }
-           // else{
-            //    Log.d("mayank","null facebook id");
-            //}
-        }
-        else {
-            Log.d("mayank","null image view");
-        }
-    }
-*/
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
