@@ -266,7 +266,7 @@ public class TopicActivity extends Activity {
 
         ParseQuery<ParseUser> query3 = ParseUser.getQuery();  // for average score
         ParseQuery<ParseUser> query2 = ParseUser.getQuery();  // for high score
-        query2.orderByDescending("score");
+        query2.orderByDescending(key);
         final ProgressDialog dialog = new ProgressDialog(TopicActivity.this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage("Opening..");
