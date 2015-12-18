@@ -29,7 +29,7 @@ public class TopicActivity extends Activity {
     ArrayList<String> QuestionsPlayed;
     String parsetable;
     TextView leveltv;
-    int level;
+    int level2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +140,8 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed = mdbHandler.getfromxiissc();
 
         }
-        level = QuestionsPlayed.size()%10+1;
-        leveltv.setText("Level "+level);
+        level2 = QuestionsPlayed.size();
+        leveltv.setText("Level "+(level2/10+1));
 
 
 
@@ -174,7 +174,7 @@ public class TopicActivity extends Activity {
                         if (e == null) {
                             // If there are results, update the list of posts
                             // and notify the adapter
-                            for(int i=0;i<question.size();i++)
+                            for(int i=0;i<question.size()&&Questions.size()<10;i++)
                             {
                                 if(!QuestionsPlayed.contains(question.get(i).getObjectId().toString())) {
                                     Question question1;
@@ -191,12 +191,17 @@ public class TopicActivity extends Activity {
 
                             Intent intent = new Intent(TopicActivity.this,QuizActivity.class);
                             intent.putParcelableArrayListExtra("Questions", Questions);
-                            intent.putExtra("level",level);
+                            intent.putExtra("level",level2);
+                            intent.putExtra("subject",Subject);
+                            intent.putExtra("class",Class);
+
                             startActivity(intent);
 
 
 
                         } else {
+                            dialog.dismiss();
+                            Toast.makeText(TopicActivity.this,"Error",Toast.LENGTH_LONG).show();
                             Log.e("Error: " , e.getMessage());
                         }
                     }

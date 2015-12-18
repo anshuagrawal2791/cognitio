@@ -205,8 +205,9 @@ public class MainActivity extends AppCompatActivity {
         cardView4.setCard(card4);
 
         String fbid =  LoginSignupActivity.id;
-        Log.e("vv", user.getString("name"));
-        Log.e("vv", user.getParseFile("dp").getUrl());
+        if(user.getString("name")!=null&&user.getParseFile("dp").getUrl()!=null)
+        { Log.e("vv", user.getString("name"));
+        Log.e("vv", user.getParseFile("dp").getUrl());}
 
         //Log.e("vv",user.getParseFile("dp"));
 
@@ -220,9 +221,14 @@ public class MainActivity extends AppCompatActivity {
             profile = new ProfileDrawerItem().withName(name2).withEmail(user.getUsername())
                     .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
         }
+        else if(user.getParseFile("dp")!=null)
+        {
+            profile = new ProfileDrawerItem().withEmail(user.getUsername())
+                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
+        }
         else if(user.get("name")!=null) {
             profile = new ProfileDrawerItem().withName(user.getString("name")).withEmail(user.getUsername())
-                    .withIcon(R.drawable.userdefault).withIdentifier(100);
+                    /*.withIcon(R.drawable.userdefault)*/.withIdentifier(100);
         }
 
 
