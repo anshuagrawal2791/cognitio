@@ -157,7 +157,7 @@ public class ResultActivity extends Activity {
         }
 
         for (int i = 0; i < 10; i++) {
-            if (Response.get(i) != -1) {
+            if (Response.get(i) > 0) {
                 score += Response.get(i);
                 Questionsansweredrightly.add(Questions.get(i).getId());
 

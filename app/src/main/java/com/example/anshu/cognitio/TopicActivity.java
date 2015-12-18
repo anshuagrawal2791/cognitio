@@ -177,7 +177,7 @@ public class TopicActivity extends Activity {
                 query.setLimit(1000);
                 final ProgressDialog dialog = new ProgressDialog(TopicActivity.this);
                 dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog.setMessage("Loading Chart Data...");
+                dialog.setMessage("Opening Questions...");
                 dialog.setIndeterminate(true);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
@@ -266,7 +266,7 @@ public class TopicActivity extends Activity {
 
         ParseQuery<ParseUser> query3 = ParseUser.getQuery();  // for average score
         ParseQuery<ParseUser> query2 = ParseUser.getQuery();  // for high score
-        query2.orderByAscending("score");
+        query2.orderByDescending("score");
         final ProgressDialog dialog = new ProgressDialog(TopicActivity.this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage("Opening..");
@@ -310,9 +310,9 @@ public class TopicActivity extends Activity {
         xVals.add("Highest Score");
         xVals.add("Average Score");
         xVals.add("Your Score");
-        yVals1.add(new BarEntry((float) b, 1));
-        yVals1.add(new BarEntry((float) c, 2));
-        yVals1.add(new BarEntry((float) d, 3));
+        yVals1.add(new BarEntry((float) b, 0));
+        yVals1.add(new BarEntry((float) c, 1));
+        yVals1.add(new BarEntry((float) d, 2));
        Log.e("mayank",Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(a));
         BarDataSet set1 = new BarDataSet(yVals1, "Your Stastics");
 
