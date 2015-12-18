@@ -166,10 +166,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public class filetoimage extends AsyncTask<Void,Void,Void > {
+    public class filetoimage extends AsyncTask<Void,Void,Void >
+    {
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             ParseUser user = ParseUser.getCurrentUser();
             ParseFile pf;
             // if (ParseFacebookUtils.isLinked(user)) {
@@ -186,37 +188,44 @@ public class ProfileActivity extends AppCompatActivity {
      //   }
         */
 
-            pf.getDataInBackground(new
+            if (pf != null)
 
-                                           GetDataCallback() {
+            {
+                pf.getDataInBackground(new
 
-                                               public void done ( byte[] data,
-                                                                  ParseException e){
-                                                   if (e == null) {
-                                                       // Decode the Byte[] into
-                                                       // Bitmap
-                                                       Bitmap bmp = BitmapFactory
-                                                               .decodeByteArray(
-                                                                       data, 0,
-                                                                       data.length);
+                                               GetDataCallback() {
 
-                                                       // initialize
-                                                       ImageView image = (ImageView) findViewById(R.id.dp);
+                                                   public void done(byte[] data,
+                                                                    ParseException e) {
+                                                       if (e == null) {
+                                                           // Decode the Byte[] into
+                                                           // Bitmap
+                                                           Bitmap bmp = BitmapFactory
+                                                                   .decodeByteArray(
+                                                                           data, 0,
+                                                                           data.length);
 
-                                                       // Set the Bitmap into the
-                                                       // ImageView
-                                                       image.setImageBitmap(bmp);
+                                                           // initialize
+                                                           ImageView image = (ImageView) findViewById(R.id.dp);
 
-                                                   } else {
-                                                       Log.d("test",
-                                                               "Problem load image the data.");
+                                                           // Set the Bitmap into the
+                                                           // ImageView
+                                                           image.setImageBitmap(bmp);
+
+                                                       } else {
+                                                           Log.d("test",
+                                                                   "Problem load image the data.");
+                                                       }
                                                    }
                                                }
-                                           }
 
-            );
+                );
+
+            }
             return null;
+
         }
+
 
       /*  @Override
         protected void onPostExecute(String result) {

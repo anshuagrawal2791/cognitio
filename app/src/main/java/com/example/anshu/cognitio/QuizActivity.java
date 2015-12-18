@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -59,6 +60,8 @@ public class QuizActivity extends Activity {
     ArrayList<Integer> Response = new ArrayList<>();
     int level2;
     TextView timertv;
+    String Subject;
+    int Class;
 
 
     int i;
@@ -105,14 +108,15 @@ public class QuizActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Questions = extras.getParcelableArrayList("Questions");
-
+            Subject=extras.getString("subject");
+            Class = extras.getInt("class");
             Log.e("dfjd", "" + Questions.size());
             level2 = extras.getInt("level");
 
         } else {
             Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
         }
-        level=(level2%10)+1;
+        level=(level2/10)+1;
 
         if (user.getString("name") != null)
             playername.setText(user.getString("name"));
@@ -332,6 +336,7 @@ public class QuizActivity extends Activity {
 
         public void onFinish() {
             countDownTimer.cancel();
+            if(i<10)
             compscore+=companswerset.get(i);
 //            compscoretv.setText(compscore);
             mHandler.postDelayed(new Runnable() {
@@ -355,7 +360,9 @@ public class QuizActivity extends Activity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 intent.putExtra("compscore", compscore);
                                 intent.putParcelableArrayListExtra("Questions", Questions);
-                                intent.putExtra("level",level2);
+                                intent.putExtra("level", level2);
+                                intent.putExtra("subject", Subject);
+                                intent.putExtra("class",Class);
                                // intent.putExtra("score",score);
                                 intent.putIntegerArrayListExtra("response",Response);
                                 startActivity(intent);
@@ -370,11 +377,20 @@ public class QuizActivity extends Activity {
         }
         @Override
         public void onTick(long millisUntilFinished) {
-            timer.setProgressWithAnimation((millisUntilFinished/100)-10);
+            timer.setProgressWithAnimation((millisUntilFinished / 100) - 10);
             timertv.setText(""+millisUntilFinished/1000);
             instscore=millisUntilFinished/1000;
         }
 
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }
