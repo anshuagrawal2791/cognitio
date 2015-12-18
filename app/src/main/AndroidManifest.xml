@@ -84,7 +84,15 @@
             android:label="@string/title_activity_quiz" />
         <activity
             android:name=".ResultActivity"
-            android:label="@string/title_activity_result"></activity>
+            android:label="@string/title_activity_result" />
+        <activity
+            android:name=".Statistics"
+            android:label="@string/title_activity_statistics"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Ranking"
+            android:label="@string/title_activity_ranking"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
