@@ -269,7 +269,7 @@ public class TopicActivity extends Activity {
         query2.orderByAscending("score");
         final ProgressDialog dialog = new ProgressDialog(TopicActivity.this);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("Signing Up...");
+        dialog.setMessage("Opening..");
         dialog.setIndeterminate(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();

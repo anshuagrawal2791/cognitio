@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //    }
         ParseUser user = ParseUser.getCurrentUser();
-        String name = ((EditText) findViewById(R.id.name)).getText().toString();
+
 
         String[] ITEMSforcity = {"AJmer", "SIkar", "Jaipur"};
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforcity);
@@ -56,13 +56,9 @@ public class ProfileActivity extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2 = (MaterialSpinner) findViewById(R.id.classsp);
         spinner2.setAdapter(adapter2);
-        String userclass =  spinner2.getSelectedItem().toString();
-        String city =  spinner1.getSelectedItem().toString();
 
-                user.put("name",name);
-        user.put("class",userclass);
-        user.put("city",city);
-        user.saveInBackground();
+
+
         //  Drawable dr = LoginSignupActivity
         // fbimage();
         ImageView imageView = (ImageView) findViewById(R.id.dp);
@@ -108,17 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String name = ((EditText) findViewById(R.id.name)).getText().toString();
-                    ParseUser user = ParseUser.getCurrentUser();
-                    String[] ITEMSforcity = {"AJmer", "SIkar", "Jaipur"};
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_spinner_item, ITEMSforcity);
-                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner1 = (MaterialSpinner) findViewById(R.id.citysp);
-                    spinner1.setAdapter(adapter1);
-                    String[] ITEMSforclass = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelth"};;
-                    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_spinner_item, ITEMSforclass);
-                    adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner2 = (MaterialSpinner) findViewById(R.id.classsp);
-                    spinner2.setAdapter(adapter2);
+                   ParseUser user = ParseUser.getCurrentUser();
                     String userclass =  spinner2.getSelectedItem().toString();
                     String city =  spinner1.getSelectedItem().toString();
 
