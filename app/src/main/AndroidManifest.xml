@@ -83,9 +83,8 @@
             android:name=".QuizActivity"
             android:label="@string/title_activity_quiz" />
         <activity
-            android:name=".Stats"
-            android:label="@string/title_activity_stats"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".ResultActivity"
+            android:label="@string/title_activity_result"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/resulttv"
+    android:textSize="30dp"
+    android:text="Game Over"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/playerdp2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:civ_border_width="4dp"
+            app:civ_border_color="#FFFFFF"
+
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VS"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compdp2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:civ_border_width="4dp"
+            app:civ_border_color="#FFFFFF"
+
+            android:layout_weight="1"
+            android:layout_margin="5dp"/>
+
+
+    </LinearLayout>
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/playername2"
+        android:gravity="center_horizontal"
+        android:text="YOU"
+        android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Computer"
+            android:gravity="center_horizontal"
+            android:layout_margin="5dp" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/playerscore2"
+        android:gravity="center_horizontal"
+        android:text="0"
+        android:layout_margin="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="-"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:id="@+id/compscore2"
+            android:gravity="center_horizontal"
+            android:layout_margin="5dp" />
+
+
+    </LinearLayout>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:background_progressbar_color="#FFCDD2"
+        app:background_progressbar_width="25dp"
+        app:progressbar_color="#F44336"
+        app:progressbar_width="25dp"
+
+        android:layout_gravity="center"
+        android:id="@+id/yourCircularProgressbar"
+
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Level 1"
+        android:id="@+id/leveltv"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Again"
+        android:id="@+id/playagain"
+        android:layout_gravity="left|bottom"
+        android:layout_marginLeft="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:id="@+id/home"
+        android:layout_gravity="right|bottom"
+        android:layout_marginRight="20dp" />
+</FrameLayout>
+</LinearLayout>

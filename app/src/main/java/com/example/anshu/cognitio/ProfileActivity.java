@@ -10,7 +10,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +37,12 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
+
+        //    }
         ParseUser user = ParseUser.getCurrentUser();
+        //  Drawable dr = LoginSignupActivity
+        // fbimage();
         ImageView imageView = (ImageView) findViewById(R.id.dp);
         if (imageView.getDrawable() == null){
             new filetoimage().execute();
@@ -43,7 +51,6 @@ public class ProfileActivity extends AppCompatActivity {
             Log.v("mayank", "mayank not null");
         }
         Button update_dp = (Button) findViewById(R.id.update_dp);
-        Button stats = (Button) findViewById(R.id.stats);
         if(user!=null){
             update_dp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,13 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 }
             });
-            stats.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ProfileActivity.this,Stats.class);
-                    startActivity(intent);
-                }
-            });
         }
         else{
             Toast.makeText(getApplicationContext(),
@@ -77,6 +77,35 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
+   /* private void fbimage(){
+        ImageView imageView = (ImageView) findViewById(R.id.dp);
+        if(imageView!=null){
+               Bundle mayank123 = getIntent().getExtras();
+            if(mayank123==null){
+                Log.d("mayank","null intent bundle");
+            }
+            else {
+                Log.d("mayank","null not intent bundle");
+            }
+                String fbid =  LoginSignupActivity.id;
+           // if(fbid!=null){
+                 //Glide.with(this).load("http://graph.facebook.com/1615242245409408/picture?type=large").into(imageView);
+                Glide.with(this).load("http://graph.facebook.com/" + fbid + "/picture?type=large").into(imageView);
+                Log.d("mayank", LoginSignupActivity.id);
+            imageView.buildDrawingCache(true);
+            Bitmap fbbitmap2 = imageView.getDrawingCache(true);
+          //  fbbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+            //  }
+           // else{
+            //    Log.d("mayank","null facebook id");
+            //}
+        }
+        else {
+            Log.d("mayank","null image view");
+        }
+    }
+*/
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -98,6 +127,15 @@ public class ProfileActivity extends AppCompatActivity {
                 Bitmap dpbitmap = BitmapFactory.decodeFile(picturePath);
                 imageView.setImageBitmap(dpbitmap);
                 new storeimage().execute(dpbitmap);
+
+               /* Bitmap dpbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+                dpbitmap.compress(Bitmap.CompressFormat.PNG, 0, stream2);
+                byte[] byteArray2 = stream2.toByteArray();
+                ParseFile parseFile2 = new ParseFile(user.getUsername()+"dp_circle.png",byteArray2);
+                ParseObject dp = new ParseObject("dp");
+                dp.put("pic",byteArray2);
+                dp.pinInBackground();*/
             }
             else {
                 Log.d("mayank", "null cursor");
@@ -128,10 +166,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public class filetoimage extends AsyncTask<Void,Void,Void > {
+    public class filetoimage extends AsyncTask<Void,Void,Void >
+    {
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             ParseUser user = ParseUser.getCurrentUser();
             ParseFile pf;
             // if (ParseFacebookUtils.isLinked(user)) {
@@ -148,38 +188,52 @@ public class ProfileActivity extends AppCompatActivity {
      //   }
         */
 
-            pf.getDataInBackground(new
+            if (pf != null)
 
-                                           GetDataCallback() {
+            {
+                pf.getDataInBackground(new
 
-                                               public void done ( byte[] data,
-                                                                  ParseException e){
-                                                   if (e == null) {
-                                                       // Decode the Byte[] into
-                                                       // Bitmap
-                                                       Bitmap bmp = BitmapFactory
-                                                               .decodeByteArray(
-                                                                       data, 0,
-                                                                       data.length);
+                                               GetDataCallback() {
 
-                                                       // initialize
-                                                       ImageView image = (ImageView) findViewById(R.id.dp);
+                                                   public void done(byte[] data,
+                                                                    ParseException e) {
+                                                       if (e == null) {
+                                                           // Decode the Byte[] into
+                                                           // Bitmap
+                                                           Bitmap bmp = BitmapFactory
+                                                                   .decodeByteArray(
+                                                                           data, 0,
+                                                                           data.length);
 
-                                                       // Set the Bitmap into the
-                                                       // ImageView
-                                                       image.setImageBitmap(bmp);
+                                                           // initialize
+                                                           ImageView image = (ImageView) findViewById(R.id.dp);
 
-                                                   } else {
-                                                       Log.d("test",
-                                                               "Problem load image the data.");
+                                                           // Set the Bitmap into the
+                                                           // ImageView
+                                                           image.setImageBitmap(bmp);
+
+                                                       } else {
+                                                           Log.d("test",
+                                                                   "Problem load image the data.");
+                                                       }
                                                    }
                                                }
-                                           }
 
-            );
+                );
+
+            }
             return null;
+
         }
 
+
+      /*  @Override
+        protected void onPostExecute(String result) {
+            ImageView imageView = (ImageView) findViewById(R.id.dp);
+            Log.d("result", result);
+            Glide.with(ProfileActivity.this).load(result).into(imageView);
+            Log.d("mayank", "asynctask image successful");
+        }        */
     }
 
 }

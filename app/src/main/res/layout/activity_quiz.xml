@@ -3,13 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/playerdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FFFFFF"
+            android:layout_marginLeft="2dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+        android:layout_marginTop="5dp">
 
         <TextView
         android:layout_width="wrap_content"
@@ -17,23 +39,41 @@
         android:id="@+id/playername"
             android:text="player"
             android:layout_weight="1"
-
-            android:gravity="center_horizontal"/>
-
-        <TextView
+            android:singleLine="false"
+            android:gravity="left"
+            />
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center">
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:background_progressbar_color="#FFCDD2"
+            app:background_progressbar_width="3dp"
+            app:progressbar_color="#F44336"
+            app:progressbar_width="3dp"
             android:id="@+id/timer"
-            android:text="10"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"/>
+
+            android:gravity="center_horizontal"
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textSize="9dp"
+                android:id="@+id/timertv"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/computer"
             android:text="Computer"
             android:layout_weight="1"
-            android:gravity="center_horizontal"/>
+            android:gravity="right"/>
 
     </LinearLayout>
     <LinearLayout
@@ -48,8 +88,7 @@
             android:id="@+id/playerscore"
             android:text="0"
             android:layout_weight="1"
-
-            android:gravity="center_horizontal"/>
+            android:gravity="left"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,12 +103,34 @@
             android:id="@+id/computerscore"
             android:text="0"
             android:layout_weight="1"
-            android:gravity="center_horizontal"/>
+            android:gravity="right"
+            android:singleLine="true"/>
     </LinearLayout>
+
+    </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#000000"
+            android:layout_marginRight="2dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/question"
+        android:layout_margin="20dp"
+        android:textSize="20dp"
+        android:gravity="center_horizontal"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
 
         <ProgressBar
             style="@android:style/Widget.ProgressBar.Horizontal"
@@ -91,31 +152,35 @@
                 android:layout_weight="1"
                 >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/question"
-                    android:layout_weight="5"/>
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:id="@+id/optionA"
-                    android:layout_weight="1"/>
+                    android:layout_margin="5dp"
+                   />
                  <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
                      android:id="@+id/optionB"
-                     android:layout_weight="1"/>
+                     android:layout_margin="5dp"
+                     />
                  <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
                      android:id="@+id/optionC"
-                     android:layout_weight="1"/>
+                     android:layout_margin="5dp"
+                     />
                  <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
                      android:id="@+id/optionD"
-                     android:layout_weight="1"/>
+                     android:layout_margin="5dp"
+                     />
 
             </LinearLayout>
 
