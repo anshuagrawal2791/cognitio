@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         Button update_dp = (Button) findViewById(R.id.update_dp);
         Button stats = (Button) findViewById(R.id.stats);
-        Button ranking = (Button) findViewById(R.id.ranking);
+       // Button ranking = (Button) findViewById(R.id.ranking);
         if(user!=null){
             update_dp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,14 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
                    startActivity(intent);
                 }
             });
-            ranking.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(
-                            ProfileActivity.this, Ranking.class);
-                    startActivity(intent);
-                }
-            });
+
         }
         else{
             Toast.makeText(getApplicationContext(),
