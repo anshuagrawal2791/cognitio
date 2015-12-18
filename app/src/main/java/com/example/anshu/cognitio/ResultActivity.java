@@ -1,5 +1,6 @@
 package com.example.anshu.cognitio;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,19 +8,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hookedonplay.decoviewlib.DecoView;
-import com.hookedonplay.decoviewlib.charts.SeriesItem;
-import com.hookedonplay.decoviewlib.events.DecoEvent;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -29,7 +24,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -332,8 +326,11 @@ public class ResultActivity extends Activity {
         }
 
 
-        
 
+        String key = (Subject.toLowerCase()).replaceAll("\\s","")+Class;
+        Log.e("mayankscore",key);
+        user.put(key,level2+sizequesrightlyanswered);
+        user.saveInBackground();
 
 
     }
