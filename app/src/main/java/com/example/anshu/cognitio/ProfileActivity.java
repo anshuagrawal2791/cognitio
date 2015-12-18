@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(
                             ProfileActivity.this,Statistics.class);
-                   startActivity(intent);
+                    startActivity(intent);
                 }
             });
             ranking.setOnClickListener(new View.OnClickListener() {
