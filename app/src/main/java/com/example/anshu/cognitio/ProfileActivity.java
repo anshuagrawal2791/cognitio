@@ -10,10 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
             Log.v("mayank", "mayank not null");
         }
         Button update_dp = (Button) findViewById(R.id.update_dp);
+        Button stats = (Button) findViewById(R.id.stats);
+       // Button ranking = (Button) findViewById(R.id.ranking);
         if(user!=null){
             update_dp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,6 +69,15 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 }
             });
+            stats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(
+                            ProfileActivity.this,Statistics.class);
+                    startActivity(intent);
+                }
+            });
+
         }
         else{
             Toast.makeText(getApplicationContext(),
@@ -166,10 +174,12 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public class filetoimage extends AsyncTask<Void,Void,Void > {
+    public class filetoimage extends AsyncTask<Void,Void,Void >
+    {
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(Void... params)
+        {
             ParseUser user = ParseUser.getCurrentUser();
             ParseFile pf;
             // if (ParseFacebookUtils.isLinked(user)) {
@@ -186,37 +196,44 @@ public class ProfileActivity extends AppCompatActivity {
      //   }
         */
 
-            pf.getDataInBackground(new
+            if (pf != null)
 
-                                           GetDataCallback() {
+            {
+                pf.getDataInBackground(new
 
-                                               public void done ( byte[] data,
-                                                                  ParseException e){
-                                                   if (e == null) {
-                                                       // Decode the Byte[] into
-                                                       // Bitmap
-                                                       Bitmap bmp = BitmapFactory
-                                                               .decodeByteArray(
-                                                                       data, 0,
-                                                                       data.length);
+                                               GetDataCallback() {
 
-                                                       // initialize
-                                                       ImageView image = (ImageView) findViewById(R.id.dp);
+                                                   public void done(byte[] data,
+                                                                    ParseException e) {
+                                                       if (e == null) {
+                                                           // Decode the Byte[] into
+                                                           // Bitmap
+                                                           Bitmap bmp = BitmapFactory
+                                                                   .decodeByteArray(
+                                                                           data, 0,
+                                                                           data.length);
 
-                                                       // Set the Bitmap into the
-                                                       // ImageView
-                                                       image.setImageBitmap(bmp);
+                                                           // initialize
+                                                           ImageView image = (ImageView) findViewById(R.id.dp);
 
-                                                   } else {
-                                                       Log.d("test",
-                                                               "Problem load image the data.");
+                                                           // Set the Bitmap into the
+                                                           // ImageView
+                                                           image.setImageBitmap(bmp);
+
+                                                       } else {
+                                                           Log.d("test",
+                                                                   "Problem load image the data.");
+                                                       }
                                                    }
                                                }
-                                           }
 
-            );
+                );
+
+            }
             return null;
+
         }
+
 
       /*  @Override
         protected void onPostExecute(String result) {
