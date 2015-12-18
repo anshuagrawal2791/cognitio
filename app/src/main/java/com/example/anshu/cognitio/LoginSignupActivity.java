@@ -221,7 +221,35 @@ public class LoginSignupActivity extends AppCompatActivity {
                     user.setEmail(usernametxt);
                     user.setUsername(usernametxt);
                     user.setPassword(passwordtxt);
-                    user.put("total_score",0);
+                    user.put("english6", 0);
+                    user.put("maths6", 0);
+                    user.put("science6", 0);
+                    user.put("socialstudies6", 0);
+                    user.put("english7", 0);
+                    user.put("maths7", 0);
+                    user.put("science7", 0);
+                    user.put("socialstudies7",0);
+                    user.put("english8", 0);
+                    user.put("maths8", 0);
+                    user.put("science8", 0);
+                    user.put("socialstudies8",0);
+                    user.put("english9", 0);
+                    user.put("maths9", 0);
+                    user.put("science9", 0);
+                    user.put("socialstudies9",0);
+                    user.put("english10", 0);
+                    user.put("maths10", 0);
+                    user.put("science10", 0);
+                    user.put("socialstudies10",0);
+                    user.put("english11", 0);
+                    user.put("maths11", 0);
+                    user.put("science11", 0);
+                    user.put("socialstudies11",0);
+                    user.put("english12", 0);
+                    user.put("maths12", 0);
+                    user.put("science12", 0);
+                    user.put("socialstudies12",0);
+
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
                             dialog.dismiss();
@@ -365,10 +393,34 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.setUsername(email);
                                             user.put("name", name);
                                             user.setPassword(id);
-                                            user.put("total_score",0);
-                                            //user.put("fbdp",parseFile3);
-                                            //user.setAuthData();
-
+                                           user.put("english6", 0);
+                                           user.put("maths6", 0);
+                                            user.put("science6", 0);
+                                            user.put("socialstudies6", 0);
+                                            user.put("english7", 0);
+                                            user.put("maths7", 0);
+                                            user.put("science7", 0);
+                                            user.put("socialstudies7",0);
+                                            user.put("english8", 0);
+                                            user.put("maths8", 0);
+                                            user.put("science8", 0);
+                                            user.put("socialstudies8",0);
+                                            user.put("english9", 0);
+                                            user.put("maths9", 0);
+                                            user.put("science9", 0);
+                                            user.put("socialstudies9",0);
+                                            user.put("english10", 0);
+                                            user.put("maths10", 0);
+                                            user.put("science10", 0);
+                                            user.put("socialstudies10",0);
+                                            user.put("english11", 0);
+                                            user.put("maths11", 0);
+                                            user.put("science11", 0);
+                                            user.put("socialstudies11",0);
+                                            user.put("english12", 0);
+                                            user.put("maths12", 0);
+                                            user.put("science12", 0);
+                                            user.put("socialstudies12",0);
 
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
@@ -390,6 +442,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                         // Sign up didn't succeed. Look at the ParseException
                                                         // to figure out what went wrong
                                                         Toast.makeText(getApplicationContext(), "Unable to connect. Try Again", Toast.LENGTH_LONG).show();
+                                                        Log.e("mayank", e.toString());
                                                         // dialog.dismiss();
                                                     }
                                                 }
