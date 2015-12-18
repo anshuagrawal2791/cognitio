@@ -10,10 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
             Log.v("mayank", "mayank not null");
         }
         Button update_dp = (Button) findViewById(R.id.update_dp);
+        Button stats = (Button) findViewById(R.id.stats);
+        Button ranking = (Button) findViewById(R.id.ranking);
         if(user!=null){
             update_dp.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,6 +67,22 @@ public class ProfileActivity extends AppCompatActivity {
                     if (check){
                         startActivityForResult(intent,GALLERY);
                     }
+                }
+            });
+            stats.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(
+                            ProfileActivity.this,Statistics.class);
+                   startActivity(intent);
+                }
+            });
+            ranking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(
+                            ProfileActivity.this, Ranking.class);
+                    startActivity(intent);
                 }
             });
         }
