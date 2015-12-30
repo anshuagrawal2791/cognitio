@@ -1,29 +1,43 @@
 package com.example.anshu.cognitio;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -32,6 +46,17 @@ public class ProfileActivity extends AppCompatActivity {
     static String picturePath1;
     MaterialSpinner spinner1;
     MaterialSpinner spinner2;
+    PieChart pieChart;
+
+    SharedPreferences sp ;
+    SharedPreferences.Editor editor;
+    int matchesplayed;
+    int matcheswon;
+    int matcheslost;
+    int matchestied;
+    int index;
+    ProgressDialog dialog2;
+    TextView statstv;
 
     private static final int GALLERY = 1;
 
@@ -46,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
         ParseUser user = ParseUser.getCurrentUser();
 
 
-        String[] ITEMSforcity = {"AJmer", "SIkar", "Jaipur"};
+        String[] ITEMSforcity = {"Ajmer", "Sikar", "Jaipur"};
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforcity);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1 = (MaterialSpinner) findViewById(R.id.citysp);
@@ -56,6 +81,39 @@ public class ProfileActivity extends AppCompatActivity {
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner2 = (MaterialSpinner) findViewById(R.id.classsp);
         spinner2.setAdapter(adapter2);
+        TextView name = (TextView)findViewById(R.id.name);
+        statstv = (TextView)findViewById(R.id.statstv);
+
+        if(user.getString("name")!=null)
+            name.setText(user.getString("name"));
+        else
+            name.setText(user.getUsername());
+
+        if(user.getString("class")!=null)
+        {
+            String userclass= user.getString("class");
+
+            if(userclass.equals("Sixth"))
+                index=0;
+            else if (userclass.equals("Seventh"))
+                index=1;
+            else if (userclass.equals("Eighth"))
+                index=2;
+            else if (userclass.equals("Ninth"))
+                index=3;
+            else if (userclass.equals("Tenth"))
+                index=4;
+            else if (userclass.equals("Eleventh"))
+                index=5;
+            else if (userclass.equals("Twelfth"))
+                index=6;
+
+            spinner2.setSelection(index+1);
+            Log.e("cls",index+"");
+
+
+        }
+
 
 
 
@@ -69,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
             Log.v("mayank", "mayank not null");
         }
         Button update_dp = (Button) findViewById(R.id.update_dp);
-        Button stats = (Button) findViewById(R.id.stats);
+        //Button stats = (Button) findViewById(R.id.stats);
         Button updateprofile = (Button) findViewById(R.id.updateprofile);
 
 
@@ -92,14 +150,8 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 }
             });
-            stats.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(
-                            ProfileActivity.this,Statistics.class);
-                    startActivity(intent);
-                }
-            });
+
+
             updateprofile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,7 +163,20 @@ public class ProfileActivity extends AppCompatActivity {
                     user.put("name",name);
                     user.put("class",userclass);
                     user.put("city",city);
-                    user.saveInBackground();
+                    final ProgressDialog dialog = new ProgressDialog(ProfileActivity.this);
+                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog.setMessage("Saving...");
+                    dialog.setIndeterminate(true);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            dialog.dismiss();
+                            if(e!=null)
+                                Toast.makeText(ProfileActivity.this,"Error",Toast.LENGTH_LONG).show();
+                        }
+                    });
 
                 }
             });
@@ -121,6 +186,52 @@ public class ProfileActivity extends AppCompatActivity {
                     "User not logged in",
                     Toast.LENGTH_LONG).show();
         }
+
+        sp = getSharedPreferences("Details", MODE_PRIVATE);
+
+
+        matchesplayed = sp.getInt("matchesplayed", 0);
+        matcheswon = sp.getInt("matcheswon", 0);
+        matcheslost = sp.getInt("matcheslost", 0);
+        matchestied = sp.getInt("matchestied", 0);
+
+        if(matchesplayed==0)
+            statstv.setText("No Stats");
+
+        Log.e("ststs",""+matchesplayed);
+        Log.e("ststs",""+matcheswon);
+        Log.e("ststs",""+matchestied);
+        Log.e("ststs",""+matcheslost);
+
+        pieChart = (PieChart) findViewById(R.id.piechart);
+        // pieChart.setUsePercentValues(true);
+        pieChart.setDescription("Statistics");
+        pieChart.setDragDecelerationFrictionCoef(0.95f);
+        pieChart.setExtraRightOffset(20f);
+        setData();
+        Legend l = pieChart.getLegend();
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(0f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColorTransparent(true);
+        pieChart.setCenterText(generateCenterSpannableText());
+
+        pieChart.setTransparentCircleColor(Color.WHITE);
+        pieChart.setTransparentCircleAlpha(110);
+
+        pieChart.setHoleRadius(58f);
+        pieChart.setTransparentCircleRadius(61f);
+
+        pieChart.setDrawCenterText(true);
+
+        pieChart.setRotationAngle(0);
+        // enable rotation of the chart by touch
+        pieChart.setRotationEnabled(true);
+        pieChart.setHighlightPerTapEnabled(true);
+
+
+
     }
 
     @Override
@@ -142,6 +253,12 @@ public class ProfileActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) findViewById(R.id.dp);
                 Bitmap dpbitmap = BitmapFactory.decodeFile(picturePath);
                 imageView.setImageBitmap(dpbitmap);
+                dialog2 = new ProgressDialog(ProfileActivity.this);
+                dialog2.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog2.setMessage("Uploading...");
+                dialog2.setIndeterminate(true);
+                dialog2.setCanceledOnTouchOutside(false);
+                dialog2.show();
                 new storeimage().execute(dpbitmap);
 
                /* Bitmap dpbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
@@ -167,8 +284,21 @@ public class ProfileActivity extends AppCompatActivity {
             ParseFile parseFile = new ParseFile(user.getUsername()+"dp.png",byteArray);
             parseFile.saveInBackground();
             user.put("dp", parseFile);
-            user.saveInBackground();
-            Log.d("mayank","asynctask successful");
+
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    if(e!=null) {
+                        Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_LONG).show();
+                        dialog2.dismiss();
+
+                    }
+                    else
+                        dialog2.dismiss();
+                }
+            });
+            Log.e("mayank","asynctask successful");
 
             //  Bitmap dpbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
             //ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
@@ -250,6 +380,44 @@ public class ProfileActivity extends AppCompatActivity {
             Glide.with(ProfileActivity.this).load(result).into(imageView);
             Log.d("mayank", "asynctask image successful");
         }        */
+    }
+
+    public void setData(){
+        ArrayList<String> xVals;
+        ArrayList<Entry>  yVals;
+        ArrayList<Integer> colors;
+        xVals = new ArrayList<String>();
+        yVals = new ArrayList<Entry>();
+        colors = new ArrayList<Integer>();
+        xVals.add("Tied");
+        xVals.add("Won");
+        xVals.add("Lost");
+        yVals.add(new Entry(matchestied, 0));
+        yVals.add(new Entry(matcheswon, 1));
+        yVals.add(new Entry(matcheslost, 2));
+        PieDataSet dataSet = new PieDataSet(yVals,"Performance");
+
+        colors.add(0,Color.GRAY);
+        colors.add(1,Color.GREEN);
+        colors.add(2,Color.RED);
+        dataSet.setColors(colors);
+        dataSet.setSliceSpace(2f);
+        dataSet.setSelectionShift(10f);
+        PieData pieData = new PieData(xVals,dataSet);
+        pieChart.setData(pieData);
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
+    }
+    private SpannableString generateCenterSpannableText() {
+
+        SpannableString s = new SpannableString("");
+        s.setSpan(new RelativeSizeSpan(1.7f), 0, 0, 0);
+        //  s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
+        // s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
+        // s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
+        //  s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
+        //  s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
+        return s;
     }
 
 }

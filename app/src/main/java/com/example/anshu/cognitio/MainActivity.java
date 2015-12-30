@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         cardView4.setCard(card4);
 
         String fbid =  LoginSignupActivity.id;
-        if(user.getString("name")!=null&&user.getParseFile("dp").getUrl()!=null)
+        if(user.getString("name")!=null&&user.getParseFile("dp")!=null)
         { Log.e("vv", user.getString("name"));
         Log.e("vv", user.getParseFile("dp").getUrl());}
 
@@ -296,27 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
                 .
 
-                        addDrawerItems(new PrimaryDrawerItem()
-
-                                        .
-
-                                                withName(R.string.logout)
-
-                                        .
-
-                                                withDescription("Logout from your account")
-
-                                        .
-
-                                                withIcon(R.mipmap.splash)
-
-                                        .
-
-                                                withIdentifier(1)
-
-                                        .
-
-                                                withSelectable(false),
+                        addDrawerItems(
 
                                 new
 
@@ -349,28 +329,7 @@ public class MainActivity extends AppCompatActivity {
                                                           @Override
                                                           public boolean onItemClick (View view,int position, IDrawerItem drawerItem){
                                                               if (drawerItem != null) {
-                                                                  if (drawerItem.getIdentifier() == 1) {
-                                                                      ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-                                                                      dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                                                      dialog.setMessage("Logging Out...");
-                                                                      dialog.setIndeterminate(true);
-                                                                      dialog.setCanceledOnTouchOutside(false);
-                                                                      dialog.show();
-                                                                      ParseUser currentUser = ParseUser.getCurrentUser();
-                                                                      ParseUser.logOut();
-                                                                      ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
 
-                                                                      if (currentUserafterlogout == null) {
-                                                                          Intent intent = new Intent(MainActivity.this, LoginSignupActivity.class);
-                                                                          startActivity(intent);
-                                                                          //dialog.dismiss();
-                                                                          Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
-                                                                      } else {
-                                                                          //dialog.dismiss();
-                                                                          Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
-                                                                      }
-
-                                                                  }
                                                                   if (drawerItem.getIdentifier() == 2) {
                                                                       startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                                                                   }
@@ -416,33 +375,33 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
-        if (id == R.id.logout) {
-            ProgressDialog dialog = new ProgressDialog(MainActivity.this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setMessage("Logging Out...");
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            ParseUser.logOut();
-            ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
 
-            if (currentUserafterlogout == null) {
-                Intent intent = new Intent(MainActivity.this, LoginSignupActivity.class);
-                startActivity(intent);
-                //dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
-            } else {
-                //dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
-            }
-
-        }
+//        if (id == R.id.logout) {
+//            ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+//            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            dialog.setMessage("Logging Out...");
+//            dialog.setIndeterminate(true);
+//            dialog.setCanceledOnTouchOutside(false);
+//            dialog.show();
+//            ParseUser currentUser = ParseUser.getCurrentUser();
+//            ParseUser.logOut();
+//            ParseUser currentUserafterlogout = ParseUser.getCurrentUser();
+//
+//            if (currentUserafterlogout == null) {
+//                Intent intent = new Intent(MainActivity.this, LoginSignupActivity.class);
+//                startActivity(intent);
+//                //dialog.dismiss();
+//                Toast.makeText(getApplicationContext(), "Successfully Logged Out", Toast.LENGTH_LONG).show();
+//            } else {
+//                //dialog.dismiss();
+//                Toast.makeText(getApplicationContext(), "Could Not Log Out. Please Try Again.", Toast.LENGTH_LONG).show();
+//            }
+//
+//        }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

@@ -63,6 +63,7 @@ public class ResultActivity extends Activity {
     int matcheswon;
     int matcheslost;
     int matchestied;
+    byte[] bitmapdata;
 
 
     @Override
@@ -115,12 +116,13 @@ public class ResultActivity extends Activity {
         ParseUser user = ParseUser.getCurrentUser();
         ParseFile pf;
         pf = user.getParseFile("dp");
-        byte[] bitmapdata = new byte[0];
+        if(pf!=null){
+        bitmapdata = new byte[0];
         try {
             bitmapdata = pf.getData();
         } catch (ParseException e) {
             Log.e("dfd", e.toString());
-        }
+        }}
 
         if (pf != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);

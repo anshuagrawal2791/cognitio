@@ -18,7 +18,7 @@
     android:layout_margin="20dp"
     android:textSize="30dp"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
@@ -36,10 +36,16 @@
                 android:layout_height="wrap_content"
                 android:text="Start Match"
                 android:id="@+id/startmatch"/>
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rankings"/>
+                android:text="Rank"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ranktv"
+                android:text="0/0"
+                android:textSize="40dp"/>
 
         </LinearLayout>
 

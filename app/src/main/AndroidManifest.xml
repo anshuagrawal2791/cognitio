@@ -78,7 +78,8 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".QuizActivity"
             android:label="@string/title_activity_quiz" />
@@ -88,11 +89,11 @@
         <activity
             android:name=".Statistics"
             android:label="@string/title_activity_statistics"
-            android:theme="@style/AppTheme.NoActionBar" />
+             />
         <activity
             android:name=".Ranking"
             android:label="@string/title_activity_ranking"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            ></activity>
     </application>
 
 </manifest>

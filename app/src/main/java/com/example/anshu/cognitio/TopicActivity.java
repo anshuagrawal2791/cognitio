@@ -42,7 +42,9 @@ public class TopicActivity extends Activity {
     String parsetable;
     TextView leveltv;
     int level2;
-    ArrayList<String> emailuser1;
+    ArrayList<Integer> scores;
+    int rank;
+    TextView ranktv;
 
 
     @Override
@@ -55,6 +57,7 @@ public class TopicActivity extends Activity {
         leveltv = (TextView)findViewById(R.id.leveltv);
         startmatch=(Button)findViewById(R.id.startmatch);
         mdbHandler = DbHandler.getInstance(this);
+        ranktv=(TextView)findViewById(R.id.ranktv);
 
 
         Bundle extras = getIntent().getExtras();
@@ -64,12 +67,12 @@ public class TopicActivity extends Activity {
             Class = extras.getInt("Class");
             topictv.setText(Subject);
             Class+=5;
-            Toast.makeText(this,""+Class,Toast.LENGTH_LONG).show();
+           // Toast.makeText(this,""+Class,Toast.LENGTH_LONG).show();
 
         }
         else
         {
-            Toast.makeText(this,"ERROR",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"ERROR",Toast.LENGTH_LONG).show();
         }
         if(Class==6)
         {
@@ -229,14 +232,16 @@ public class TopicActivity extends Activity {
 
                 //ArrayList<String> played = new ArrayList<String>();
                 Log.e("fd", QuestionsPlayed.toString());
-//                played.add("dfkf");
+//                for(int i=0;i<10;i++)
+//                Log.e("fd",Questions.get(i).getQuestion().toString());
+////                played.add("dfkf");
 //                played.add("dfkdff");
 //                played.add("dfswerekf");
 //               mdbHandler.addtovienglish(played);
 //                Log.e("fdfd", mdbHandler.getfromvienglish().toString());
             }
         });
-        emailuser1 = new ArrayList<String>();
+        scores = new ArrayList<Integer>();
         mChart = (HorizontalBarChart) findViewById(R.id.horbarchart);
         mChart.setDrawBarShadow(false);
         mChart.setDrawValueAboveBar(true);
@@ -281,13 +286,16 @@ public class TopicActivity extends Activity {
                     if (e == null) {
                         for (int i = 0; i < list.size(); i++) {
 
-                            emailuser1.add(list.get(i).getString("email"));
-                            Log.e("mayank12345", Integer.toString(emailuser1.size()));
+                            scores.add(list.get(i).getInt(key));
+                            Log.e("mayank12345", Integer.toString(scores.size()));
 
                         }
-                        usercount = emailuser1.size();
+                        usercount = scores.size();
                         Log.e("mayank key", key);
+                        rank=scores.lastIndexOf(yourscore)+1;
+                        ranktv.setText(rank+"/"+usercount);
                         highscore = list.get(0).getInt(key);
+
                         for (int i = 0; i < list.size(); i++) {
                             scoresum = scoresum + list.get(i).getInt(key);
                         }
