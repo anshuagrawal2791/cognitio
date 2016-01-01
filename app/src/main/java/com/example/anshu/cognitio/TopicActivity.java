@@ -286,13 +286,14 @@ public class TopicActivity extends Activity {
                     if (e == null) {
                         for (int i = 0; i < list.size(); i++) {
 
+                            if(list.get(i).getInt(key)>0)
                             scores.add(list.get(i).getInt(key));
                             Log.e("mayank12345", Integer.toString(scores.size()));
 
                         }
                         usercount = scores.size();
                         Log.e("mayank key", key);
-                        rank=scores.lastIndexOf(yourscore)+1;
+                        rank = scores.indexOf(yourscore)+1;
                         ranktv.setText(rank+"/"+usercount);
                         highscore = list.get(0).getInt(key);
 
