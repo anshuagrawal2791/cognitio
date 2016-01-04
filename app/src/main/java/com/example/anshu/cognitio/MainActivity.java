@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("Subject",card.getTitle());
                     startActivity(intent);
                 }
-                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
         card2.setOnClickListener(new Card.OnCardClickListener() {
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("Subject",card.getTitle());
                     startActivity(intent);
                 }
-                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
         card3.setOnClickListener(new Card.OnCardClickListener() {
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
-                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
         card4.setOnClickListener(new Card.OnCardClickListener() {
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("Subject", card.getTitle());
                     startActivity(intent);
                 }
-                Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

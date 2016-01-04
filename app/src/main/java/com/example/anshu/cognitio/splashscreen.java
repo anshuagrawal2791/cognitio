@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -21,19 +25,26 @@ public class splashscreen extends Activity {
 
         findViewById(R.id.loading).setVisibility(View.VISIBLE);
 
-        Thread timerThread = new Thread(){
-            public void run(){
-                try{
-                    sleep(3000);
+        final boolean[] isConnected = {util.checkConnection(splashscreen.this)};
 
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }finally{
-                    boolean isConnected = util.checkConnection(splashscreen.this);
-                    Log.v("connection", Boolean.toString(isConnected));
+        Log.e("connection", Boolean.toString(isConnected[0]));
 
 
-                    if(isConnected) {
+        if(isConnected[0]) {
+            Thread timerThread = new Thread(){
+                public void run(){
+                    try{
+                        //ParseUser user= ParseUser.getCurrentUser();
+
+                            sleep(3000);
+
+
+
+
+                    }catch(InterruptedException e){
+                        e.printStackTrace();
+                    }
+                    finally {
                         ParseUser currentUser = ParseUser.getCurrentUser();
                         if (currentUser != null) {
                             // Send logged in users to Welcome.class
@@ -41,35 +52,79 @@ public class splashscreen extends Activity {
                             //findViewById(R.id.loading).setVisibility(View.GONE);
                             startActivity(intent);
                             finish();
+                            //Toast.makeText(this,"a",Toast.LENGTH_LONG).show();
                         } else {
                             // Send user to LoginSignupActivity.class
                             Intent intent = new Intent(splashscreen.this,
                                     LoginSignupActivity.class);
                             startActivity(intent);
                             finish();
+                            //Toast.makeText(this,"b",Toast.LENGTH_LONG).show();
                         }
                     }
-                    else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(splashscreen.this);
-                        builder.setTitle("Not Connected");
-                        builder.setMessage("Please check your connection settings.");
-                        builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User clicked OK button
-                            }
-                        });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                            }
-                        });
-                        AlertDialog dialog = builder.create();
-                    }
-
                 }
-            }
-        };
-        timerThread.start();
+            };
+            timerThread.start();
+
+
+
+
+
+        }
+        else {
+
+            RelativeLayout coordinatorLayout = (RelativeLayout) findViewById(R.id
+                    .coordinatorLayout);
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "No Network", Snackbar.LENGTH_INDEFINITE);
+            
+
+            snackbar.show();
+
+            Thread timerThread = new Thread(){
+                    public void run(){
+                        try{
+                            //ParseUser user= ParseUser.getCurrentUser();
+                            while(isConnected[0] ==false) {
+                                sleep(1000);
+                                if(util.checkConnection(splashscreen.this)==true)
+                                    isConnected[0] =true;
+
+                            }
+
+                        }catch(InterruptedException e){
+                            e.printStackTrace();
+                        }
+                        finally {
+                            ParseUser currentUser = ParseUser.getCurrentUser();
+                            if (currentUser != null) {
+                                // Send logged in users to Welcome.class
+                                Intent intent = new Intent(splashscreen.this, MainActivity.class);
+                                //findViewById(R.id.loading).setVisibility(View.GONE);
+                                startActivity(intent);
+                                finish();
+                                //Toast.makeText(this,"a",Toast.LENGTH_LONG).show();
+                            } else {
+                                // Send user to LoginSignupActivity.class
+                                Intent intent = new Intent(splashscreen.this,
+                                        LoginSignupActivity.class);
+                                startActivity(intent);
+                                finish();
+                                //Toast.makeText(this,"b",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                };
+                timerThread.start();
+
+
+//            Toast.makeText(splashscreen.this,"c",Toast.LENGTH_LONG).show();
+//            findViewById(R.id.loading).setVisibility(View.GONE);
+
+
+
+        }
+
 
 
 
