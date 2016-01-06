@@ -166,7 +166,7 @@ public class ResultActivity extends Activity {
             }
 
         }
-        editor.putInt("matchesplayed",(matchesplayed+1));
+        editor.putInt("matchesplayed", (matchesplayed + 1));
         if (score > compscore) {
             resulttv.setText("YOU WIN!");
             editor.putInt("matcheswon",matcheswon+1);
@@ -187,10 +187,16 @@ public class ResultActivity extends Activity {
         }
         editor.commit();
 
-        Log.e("ststs2",""+sp.getInt("matchesplayed",0));
+        Log.e("ststs2", "" + sp.getInt("matchesplayed", 0));
         Log.e("ststs2",""+sp.getInt("matcheswon",0));
         Log.e("ststs2", "" + sp.getInt("matchestied",0));
         Log.e("ststs2", "" + sp.getInt("matcheslost",0));
+
+
+        user.put("matchesplayed",sp.getInt("matchesplayed",0));
+        user.put("matcheswon",sp.getInt("matcheswon",0));
+        user.put("matcheslost",sp.getInt("matcheslost",0));
+        user.put("matchestied",sp.getInt("matchestied",0));
 
 
         Log.e("Response", "" + score);

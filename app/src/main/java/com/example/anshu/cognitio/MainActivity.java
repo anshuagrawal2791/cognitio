@@ -46,19 +46,21 @@ public class MainActivity extends AppCompatActivity {
     IProfile profile;
     SharedPreferences sp ;
     SharedPreferences.Editor editor;
+    ParseUser user;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
 
 
 
-        ParseUser user  = ParseUser.getCurrentUser();
+        user  = ParseUser.getCurrentUser();
         // Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
 
 
@@ -403,5 +405,149 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("dfasfad","onresume");
+        if(user.get("name")!=null&&user.getParseFile("dp")!=null)
 
+        {
+            //    profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
+            //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
+
+            String name2 = (user.get("name")).toString();
+            profile = new ProfileDrawerItem().withName(name2).withEmail(user.getUsername())
+                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
+            Log.e("onresume","1");
+        }
+        else if(user.getParseFile("dp")!=null)
+        {
+            profile = new ProfileDrawerItem().withEmail(user.getUsername())
+                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
+            Log.e("onresume","2");
+        }
+        else if(user.get("name")!=null) {
+            profile = new ProfileDrawerItem().withName(user.getString("name")).withEmail(user.getUsername())
+                    /*.withIcon(R.drawable.userdefault)*/.withIdentifier(100);
+            Log.e("onresume","3");
+        }
+
+
+        //    profile = new ProfileDrawerItem().withEmail(user.getUsername())
+        //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
+
+
+        else
+        {
+            profile = new ProfileDrawerItem().withEmail(user.getUsername())
+                    .withIdentifier(100);
+
+        }
+
+
+        headerResult=new
+
+                AccountHeaderBuilder()
+
+                .
+
+                        withActivity(this)
+
+                .
+
+                        withHeaderBackground(R.mipmap.header)
+
+                .
+
+                        addProfiles(profile)
+
+
+
+                .
+
+                        build();
+
+        result=new
+
+                DrawerBuilder()
+
+                .
+
+                        withActivity(this)
+
+                .
+
+                        withToolbar(toolbar)
+
+                .
+
+                        withHasStableIds(true)
+
+                .
+
+                        withAccountHeader(headerResult)
+
+                .
+
+                        addDrawerItems(
+
+                                new
+
+                                        PrimaryDrawerItem()
+
+                                        .
+
+                                                withName(R.string.Profile)
+
+                                        .
+
+                                                withDescription("View and Update Your Profile")
+
+                                        .
+
+                                                withIcon(R.mipmap.splash)
+
+                                        .
+
+                                                withIdentifier(2)
+
+                                        .
+
+                                                withSelectable(false)
+
+                        )
+                .
+
+                        withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                                                          @Override
+                                                          public boolean onItemClick (View view,int position, IDrawerItem drawerItem){
+                                                              if (drawerItem != null) {
+
+                                                                  if (drawerItem.getIdentifier() == 2) {
+                                                                      startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                                                                  }
+                                                              }
+                                                              return false;
+                                                          }
+                                                      }
+
+                        )
+
+
+
+
+
+                .
+
+                        build();
+
+        RecyclerViewCacheUtil.getInstance().
+
+                withCacheSize(2)
+
+                .init(result);
+
+
+
+    }
 }

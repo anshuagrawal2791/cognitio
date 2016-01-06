@@ -8,7 +8,11 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,6 +41,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -190,10 +195,10 @@ public class ProfileActivity extends AppCompatActivity {
         sp = getSharedPreferences("Details", MODE_PRIVATE);
 
 
-        matchesplayed = sp.getInt("matchesplayed", 0);
-        matcheswon = sp.getInt("matcheswon", 0);
-        matcheslost = sp.getInt("matcheslost", 0);
-        matchestied = sp.getInt("matchestied", 0);
+        matchesplayed = user.getInt("matchesplayed");
+        matcheswon = user.getInt("matcheswon");
+        matcheslost = user.getInt("matcheslost");
+        matchestied = user.getInt("matchestied");
 
         if(matchesplayed==0)
             statstv.setText("No Stats");
@@ -251,15 +256,123 @@ public class ProfileActivity extends AppCompatActivity {
                 picturePath1 = picturePath;
                 cursor.close();
                 ImageView imageView = (ImageView) findViewById(R.id.dp);
-                Bitmap dpbitmap = BitmapFactory.decodeFile(picturePath);
-                imageView.setImageBitmap(dpbitmap);
+//                Bitmap dpbitmap = BitmapFactory.decodeFile(picturePath);
+//                imageView.setImageBitmap(dpbitmap);
                 dialog2 = new ProgressDialog(ProfileActivity.this);
                 dialog2.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 dialog2.setMessage("Uploading...");
                 dialog2.setIndeterminate(true);
                 dialog2.setCanceledOnTouchOutside(false);
                 dialog2.show();
-                new storeimage().execute(dpbitmap);
+
+
+                Bitmap scaledBitmap = null;
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+
+//      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
+//      you try the use the bitmap here, you will get null.
+                options.inJustDecodeBounds = true;
+                Bitmap bmp = BitmapFactory.decodeFile(picturePath, options);
+
+                int actualHeight = options.outHeight;
+                int actualWidth = options.outWidth;
+
+//      max Height and width values of the compressed image is taken as 816x612
+
+
+
+                float maxHeight = 204.0f;
+                float maxWidth = 153.0f;
+                float imgRatio = actualWidth / actualHeight;
+                float maxRatio = maxWidth / maxHeight;
+
+//      width and height values are set maintaining the aspect ratio of the image
+
+                if (actualHeight > maxHeight || actualWidth > maxWidth) {
+                    if (imgRatio < maxRatio) {
+                        imgRatio = maxHeight / actualHeight;
+                        actualWidth = (int) (imgRatio * actualWidth);
+                        actualHeight = (int) maxHeight;
+                    } else if (imgRatio > maxRatio) {
+                        imgRatio = maxWidth / actualWidth;
+                        actualHeight = (int) (imgRatio * actualHeight);
+                        actualWidth = (int) maxWidth;
+                    } else {
+                        actualHeight = (int) maxHeight;
+                        actualWidth = (int) maxWidth;
+
+                    }
+                }
+
+                options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
+
+//      inJustDecodeBounds set to false to load the actual bitmap
+                options.inJustDecodeBounds = false;
+
+//      this options allow android to claim the bitmap memory if it runs low on memory
+                options.inPurgeable = true;
+                options.inInputShareable = true;
+                options.inTempStorage = new byte[16 * 1024];
+
+                try {
+//          load the bitmap from its path
+                    bmp = BitmapFactory.decodeFile(picturePath, options);
+                } catch (OutOfMemoryError exception) {
+                    exception.printStackTrace();
+
+                }
+                try {
+                    scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
+                } catch (OutOfMemoryError exception) {
+                    exception.printStackTrace();
+                }
+
+                float ratioX = actualWidth / (float) options.outWidth;
+                float ratioY = actualHeight / (float) options.outHeight;
+                float middleX = actualWidth / 2.0f;
+                float middleY = actualHeight / 2.0f;
+
+                Matrix scaleMatrix = new Matrix();
+                scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+                Canvas canvas = new Canvas(scaledBitmap);
+                canvas.setMatrix(scaleMatrix);
+                canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+//      check the rotation of the image and display it properly
+                ExifInterface exif;
+                try {
+                    exif = new ExifInterface(picturePath);
+
+                    int orientation = exif.getAttributeInt(
+                            ExifInterface.TAG_ORIENTATION, 0);
+                    Log.d("EXIF", "Exif: " + orientation);
+                    Matrix matrix = new Matrix();
+                    if (orientation == 6) {
+                        matrix.postRotate(90);
+                        Log.d("EXIF", "Exif: " + orientation);
+                    } else if (orientation == 3) {
+                        matrix.postRotate(180);
+                        Log.d("EXIF", "Exif: " + orientation);
+                    } else if (orientation == 8) {
+                        matrix.postRotate(270);
+                        Log.d("EXIF", "Exif: " + orientation);
+                    }
+                    scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                            scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
+                            true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // scaledBitmap.compress(Bitmap.CompressFormat.JPEG,)
+
+                //Bitmap dpbitmap = BitmapFactory.decodeFile(picturePath);
+               imageView.setImageBitmap(scaledBitmap);
+
+
+                new storeimage().execute(scaledBitmap);
 
                /* Bitmap dpbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                 ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
@@ -289,16 +402,18 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseException e) {
 
-                    if(e!=null) {
+                    if (e != null) {
                         Toast.makeText(ProfileActivity.this, "Error", Toast.LENGTH_LONG).show();
                         dialog2.dismiss();
 
-                    }
-                    else
+                    } else {
                         dialog2.dismiss();
+                        Log.e("mayank", "asynctask successful");
+
+                    }
                 }
             });
-            Log.e("mayank","asynctask successful");
+
 
             //  Bitmap dpbitmap2 = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
             //ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
@@ -418,6 +533,24 @@ public class ProfileActivity extends AppCompatActivity {
         //  s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
         //  s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
         return s;
+    }
+    public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        final float totalPixels = width * height;
+        final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+        while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+            inSampleSize++;
+        }
+
+        return inSampleSize;
     }
 
 }
