@@ -62,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
     int index;
     ProgressDialog dialog2;
     TextView statstv;
+    ArrayList<Integer> indexy = new ArrayList<>();
 
     private static final int GALLERY = 1;
 
@@ -70,6 +71,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        indexy.add(0, 1);
+        indexy.add(1, 2);
+        indexy.add(2,3);
 
 
         //    }
@@ -504,17 +508,36 @@ public class ProfileActivity extends AppCompatActivity {
         xVals = new ArrayList<String>();
         yVals = new ArrayList<Entry>();
         colors = new ArrayList<Integer>();
-        xVals.add("Tied");
-        xVals.add("Won");
-        xVals.add("Lost");
-        yVals.add(new Entry(matchestied, 0));
-        yVals.add(new Entry(matcheswon, 1));
-        yVals.add(new Entry(matcheslost, 2));
+        if(matchestied>0) {
+            xVals.add("Tied");
+            yVals.add(new Entry(matchestied, indexy.get(0)));
+            colors.add(indexy.get(0)-1,Color.GRAY);
+            indexy.remove(0);
+        }
+        if(matcheswon>0)
+        {
+            xVals.add("Won");
+            yVals.add(new Entry(matcheswon, indexy.get(0)));
+            colors.add(indexy.get(0)-1,Color.GREEN);
+            indexy.remove(0);
+        }
+        if(matcheslost>0)
+        {
+            xVals.add("Lost");
+            yVals.add(new Entry(matcheslost, indexy.get(0)));
+            colors.add(indexy.get(0)-1,Color.RED);
+            indexy.remove(0);
+        }
+
+
+        //yVals.add(new Entry(matchestied, 0));
+        //yVals.add(new Entry(matcheswon, 1));
+
         PieDataSet dataSet = new PieDataSet(yVals,"Performance");
 
-        colors.add(0,Color.GRAY);
-        colors.add(1,Color.GREEN);
-        colors.add(2,Color.RED);
+       // colors.add(0,Color.GRAY);
+
+
         dataSet.setColors(colors);
         dataSet.setSliceSpace(2f);
         dataSet.setSelectionShift(10f);

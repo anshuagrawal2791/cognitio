@@ -421,6 +421,10 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.put("maths12", 0);
                                             user.put("science12", 0);
                                             user.put("socialstudies12",0);
+                                            user.put("matchesplayed",0);
+                                            user.put("matcheswon",0);
+                                            user.put("matcheslost",0);
+                                            user.put("matchestied",0);
 
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
