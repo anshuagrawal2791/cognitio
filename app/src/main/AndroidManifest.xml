@@ -53,6 +53,7 @@
         <activity
             android:name=".splashscreen"
             android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,6 +63,7 @@
         <activity
             android:name=".LoginSignupActivity"
             android:label="@string/title_activity_login_signup"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -74,7 +76,8 @@
 
         <activity
             android:name=".TopicActivity"
-            android:label="@string/title_activity_topic" />
+            android:label="@string/title_activity_topic"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
@@ -82,17 +85,21 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".QuizActivity"
-            android:label="@string/title_activity_quiz" />
+            android:label="@string/title_activity_quiz"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ResultActivity"
-            android:label="@string/title_activity_result" />
+            android:label="@string/title_activity_result"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Statistics"
             android:label="@string/title_activity_statistics"
+            android:screenOrientation="portrait"
              />
         <activity
             android:name=".Ranking"
             android:label="@string/title_activity_ranking"
+            android:screenOrientation="portrait"
             ></activity>
     </application>
 
