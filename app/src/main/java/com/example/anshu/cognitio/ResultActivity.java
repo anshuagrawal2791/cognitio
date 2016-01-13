@@ -260,6 +260,8 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoviscience(Questionsansweredrightly);
             else if(Subject.equals("Social Studies"))
                 mdbHandler.addtovissc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtovigk(Questionsansweredrightly);
         }
         else if(Class==7)
         {
@@ -271,6 +273,8 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoviiscience(Questionsansweredrightly);
             else if(Subject.equals("Social Studies"))
                 mdbHandler.addtoviissc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtoviigk(Questionsansweredrightly);
 
         }
         else if(Class==8)
@@ -279,10 +283,23 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoviiienglish(Questionsansweredrightly);
             else if(Subject.equals("Maths"))
                 mdbHandler.addtoviiimaths(Questionsansweredrightly);
-            else if(Subject.equals("Science"))
-                mdbHandler.addtoviiiscience(Questionsansweredrightly);
-            else if(Subject.equals("Social Studies"))
-                mdbHandler.addtoviiissc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtoviiigk(Questionsansweredrightly);
+            else if(Subject.equals("Physics"))
+                mdbHandler.addtoviiiphysics(Questionsansweredrightly);
+            else if(Subject.equals("Chemistry"))
+                mdbHandler.addtoviiichem(Questionsansweredrightly);
+            else if(Subject.equals("Biology"))
+                mdbHandler.addtoviiibio(Questionsansweredrightly);
+            else if(Subject.equals("History"))
+                mdbHandler.addtoviiihistory(Questionsansweredrightly);
+            else if(Subject.equals("Civics"))
+                mdbHandler.addtoviiicivic(Questionsansweredrightly);
+            else if(Subject.equals("Geography"))
+                mdbHandler.addtoviiigeo(Questionsansweredrightly);
+            else if(Subject.equals("Economics"))
+                mdbHandler.addtoviiieco(Questionsansweredrightly);
+
 
         }
         else if(Class==9)
@@ -291,10 +308,22 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoixenglish(Questionsansweredrightly);
             else if(Subject.equals("Maths"))
                 mdbHandler.addtoixmaths(Questionsansweredrightly);
-            else if(Subject.equals("Science"))
-                mdbHandler.addtoixscience(Questionsansweredrightly);
-            else if(Subject.equals("Social Studies"))
-                mdbHandler.addtoixssc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtoixgk(Questionsansweredrightly);
+            else if(Subject.equals("Physics"))
+                mdbHandler.addtoixphysics(Questionsansweredrightly);
+            else if(Subject.equals("Chemistry"))
+                mdbHandler.addtoixchem(Questionsansweredrightly);
+            else if(Subject.equals("Biology"))
+                mdbHandler.addtoixbio(Questionsansweredrightly);
+            else if(Subject.equals("History"))
+                mdbHandler.addtoixhistory(Questionsansweredrightly);
+            else if(Subject.equals("Civics"))
+                mdbHandler.addtoixcivic(Questionsansweredrightly);
+            else if(Subject.equals("Geography"))
+                mdbHandler.addtoixgeo(Questionsansweredrightly);
+            else if(Subject.equals("Economics"))
+                mdbHandler.addtoixeco(Questionsansweredrightly);
 
         }
         else if(Class==10) {
@@ -302,10 +331,22 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoxenglish(Questionsansweredrightly);
             else if(Subject.equals("Maths"))
                 mdbHandler.addtoxmaths(Questionsansweredrightly);
-            else if(Subject.equals("Science"))
-                mdbHandler.addtoxscience(Questionsansweredrightly);
-            else if(Subject.equals("Social Studies"))
-                mdbHandler.addtoxssc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtoxgk(Questionsansweredrightly);
+            else if(Subject.equals("Physics"))
+                mdbHandler.addtoxphysics(Questionsansweredrightly);
+            else if(Subject.equals("Chemistry"))
+                mdbHandler.addtoxchem(Questionsansweredrightly);
+            else if(Subject.equals("Biology"))
+                mdbHandler.addtoxbio(Questionsansweredrightly);
+            else if(Subject.equals("History"))
+                mdbHandler.addtoxhistory(Questionsansweredrightly);
+            else if(Subject.equals("Civics"))
+                mdbHandler.addtoxcivic(Questionsansweredrightly);
+            else if(Subject.equals("Geography"))
+                mdbHandler.addtoxgeo(Questionsansweredrightly);
+            else if(Subject.equals("Economics"))
+                mdbHandler.addtoxeco(Questionsansweredrightly);
 
         }
         else if(Class==11)
@@ -314,10 +355,15 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoxienglish(Questionsansweredrightly);
             else if(Subject.equals("Maths"))
                 mdbHandler.addtoximaths(Questionsansweredrightly);
-            else if(Subject.equals("Science"))
-                mdbHandler.addtoxiscience(Questionsansweredrightly);
-            else if(Subject.equals("Social Studies"))
-                mdbHandler.addtoxissc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtoxigk(Questionsansweredrightly);
+            else if(Subject.equals("Physics"))
+                mdbHandler.addtoxiphysics(Questionsansweredrightly);
+            else if(Subject.equals("Chemistry"))
+                mdbHandler.addtoxichem(Questionsansweredrightly);
+            else if(Subject.equals("Biology"))
+                mdbHandler.addtoxibio(Questionsansweredrightly);
+
 
         }
         else if(Class==12)
@@ -326,10 +372,14 @@ public class ResultActivity extends Activity {
                 mdbHandler.addtoxiienglish(Questionsansweredrightly);
             else if(Subject.equals("Maths"))
                 mdbHandler.addtoxiimaths(Questionsansweredrightly);
-            else if(Subject.equals("Science"))
-                mdbHandler.addtoxiiscience(Questionsansweredrightly);
-            else if(Subject.equals("Social Studies"))
-                mdbHandler.addtoxiissc(Questionsansweredrightly);
+            else if(Subject.equals("General Knowledge"))
+                mdbHandler.addtoxiigk(Questionsansweredrightly);
+            else if(Subject.equals("Physics"))
+                mdbHandler.addtoxiiphysics(Questionsansweredrightly);
+            else if(Subject.equals("Chemistry"))
+                mdbHandler.addtoxiichem(Questionsansweredrightly);
+            else if(Subject.equals("Biology"))
+                mdbHandler.addtoxiibio(Questionsansweredrightly);
 
         }
 
@@ -356,6 +406,8 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviscience();
             else if(Subject.equals("Social Studies"))
                 QuestionsPlayed = mdbHandler.getfromvissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromvigk();
         }
         else if(Class==7)
         {
@@ -367,6 +419,8 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviiscience();
             else if(Subject.equals("Social Studies"))
                 QuestionsPlayed = mdbHandler.getfromviissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromviigk();
 
         }
         else if(Class==8)
@@ -375,10 +429,23 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviiienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromviiimaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromviiiscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromviiissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromviiigk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromviiiphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromviiichem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromviiibio();
+            else if(Subject.equals("History"))
+                QuestionsPlayed = mdbHandler.getfromviiihistory();
+            else if(Subject.equals("Civics"))
+                QuestionsPlayed = mdbHandler.getfromviiicivic();
+            else if(Subject.equals("Geography"))
+                QuestionsPlayed = mdbHandler.getfromviiigeo();
+            else if(Subject.equals("Economics"))
+                QuestionsPlayed = mdbHandler.getfromviiieco();
+
 
         }
         else if(Class==9)
@@ -387,10 +454,22 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromixenglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromixmaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromixscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromixssc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromixgk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromixphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromixchem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromixbio();
+            else if(Subject.equals("History"))
+                QuestionsPlayed = mdbHandler.getfromixhistory();
+            else if(Subject.equals("Civics"))
+                QuestionsPlayed = mdbHandler.getfromixcivic();
+            else if(Subject.equals("Geography"))
+                QuestionsPlayed = mdbHandler.getfromixgeo();
+            else if(Subject.equals("Economics"))
+                QuestionsPlayed = mdbHandler.getfromixeco();
 
         }
         else if(Class==10) {
@@ -398,10 +477,22 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxenglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromxmaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromxscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromxssc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromxgk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromxphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromxchem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromxbio();
+            else if(Subject.equals("History"))
+                QuestionsPlayed = mdbHandler.getfromxhistory();
+            else if(Subject.equals("Civics"))
+                QuestionsPlayed = mdbHandler.getfromxcivic();
+            else if(Subject.equals("Geography"))
+                QuestionsPlayed = mdbHandler.getfromxgeo();
+            else if(Subject.equals("Economics"))
+                QuestionsPlayed = mdbHandler.getfromxeco();
 
         }
         else if(Class==11)
@@ -410,10 +501,15 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromximaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromxiscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromxissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromxigk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromxiphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromxichem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromxibio();
+
 
         }
         else if(Class==12)
@@ -422,13 +518,16 @@ public class ResultActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxiienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromxiimaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromxiiscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromxiissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromxiigk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromxiiphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromxiichem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromxiibio();
 
         }
-
         Questions.clear();
 
         parsetable = Subject.toLowerCase()+Class+"th";

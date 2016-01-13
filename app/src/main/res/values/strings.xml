@@ -74,5 +74,7 @@
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_statistics">Statistics</string>
     <string name="title_activity_ranking">Ranking</string>
+    <string name="title_activity_select_subject">Select_subject</string>
+    <string name="title_activity_update_ques">UpdateQues</string>
 
 </resources>

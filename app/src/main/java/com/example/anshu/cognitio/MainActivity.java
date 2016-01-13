@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,7 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +40,16 @@ import it.gmariotti.cardslib.library.cards.material.MaterialLargeImageCard;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class MainActivity extends AppCompatActivity {
 
     MaterialSpinner spinner;
@@ -49,93 +63,58 @@ public class MainActivity extends AppCompatActivity {
     ParseUser user;
     Toolbar toolbar;
 
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private int[] tabIcons = {
+            R.drawable.untitled,
+            R.drawable.untitled,
+            R.drawable.untitled
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
+
+        viewPager.setCurrentItem(1);
 
         user  = ParseUser.getCurrentUser();
         // Toast.makeText(getApplicationContext(), " " + user.getEmail() + " " + user.get("name"), Toast.LENGTH_LONG);
 
 
+        ImageView im = (ImageView)findViewById(R.id.im);
+        ImageView im1 = (ImageView)findViewById(R.id.im1);
+        ImageView im2 = (ImageView)findViewById(R.id.im2);
 
-        String[] ITEMS = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelfth"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = (MaterialSpinner) findViewById(R.id.classsp);
-        spinner.setAdapter(adapter);
-
-
-
-
-
-        MaterialLargeImageCard card =
-                MaterialLargeImageCard.with(MainActivity.this)
-                        .setTextOverImage("English")
-                        .setTitle("English")
-                        .useDrawableId(R.drawable.splash)
-                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
-                        .build();
-        MaterialLargeImageCard card2 =
-                MaterialLargeImageCard.with(MainActivity.this)
-                        .setTextOverImage("Maths").setTitle("Maths")
-                        .useDrawableId(R.drawable.splash)
-                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
-                        .build();
-        MaterialLargeImageCard card3 =
-                MaterialLargeImageCard.with(MainActivity.this)
-                        .setTextOverImage("Social Studies").setTitle("Social Studies")
-                        .useDrawableId(R.drawable.splash)
-                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
-                        .build();
-        MaterialLargeImageCard card4 =
-                MaterialLargeImageCard.with(MainActivity.this)
-                        .setTextOverImage("Science").setTitle("Science")
-                        .useDrawableId(R.drawable.splash)
-                                //.setupSupplementalActions(R.layout.carddemo_native_material_supplemental_actions_large_icon, actions)
-                        .build();
-
-        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+        im.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void set(ImageView imageView, Uri uri, Drawable placeholder) {
-                Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+            public void onClick(View v) {
+                viewPager.setCurrentItem(2);
             }
-
+        });
+im1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void cancel(ImageView imageView) {
-                Glide.clear(imageView);
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+im2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
             }
         });
 
 
 
-//        actions = new ArrayList<BaseSupplementalAction>();
-//
-//        actions = new ArrayList<BaseSupplementalAction>();
-//
-//        IconSupplementalAction t1 = new IconSupplementalAction(MainActivity.this, R.id.ic1);
-//        t1.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-//            @Override
-//            public void onClick(Card card, View view) {
-//                Toast.makeText(MainActivity.this," Click on Text SHARE ",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        actions.add(t1);
-//
-//        IconSupplementalAction t2 = new IconSupplementalAction(MainActivity.this, R.id.ic2);
-//        t2.setOnActionClickListener(new BaseSupplementalAction.OnActionClickListener() {
-//            @Override
-//            public void onClick(Card card, View view) {
-//                Toast.makeText(MainActivity.this," Click on Text LEARN ",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        actions.add(t2);
 
 
 
@@ -143,223 +122,52 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        card.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                if(spinner.getSelectedItemPosition()==0)
-                    spinner.setError("Select a Class");
-                else
-                {
-                    Intent intent = new Intent(MainActivity.this,TopicActivity.class);
-                    intent.putExtra("Class",spinner.getSelectedItemPosition());
-                    intent.putExtra("Subject",card.getTitle());
-                    startActivity(intent);
-                }
-               // Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        card2.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                if(spinner.getSelectedItemPosition()==0)
-                    spinner.setError("Select a Class");
-                else
-                {
-                    Intent intent = new Intent(MainActivity.this,TopicActivity.class);
-                    intent.putExtra("Class",spinner.getSelectedItemPosition());
-                    intent.putExtra("Subject",card.getTitle());
-                    startActivity(intent);
-                }
-                //Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        card3.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                if (spinner.getSelectedItemPosition() == 0)
-                    spinner.setError("Select a Class");
-                else {
-                    Intent intent = new Intent(MainActivity.this, TopicActivity.class);
-                    intent.putExtra("Class", spinner.getSelectedItemPosition());
-                    intent.putExtra("Subject", card.getTitle());
-                    startActivity(intent);
-                }
-
-               // Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        card4.setOnClickListener(new Card.OnCardClickListener() {
-            @Override
-            public void onClick(Card card, View view) {
-                if (spinner.getSelectedItemPosition() == 0)
-                    spinner.setError("Select a Class");
-                else {
-                    Intent intent = new Intent(MainActivity.this, TopicActivity.class);
-                    intent.putExtra("Class", spinner.getSelectedItemPosition());
-                    intent.putExtra("Subject", card.getTitle());
-                    startActivity(intent);
-                }
-               // Toast.makeText(MainActivity.this, card.getTitle().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        CardViewNative cardView = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage);
-        cardView.setCard(card);
-        CardViewNative cardView2 = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage2);
-        cardView2.setCard(card2);
-        CardViewNative cardView3 = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage3);
-        cardView3.setCard(card3);
-        CardViewNative cardView4 = (CardViewNative) MainActivity.this.findViewById(R.id.carddemo_largeimage4);
-        cardView4.setCard(card4);
-
-        String fbid =  LoginSignupActivity.id;
-        if(user.getString("name")!=null&&user.getParseFile("dp")!=null)
-        { Log.e("vv", user.getString("name"));
-        Log.e("vv", user.getParseFile("dp").getUrl());}
-
-        //Log.e("vv",user.getParseFile("dp"));
-
-        if(user.get("name")!=null&&user.getParseFile("dp")!=null)
-
-        {
-            //    profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
-            //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
-
-            String name2 = (user.get("name")).toString();
-            profile = new ProfileDrawerItem().withName(name2).withEmail(user.getUsername())
-                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
-        }
-        else if(user.getParseFile("dp")!=null)
-        {
-            profile = new ProfileDrawerItem().withEmail(user.getUsername())
-                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
-        }
-        else if(user.get("name")!=null) {
-            profile = new ProfileDrawerItem().withName(user.getString("name")).withEmail(user.getUsername())
-                    /*.withIcon(R.drawable.userdefault)*/.withIdentifier(100);
-        }
-
-
-            //    profile = new ProfileDrawerItem().withEmail(user.getUsername())
-            //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
-
-
-        else
-        {
-                profile = new ProfileDrawerItem().withEmail(user.getUsername())
-                        .withIdentifier(100);
-
-            }
-
-
-        headerResult=new
-
-                AccountHeaderBuilder()
-
-                .
-
-                        withActivity(this)
-
-                .
-
-                        withHeaderBackground(R.mipmap.header)
-
-                .
-
-                        addProfiles(profile)
-
-                .
-
-                        withSavedInstance(savedInstanceState)
-
-                .
-
-                        build();
-
-        result=new
-
-                DrawerBuilder()
-
-                .
-
-                        withActivity(this)
-
-                .
-
-                        withToolbar(toolbar)
-
-                .
-
-                        withHasStableIds(true)
-
-                .
-
-                        withAccountHeader(headerResult)
-
-                .
-
-                        addDrawerItems(
-
-                                new
-
-                                        PrimaryDrawerItem()
-
-                                        .
-
-                                                withName(R.string.Profile)
-
-                                        .
-
-                                                withDescription("View and Update Your Profile")
-
-                                        .
-
-                                                withIcon(R.mipmap.splash)
-
-                                        .
-
-                                                withIdentifier(2)
-
-                                        .
-
-                                                withSelectable(false)
-
-                        )
-                .
-
-                        withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                                          @Override
-                                                          public boolean onItemClick (View view,int position, IDrawerItem drawerItem){
-                                                              if (drawerItem != null) {
-
-                                                                  if (drawerItem.getIdentifier() == 2) {
-                                                                      startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                                                                  }
-                                                              }
-                                                              return false;
-                                                          }
-                                                      }
-
-                        ).
-
-                        withSavedInstance(savedInstanceState)
-
-                .
-
-                        withShowDrawerOnFirstLaunch(true)
-
-                .
-
-                        build();
-
-        RecyclerViewCacheUtil.getInstance().
-
-                withCacheSize(2)
-
-                .
-
-                        init(result);
     }
+
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Profile(), "Profile");
+        adapter.addFragment(new Home(), "Home");
+        adapter.addFragment(new Stats(), "Stats");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return null;
+        }
+    }
+
+
 
 
     @Override
@@ -408,145 +216,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("dfasfad","onresume");
-        if(user.get("name")!=null&&user.getParseFile("dp")!=null)
-
-        {
-            //    profile = new ProfileDrawerItem().withName(user.get("name").toString()).withEmail(user.getUsername())
-            //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
-
-            String name2 = (user.get("name")).toString();
-            profile = new ProfileDrawerItem().withName(name2).withEmail(user.getUsername())
-                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
-            Log.e("onresume","1");
-        }
-        else if(user.getParseFile("dp")!=null)
-        {
-            profile = new ProfileDrawerItem().withEmail(user.getUsername())
-                    .withIcon(user.getParseFile("dp").getUrl()).withIdentifier(100);
-            Log.e("onresume","2");
-        }
-        else if(user.get("name")!=null) {
-            profile = new ProfileDrawerItem().withName(user.getString("name")).withEmail(user.getUsername())
-                    /*.withIcon(R.drawable.userdefault)*/.withIdentifier(100);
-            Log.e("onresume","3");
-        }
-
-
-        //    profile = new ProfileDrawerItem().withEmail(user.getUsername())
-        //          .withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460").withIdentifier(100);
-
-
-        else
-        {
-            profile = new ProfileDrawerItem().withEmail(user.getUsername())
-                    .withIdentifier(100);
-
-        }
-
-
-        headerResult=new
-
-                AccountHeaderBuilder()
-
-                .
-
-                        withActivity(this)
-
-                .
-
-                        withHeaderBackground(R.mipmap.header)
-
-                .
-
-                        addProfiles(profile)
-
-
-
-                .
-
-                        build();
-
-        result=new
-
-                DrawerBuilder()
-
-                .
-
-                        withActivity(this)
-
-                .
-
-                        withToolbar(toolbar)
-
-                .
-
-                        withHasStableIds(true)
-
-                .
-
-                        withAccountHeader(headerResult)
-
-                .
-
-                        addDrawerItems(
-
-                                new
-
-                                        PrimaryDrawerItem()
-
-                                        .
-
-                                                withName(R.string.Profile)
-
-                                        .
-
-                                                withDescription("View and Update Your Profile")
-
-                                        .
-
-                                                withIcon(R.mipmap.splash)
-
-                                        .
-
-                                                withIdentifier(2)
-
-                                        .
-
-                                                withSelectable(false)
-
-                        )
-                .
-
-                        withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                                          @Override
-                                                          public boolean onItemClick (View view,int position, IDrawerItem drawerItem){
-                                                              if (drawerItem != null) {
-
-                                                                  if (drawerItem.getIdentifier() == 2) {
-                                                                      startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                                                                  }
-                                                              }
-                                                              return false;
-                                                          }
-                                                      }
-
-                        )
-
-
-
-
-
-                .
-
-                        build();
-
-        RecyclerViewCacheUtil.getInstance().
-
-                withCacheSize(2)
-
-                .init(result);
-
 
 
     }

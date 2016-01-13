@@ -35,7 +35,7 @@ public class TopicActivity extends Activity {
     String Subject;
     int Class;
     TextView topictv;
-    Button startmatch;
+    Button startmatch,upd_qes;
     DbHandler mdbHandler;
     ArrayList<Question> Questions;
     ArrayList<String> QuestionsPlayed;
@@ -56,6 +56,7 @@ public class TopicActivity extends Activity {
         topictv=(TextView)findViewById(R.id.topictv);
         leveltv = (TextView)findViewById(R.id.leveltv);
         startmatch=(Button)findViewById(R.id.startmatch);
+        upd_qes=(Button)findViewById(R.id.upd_qes);
         mdbHandler = DbHandler.getInstance(this);
         ranktv=(TextView)findViewById(R.id.ranktv);
 
@@ -66,8 +67,8 @@ public class TopicActivity extends Activity {
             Subject = extras.getString("Subject");
             Class = extras.getInt("Class");
             topictv.setText(Subject);
-            Class+=5;
-           // Toast.makeText(this,""+Class,Toast.LENGTH_LONG).show();
+            //Class+=5;
+            // Toast.makeText(this,""+Class,Toast.LENGTH_LONG).show();
 
         }
         else
@@ -86,6 +87,8 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviscience();
             else if(Subject.equals("Social Studies"))
                 QuestionsPlayed = mdbHandler.getfromvissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromvigk();
         }
         else if(Class==7)
         {
@@ -97,6 +100,8 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviiscience();
             else if(Subject.equals("Social Studies"))
                 QuestionsPlayed = mdbHandler.getfromviissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromviigk();
 
         }
         else if(Class==8)
@@ -105,10 +110,23 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviiienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromviiimaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromviiiscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromviiissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromviiigk();
+        else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromviiiphysics();
+        else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromviiichem();
+        else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromviiibio();
+        else if(Subject.equals("History"))
+                QuestionsPlayed = mdbHandler.getfromviiihistory();
+        else if(Subject.equals("Civics"))
+                QuestionsPlayed = mdbHandler.getfromviiicivic();
+        else if(Subject.equals("Geography"))
+                QuestionsPlayed = mdbHandler.getfromviiigeo();
+        else if(Subject.equals("Economics"))
+                QuestionsPlayed = mdbHandler.getfromviiieco();
+
 
         }
         else if(Class==9)
@@ -117,10 +135,22 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromixenglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromixmaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromixscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromixssc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromixgk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromixphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromixchem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromixbio();
+            else if(Subject.equals("History"))
+                QuestionsPlayed = mdbHandler.getfromixhistory();
+            else if(Subject.equals("Civics"))
+                QuestionsPlayed = mdbHandler.getfromixcivic();
+            else if(Subject.equals("Geography"))
+                QuestionsPlayed = mdbHandler.getfromixgeo();
+            else if(Subject.equals("Economics"))
+                QuestionsPlayed = mdbHandler.getfromixeco();
 
         }
         else if(Class==10) {
@@ -128,10 +158,22 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxenglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromxmaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromxscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromxssc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromxgk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromxphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromxchem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromxbio();
+            else if(Subject.equals("History"))
+                QuestionsPlayed = mdbHandler.getfromxhistory();
+            else if(Subject.equals("Civics"))
+                QuestionsPlayed = mdbHandler.getfromxcivic();
+            else if(Subject.equals("Geography"))
+                QuestionsPlayed = mdbHandler.getfromxgeo();
+            else if(Subject.equals("Economics"))
+                QuestionsPlayed = mdbHandler.getfromxeco();
 
         }
         else if(Class==11)
@@ -140,10 +182,15 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromximaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromxiscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromxissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromxigk();
+          else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromxiphysics();
+          else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromxichem();
+          else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromxibio();
+          
 
         }
         else if(Class==12)
@@ -152,15 +199,18 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxiienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromxiimaths();
-            else if(Subject.equals("Science"))
-                QuestionsPlayed=mdbHandler.getfromxiiscience();
-            else if(Subject.equals("Social Studies"))
-                QuestionsPlayed = mdbHandler.getfromxiissc();
+            else if(Subject.equals("General Knowledge"))
+                QuestionsPlayed = mdbHandler.getfromxiigk();
+            else if(Subject.equals("Physics"))
+                QuestionsPlayed = mdbHandler.getfromxiiphysics();
+            else if(Subject.equals("Chemistry"))
+                QuestionsPlayed = mdbHandler.getfromxiichem();
+            else if(Subject.equals("Biology"))
+                QuestionsPlayed = mdbHandler.getfromxiibio();
 
         }
         level2 = QuestionsPlayed.size();
-        leveltv.setText("Level "+(level2/10+1));
-
+        leveltv.setText("Level " + (level2 / 10 + 1));
 
 
         startmatch.setOnClickListener(new View.OnClickListener() {
@@ -205,19 +255,23 @@ public class TopicActivity extends Activity {
 
 
                             Log.e("qu", "" + Questions.size());
-
+                            if(Questions.size()==10){
                             Intent intent = new Intent(TopicActivity.this, QuizActivity.class);
                             intent.putParcelableArrayListExtra("Questions", Questions);
                             intent.putExtra("level", level2);
                             intent.putExtra("subject", Subject);
                             intent.putExtra("class", Class);
 
-                            startActivity(intent);
+                            startActivity(intent);}
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Congratulations!You've completed all the questions!",Toast.LENGTH_LONG).show();
+                            }
 
 
                         } else {
                             dialog.dismiss();
-                            Toast.makeText(TopicActivity.this, "Error", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Congratulations!You've completed all the questions!",Toast.LENGTH_LONG).show();
                             Log.e("Error: ", e.getMessage());
                         }
                     }
@@ -241,6 +295,23 @@ public class TopicActivity extends Activity {
 //                Log.e("fdfd", mdbHandler.getfromvienglish().toString());
             }
         });
+
+        upd_qes.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View v) {
+                Intent intent_upd =    new Intent(TopicActivity.this,UpdateQues.class);
+                intent_upd.putExtra("tablename" ,Subject.toLowerCase()+Class+"th");
+                Log.v("mayank",Subject.toLowerCase()+Class+"th");
+                startActivity(intent_upd);
+
+            }
+        });
+
+
+
+
         scores = new ArrayList<Integer>();
         mChart = (HorizontalBarChart) findViewById(R.id.horbarchart);
         mChart.setDrawBarShadow(false);
@@ -261,11 +332,11 @@ public class TopicActivity extends Activity {
         YAxis yl = mChart.getAxisLeft();
         yl.setDrawAxisLine(true);
         // yl.setDrawGridLines(true);
-         yl.setGridLineWidth(0.6f);
+        yl.setGridLineWidth(0.6f);
 
 
         ParseUser user = ParseUser.getCurrentUser();
-          String email = user.getEmail();
+        String email = user.getEmail();
         final String key = (Subject.toLowerCase()).replaceAll("\\s","")+Class;
         yourscore = user.getInt(key);
 
@@ -278,40 +349,40 @@ public class TopicActivity extends Activity {
         dialog.setIndeterminate(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-            query2.findInBackground(new FindCallback<ParseUser>()
+        query2.findInBackground(new FindCallback<ParseUser>()
 
-            {
-                @Override
-                public void done (List < ParseUser > list, ParseException e) {
-                    if (e == null) {
-                        for (int i = 0; i < list.size(); i++) {
+        {
+            @Override
+            public void done (List < ParseUser > list, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < list.size(); i++) {
 
-                            if(list.get(i).getInt(key)>0)
+                        if(list.get(i).getInt(key)>0)
                             scores.add(list.get(i).getInt(key));
-                            Log.e("mayank12345", Integer.toString(scores.size()));
+                        Log.e("mayank12345", Integer.toString(scores.size()));
 
-                        }
-                        usercount = scores.size();
-                        Log.e("mayank key", key);
-                        rank = scores.indexOf(yourscore)+1;
-                        ranktv.setText(rank+"/"+usercount);
-                        highscore = list.get(0).getInt(key);
-
-                        for (int i = 0; i < list.size(); i++) {
-                            scoresum = scoresum + list.get(i).getInt(key);
-                        }
-                        if (usercount != 0) {
-                            avgscore = scoresum / usercount;
-                        } else {
-                            Log.e("mayank", "zero no. of users");
-                        }
-                        setData(usercount, highscore, avgscore, yourscore);
-                        dialog.dismiss();
                     }
-                }
-            });
+                    usercount = scores.size();
+                    Log.e("mayank key", key);
+                    rank = scores.indexOf(yourscore)+1;
+                    ranktv.setText(rank+"/"+usercount);
+                    highscore = list.get(0).getInt(key);
 
-        }
+                    for (int i = 0; i < list.size(); i++) {
+                        scoresum = scoresum + list.get(i).getInt(key);
+                    }
+                    if (usercount != 0) {
+                        avgscore = scoresum / usercount;
+                    } else {
+                        Log.e("mayank", "zero no. of users");
+                    }
+                    setData(usercount, highscore, avgscore, yourscore);
+                    dialog.dismiss();
+                }
+            }
+        });
+
+    }
 
     private void setData(int a , int b , int c , int d) {
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
@@ -322,7 +393,7 @@ public class TopicActivity extends Activity {
         yVals1.add(new BarEntry((float) b, 0));
         yVals1.add(new BarEntry((float) c, 1));
         yVals1.add(new BarEntry((float) d, 2));
-       Log.e("mayank",Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(a));
+        Log.e("mayank",Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(a));
         BarDataSet set1 = new BarDataSet(yVals1, "Your Stastics");
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();

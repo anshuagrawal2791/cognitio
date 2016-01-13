@@ -10,13 +10,13 @@
     tools:context="com.example.anshu.cognitio.TopicActivity"
     android:orientation="vertical">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/topictv"
-    android:text="Subject"
-    android:layout_margin="20dp"
-    android:textSize="30dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topictv"
+        android:text="Subject"
+        android:layout_margin="20dp"
+        android:textSize="30dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +36,13 @@
                 android:layout_height="wrap_content"
                 android:text="Start Match"
                 android:id="@+id/startmatch"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UPDATE NEW QUESTIONS"
+                android:id="@+id/upd_qes" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

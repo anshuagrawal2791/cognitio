@@ -4,86 +4,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:card="http://schemas.android.com/apk/res-auto"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_main"
+
     tools:context=".MainActivity">
 
+    <android.support.design.widget.AppBarLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/view">
+
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
 
-
-
-    <fr.ganfra.materialspinner.MaterialSpinner
-        android:id="@+id/classsp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:ms_multiline="false"
-        app:ms_hint="Select Class"
-        app:ms_enableFloatingLabel="true"
-        app:ms_enableErrorLabel="true"
-        app:ms_floatingLabelText="Class"
-        app:ms_baseColor="@color/colorAccent"
-        app:ms_highlightColor="@color/colorAccent"
-        app:ms_errorColor="@color/error"
-
-        app:ms_thickness="1dp"
-        app:ms_hintColor="@color/hint"
-        app:ms_arrowColor="@color/base"
-        app:ms_arrowSize="8dp"
-        app:ms_alignLabels="false"
-        app:ms_floatingLabelColor="@color/colorAccent"/>
-
-
-    <ScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/classsp"
-        >
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="#111111"
+        android:layout_below="@+id/view"
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-    <it.gmariotti.cardslib.library.view.CardViewNative
-        android:id="@+id/carddemo_largeimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        card:card_layout_resourceID="@layout/native_material_largeimage_card"
-        style="@style/card_external"
-        android:layout_below="@+id/classsp"
+        android:layout_above="@+id/frameLayout3" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:layout_alignParentBottom="true"
+       android:id="@+id/frameLayout3">
 
-        />
+       <ImageView
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:src="@drawable/stats"
 
-    <it.gmariotti.cardslib.library.view.CardViewNative
-        android:id="@+id/carddemo_largeimage2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card:card_layout_resourceID="@layout/native_material_largeimage_card"
-        style="@style/card_external"
-        android:layout_below="@+id/carddemo_largeimage"
-        />
-            <it.gmariotti.cardslib.library.view.CardViewNative
-        android:id="@+id/carddemo_largeimage3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card:card_layout_resourceID="@layout/native_material_largeimage_card"
-        style="@style/card_external"
-        android:layout_below="@+id/carddemo_largeimage2"
-        />
-            <it.gmariotti.cardslib.library.view.CardViewNative
-        android:id="@+id/carddemo_largeimage4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card:card_layout_resourceID="@layout/native_material_largeimage_card"
-        style="@style/card_external"
-        android:layout_below="@+id/carddemo_largeimage3"
-        />
+           android:id="@+id/im2"
+           android:layout_weight="1"
+           android:backgroundTint="#111111"
 
-        </LinearLayout>
+           android:layout_gravity="center" />
 
-    </ScrollView>
+       <ImageView
+           android:layout_width="60dp"
+           android:layout_height="60dp"
+           android:src="@drawable/home"
+
+           android:id="@+id/im1"
+           android:layout_weight="1"
+           />
+
+       <ImageView
+           android:layout_width="30dp"
+           android:layout_height="30dp"
+           android:id="@+id/im"
+           android:layout_weight="1"
+           android:src="@drawable/profile"
+
+           android:backgroundTint="#111111"
+           android:layout_gravity="center" />
+
+   </LinearLayout>
+
 </RelativeLayout>

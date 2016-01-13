@@ -125,7 +125,7 @@ public class LoginSignupActivity extends AppCompatActivity {
             }
         });
 
-      //  mBtnFb = (Button) findViewById(R.id.btn_fb_login);
+        //  mBtnFb = (Button) findViewById(R.id.btn_fb_login);
 
         // Login Button Click Listener
         loginbutton.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +192,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                 }
 
 
-        }
+            }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -225,30 +225,70 @@ public class LoginSignupActivity extends AppCompatActivity {
                     user.put("maths6", 0);
                     user.put("science6", 0);
                     user.put("socialstudies6", 0);
+                    user.put("gk6", 0);
+
                     user.put("english7", 0);
                     user.put("maths7", 0);
                     user.put("science7", 0);
                     user.put("socialstudies7",0);
+                    user.put("gk7", 0);
+
                     user.put("english8", 0);
                     user.put("maths8", 0);
-                    user.put("science8", 0);
-                    user.put("socialstudies8",0);
+                    // user.put("science8", 0);
+                    // user.put("socialstudies8",0);
+                    user.put("physics8",0);
+                    user.put("chem8",0);
+                    user.put("bio8",0);
+                    user.put("history8",0);
+                    user.put("civic8",0);
+                    user.put("geo8",0);
+                    user.put("eco8",0);
+                    user.put("gk8",0);
+
                     user.put("english9", 0);
                     user.put("maths9", 0);
-                    user.put("science9", 0);
-                    user.put("socialstudies9",0);
+                    //  user.put("science9", 0);
+                    //  user.put("socialstudies9",0);
+                    user.put("physics9",0);
+                    user.put("chem9",0);
+                    user.put("bio9",0);
+                    user.put("history9",0);
+                    user.put("civic9",0);
+                    user.put("geo9",0);
+                    user.put("eco9",0);
+                    user.put("gk9",0);
+
                     user.put("english10", 0);
                     user.put("maths10", 0);
-                    user.put("science10", 0);
-                    user.put("socialstudies10",0);
+                    // user.put("science10", 0);
+                    // user.put("socialstudies10",0);
+                    user.put("physics10",0);
+                    user.put("chem10",0);
+                    user.put("bio10",0);
+                    user.put("history10",0);
+                    user.put("civic10",0);
+                    user.put("geo10",0);
+                    user.put("eco10",0);
+                    user.put("gk10",0);
+
                     user.put("english11", 0);
                     user.put("maths11", 0);
-                    user.put("science11", 0);
-                    user.put("socialstudies11",0);
+                    //  user.put("science11", 0);
+                    // user.put("socialstudies11",0);
+                    user.put("physics11",0);
+                    user.put("chem11",0);
+                    user.put("bio11",0);
+                    user.put("gk11",0);
+
                     user.put("english12", 0);
                     user.put("maths12", 0);
-                    user.put("science12", 0);
-                    user.put("socialstudies12",0);
+                    // user.put("science12", 0);
+                    // user.put("socialstudies12",0);
+                    user.put("physics12",0);
+                    user.put("chem12",0);
+                    user.put("bio12",0);
+                    user.put("gk12",0);
 
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
@@ -287,7 +327,7 @@ public class LoginSignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginSignupActivity.this);
                 builder.setTitle("Forgot Password");
-              //  builder.setMessage("Enter Email");
+                //  builder.setMessage("Enter Email");
                 builder.setCancelable(true);
 
 // Set up the input
@@ -393,8 +433,8 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.setUsername(email);
                                             user.put("name", name);
                                             user.setPassword(id);
-                                           user.put("english6", 0);
-                                           user.put("maths6", 0);
+                                            user.put("english6", 0);
+                                            user.put("maths6", 0);
                                             user.put("science6", 0);
                                             user.put("socialstudies6", 0);
                                             user.put("english7", 0);
@@ -421,10 +461,6 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.put("maths12", 0);
                                             user.put("science12", 0);
                                             user.put("socialstudies12",0);
-                                            user.put("matchesplayed",0);
-                                            user.put("matcheswon",0);
-                                            user.put("matcheslost",0);
-                                            user.put("matchestied",0);
 
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
@@ -435,7 +471,7 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                         Log.e("fblogin", "Done, Dude!! You signed up");
 
 
-                                                       //
+                                                        //
 
 
                                                         //dialog.dismiss();
@@ -461,8 +497,8 @@ public class LoginSignupActivity extends AppCompatActivity {
                                                                 //new getbmglide().execute(id);
                                                                 // If user exist and authenticated, send user to Welcome.class
 
-                                                             //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                               // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                                                                 Intent intent = new Intent(LoginSignupActivity.this, MainActivity.class);
                                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -520,11 +556,11 @@ public class LoginSignupActivity extends AppCompatActivity {
 
 
     private void getUserDetailsFromParse() {
-       parseUser = ParseUser.getCurrentUser();
+        parseUser = ParseUser.getCurrentUser();
 //
 //        }
         email = (parseUser.getEmail());
-       // name = (parseUser.getUsername());
+        // name = (parseUser.getUsername());
         Intent intent = new Intent(
                 LoginSignupActivity.this,
                 MainActivity.class);
@@ -562,14 +598,14 @@ public class LoginSignupActivity extends AppCompatActivity {
                 parseFilefb.saveInBackground();
 
                 user.put("dp", parseFilefb);
-               user.saveInBackground();
+                user.saveInBackground();
 
                 Thread timerThread = new Thread(){
                     public void run(){
                         try{
                             ParseUser user= ParseUser.getCurrentUser();
                             while(user.getParseFile("dp").getUrl()==null)
-                            sleep(2000);
+                                sleep(2000);
 
                         }catch(InterruptedException e){
                             e.printStackTrace();
