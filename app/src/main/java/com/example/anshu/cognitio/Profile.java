@@ -135,7 +135,8 @@ public class Profile extends Fragment {
         //    }
         ParseUser user = ParseUser.getCurrentUser();
 
-
+        Class = (TextView) v.findViewById(R.id.Class);
+        city = (TextView) v.findViewById(R.id.city);
         TextView name = (TextView) v.findViewById(R.id.name);
         statstv = (TextView) v.findViewById(R.id.statstv);
 
@@ -145,16 +146,23 @@ public class Profile extends Fragment {
         else
             name.setText(user.getUsername());
 
+        //user.put("class",null);
         if (user.getString("class") != null) {
-            Class = (TextView) v.findViewById(R.id.Class);
+
             Class.setText(user.getString("class"));
 
         }
+        else
+        Class.setVisibility(View.GONE);
+
+        //user.put("city",null);
         if (user.getString("city") != null) {
-            city = (TextView) v.findViewById(R.id.city);
+
             city.setText(user.getString("city"));
 
         }
+        else
+        city.setVisibility(View.GONE);
 
         final ImageView imageView = (ImageView) v.findViewById(R.id.dp);
         ParseFile pf;
@@ -302,7 +310,7 @@ public class Profile extends Fragment {
         //yVals.add(new Entry(matchestied, 0));
         //yVals.add(new Entry(matcheswon, 1));
 
-        PieDataSet dataSet = new PieDataSet(yVals,"Performance");
+        PieDataSet dataSet = new PieDataSet(yVals,"");
 
         // colors.add(0,Color.GRAY);
 

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="#111111"
    >
 
 
@@ -30,7 +30,8 @@
                 app:civ_border_width="2dp"
                 app:civ_border_color="#1f2229"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:src="@drawable/userdefault"/>
             />
 
         </LinearLayout>
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:singleLine="false"
                     android:hint="Name"
-
+                    android:textColor="#ffffff"
                     android:id="@+id/name"
                     android:layout_weight="1"
                     android:textSize="20dp" android:layout_marginLeft="20dp"/>
@@ -60,6 +61,7 @@
                     android:inputType="textPersonName"
                     android:hint="Class"
                     android:ems="10"
+    android:textColor="#ffffff"
                     android:id="@+id/Class"
                     android:layout_weight="1"
     android:layout_marginLeft="20dp" />
@@ -69,6 +71,7 @@
                     android:inputType="textPersonName"
                     android:hint="City"
                     android:ems="10"
+    android:textColor="#ffffff"
                     android:id="@+id/city"
                     android:layout_weight="1"
     android:layout_marginLeft="20dp" />
@@ -105,7 +108,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_dialog_email" />
+            android:src="@drawable/edit"
+            />
     </FrameLayout>
 
 
