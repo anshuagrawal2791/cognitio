@@ -13,8 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -22,6 +25,7 @@ public class UpdateQues extends AppCompatActivity {
     String ques,opta,optb,optc,optd,corrop,email;
     Button submit;
     MaterialSpinner corrop_spn;
+    String table;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,50 +42,65 @@ public class UpdateQues extends AppCompatActivity {
             }
         });
 
-        ques = ((EditText)findViewById(R.id.ques)).toString();
-        opta = ((EditText)findViewById(R.id.opta)).toString();
-        optb = ((EditText)findViewById(R.id.optb)).toString();
-        optc = ((EditText)findViewById(R.id.optc)).toString();
-        optd = ((EditText)findViewById(R.id.optd)).toString();
+
         submit=(Button)findViewById(R.id.submit_ques);
 
-        ParseUser user = ParseUser.getCurrentUser();
-        email = user.getEmail();
+
         corrop_spn = (MaterialSpinner) findViewById(R.id.corrop);
         String[] optionsforques = {"A", "B", "C" ,"D"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, optionsforques);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         corrop_spn.setAdapter(adapter);
-        corrop =  corrop_spn.getSelectedItem().toString();
-        Bundle extras = getIntent().getExtras();
-        String table = extras.getString("tablename");
 
-        ParseObject tableName = new ParseObject("table");
+        Bundle extras = getIntent().getExtras();
+         table = extras.getString("tablename");
+
+    //    ParseObject tableName = new ParseObject(table);
 
         submit.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
+                ques = ((EditText)findViewById(R.id.ques)).getText().toString();
+                opta = ((EditText)findViewById(R.id.opta)).getText().toString();
+                optb = ((EditText)findViewById(R.id.optb)).getText().toString();
+                optc = ((EditText)findViewById(R.id.optc)).getText().toString();
+                optd = ((EditText)findViewById(R.id.optd)).getText().toString();
+                ParseUser user = ParseUser.getCurrentUser();
+                email = user.getEmail();
+                corrop =  corrop_spn.getSelectedItem().toString();
                 final ProgressDialog dialog1 = new ProgressDialog(UpdateQues.this);
                 dialog1.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 dialog1.setMessage("Opening..");
                 dialog1.setIndeterminate(true);
                 dialog1.setCanceledOnTouchOutside(false);
                 dialog1.show();
-                ParseObject tableName = new ParseObject("table");
+                ParseObject tableName = new ParseObject(table);
+                Log.v("MAYANK789", table);
+
                 Log.v("MAYANK123", tableName + "got");
+             //   ParseQuery<ParseObject> teamQuery = ParseQuery.getQuery("Team");
+                tableName.put("User_email",email);
                 tableName.put("question", ques);
                 tableName.put("optionA", opta);
                 tableName.put("optionB", optb);
                 tableName.put("optionC", optc);
-                tableName.put("optiond", optd);
-                tableName.put("rightoption", optd);
-                tableName.put("User_email", corrop);
+                tableName.put("optionD", optd);
+                tableName.put("rightoption", corrop);
                 tableName.put("approval", "no");
-                tableName.saveInBackground();
-                dialog1.dismiss();
-                Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG).show();
+               // tableName.saveInBackground();
+
+                tableName.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                        dialog1.dismiss();
+                        Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG).show();
+                        if (e != null)
+                            Toast.makeText(UpdateQues.this, "Error", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 

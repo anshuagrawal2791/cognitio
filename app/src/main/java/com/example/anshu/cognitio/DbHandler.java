@@ -114,7 +114,7 @@ public class DbHandler extends SQLiteOpenHelper{
                 + XIIENGLISH + " TEXT," + XIIMATHS + " TEXT," + XIISCIENCE + " TEXT," + XIISSC + " TEXT"+")";
        */
         String query = "CREATE TABLE " + TABLE_PLAYED + "("
-                + VIENGLISH + " TEXT,"+ VIMATHS + " TEXT" + VISCIENCE + " TEXT," + VISSC + " TEXT," + VIGK + " TEXT,"
+                + VIENGLISH + " TEXT,"+ VIMATHS + " TEXT," + VISCIENCE + " TEXT," + VISSC + " TEXT," + VIGK + " TEXT,"
                 + VIIENGLISH + " TEXT," + VIIMATHS + " TEXT," + VIISCIENCE + " TEXT," + VIISSC + " TEXT," + VIIGK + " TEXT,"
                 + VIIIENGLISH + " TEXT," + VIIIMATHS + " TEXT," + VIIIPHYSICS + " TEXT," + VIIICHEM + " TEXT,"
                 + VIIIBIO + " TEXT,"+ VIIIHISTORY + " TEXT,"+ VIIICIVIC + " TEXT,"+ VIIIGEO + " TEXT,"+ VIIIECO + " TEXT,"
