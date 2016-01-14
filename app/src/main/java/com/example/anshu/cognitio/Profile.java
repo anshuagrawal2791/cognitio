@@ -144,16 +144,24 @@ public class Profile extends Fragment {
             //name.setText(user.getString("name"));
         else
             name.setText(user.getUsername());
-
+        Class = (TextView) v.findViewById(R.id.Class);
         if (user.getString("class") != null) {
-            Class = (TextView) v.findViewById(R.id.Class);
+
             Class.setText(user.getString("class"));
 
         }
+        else{
+            Class.setVisibility(View.GONE);
+        }
+
+        city = (TextView) v.findViewById(R.id.city);
         if (user.getString("city") != null) {
-            city = (TextView) v.findViewById(R.id.city);
+
             city.setText(user.getString("city"));
 
+        }
+        else{
+            city.setVisibility(View.GONE);
         }
 
         final ImageView imageView = (ImageView) v.findViewById(R.id.dp);
