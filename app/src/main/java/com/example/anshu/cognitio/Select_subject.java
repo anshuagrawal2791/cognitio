@@ -128,7 +128,7 @@ iv4.setOnClickListener(new View.OnClickListener() {
             iv3.setImageResource(R.drawable.c);
             iv4.setImageResource(R.drawable.b);
             iv5.setImageResource(R.drawable.m);
-            iv6.setImageResource(R.drawable.profile);
+            iv6.setImageResource(R.drawable.h);
             iv7.setImageResource(R.drawable.cv);
             iv8.setImageResource(R.drawable.g);
             iv9.setImageResource(R.drawable.ec);

@@ -107,6 +107,8 @@ public class Profile extends Fragment {
     int matcheslost;
     int matchestied;
     int index;
+    TextView name;
+    ParseUser user;
     ProgressDialog dialog2;
     TextView statstv;
     TextView Class;
@@ -133,7 +135,7 @@ public class Profile extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),ProfileActivity.class);
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -144,11 +146,11 @@ public class Profile extends Fragment {
         sp = getActivity().getSharedPreferences("Details", Context.MODE_PRIVATE);
 
         //    }
-        ParseUser user = ParseUser.getCurrentUser();
+        user = ParseUser.getCurrentUser();
 
         Class = (TextView) v.findViewById(R.id.Class);
         city = (TextView) v.findViewById(R.id.city);
-        TextView name = (TextView) v.findViewById(R.id.name);
+        name = (TextView) v.findViewById(R.id.name);
         statstv = (TextView) v.findViewById(R.id.statstv);
 
         if (user.getString("name") != null)
@@ -366,10 +368,84 @@ public class Profile extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (user.getString("name") != null)
+            name.setText("Anshuman Agrawal");
+            //name.setText(user.getString("name"));
+        else
+            name.setText(user.getUsername());
+
+        //user.put("class",null);
+        if (user.getString("class") != null) {
+
+            Class.setText(user.getString("class"));
+
+        }
+        else
+            Class.setVisibility(View.GONE);
+
+        //user.put("city",null);
+        if (user.getString("city") != null) {
+
+            city.setText(user.getString("city"));
+
+        }
+        else
+            city.setVisibility(View.GONE);
+
+        final ImageView imageView = (ImageView) v.findViewById(R.id.dp);
+        ParseFile pf;
+        // if (ParseFacebookUtils.isLinked(user)) {
+        //      pf = user.getParseFile("fbdp");
+        //    Log.d("mayank", "fb linked");
+        //    }
+        // else {
+        pf = user.getParseFile("dp");
+        //     Log.d("mayank","fb not linked");
+        //   }
+           /* Log.d("mayank", "asynctask image mayank successful");
+            Log.d("mayank", pf.getUrl());
+            //  return pf.getUrl();
+     //   }
+        */
+
+        if (pf != null)
+
+        {
+            pf.getDataInBackground(new
+
+                                           GetDataCallback() {
+
+                                               public void done(byte[] data,
+                                                                ParseException e) {
+                                                   if (e == null) {
+                                                       // Decode the Byte[] into
+                                                       // Bitmap
+                                                       Bitmap bmp = BitmapFactory
+                                                               .decodeByteArray(
+                                                                       data, 0,
+                                                                       data.length);
+
+                                                       // initialize
 
 
+                                                       // Set the Bitmap into the
+                                                       // ImageView
+                                                       imageView.setImageBitmap(bmp);
 
+                                                   } else {
+                                                       Log.d("test",
+                                                               "Problem load image the data.");
+                                                   }
+                                               }
+                                           }
 
+            );
+        }
+
+    }
 
     /**
      * This interface must be implemented by activities that contain this

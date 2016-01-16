@@ -557,7 +557,7 @@ public class ResultActivity extends Activity {
                     {
                         if(!QuestionsPlayed.contains(question.get(i).getObjectId().toString())) {
                             Question question1;
-                            question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString());
+                            question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString(),question.get(i).getString("credit"));
                             Questions.add(question1);
                         }
 

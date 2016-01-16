@@ -3,10 +3,13 @@ package com.example.anshu.cognitio;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +47,11 @@ public class TopicActivity extends Activity {
     int level2;
     ArrayList<Integer> scores;
     int rank;
+    String key;
     TextView ranktv;
+    ImageView topicimage;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -59,7 +66,9 @@ public class TopicActivity extends Activity {
         upd_qes=(Button)findViewById(R.id.upd_qes);
         mdbHandler = DbHandler.getInstance(this);
         ranktv=(TextView)findViewById(R.id.ranktv);
-
+        topicimage = (ImageView)findViewById(R.id.topicimage);
+        sp=getSharedPreferences("ranks",MODE_PRIVATE);
+        editor=sp.edit();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -75,6 +84,31 @@ public class TopicActivity extends Activity {
         {
             //Toast.makeText(this,"ERROR",Toast.LENGTH_LONG).show();
         }
+        if(Subject.equals("English"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.e));
+        else if(Subject.equals("Maths"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.m));
+        else if(Subject.equals("Science"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.sc));
+        else if(Subject.equals("SocialStudies"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.sst));
+        else if(Subject.equals("GeneralKnowledge"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.gk));
+        else if(Subject.equals("Physics"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.p));
+        else if(Subject.equals("Chemistry"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.c));
+        else if(Subject.equals("Biology"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.b));
+        else if(Subject.equals("History"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.h));
+        else if(Subject.equals("Civics"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.cv));
+        else if(Subject.equals("Geography"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.g));
+        else if(Subject.equals("Economics"))
+            topicimage.setImageDrawable(getResources().getDrawable(R.drawable.ec));
+
         if(Class==6)
         {
             if(Subject.equals("English"))
@@ -234,6 +268,7 @@ public class TopicActivity extends Activity {
                 dialog.setIndeterminate(true);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
+               // Toast.makeText(TopicActivity.this,key+rank+usercount,Toast.LENGTH_LONG).show();
                 query.findInBackground(new FindCallback<ParseObject>() {
 
                     @Override
@@ -242,10 +277,12 @@ public class TopicActivity extends Activity {
                         if (e == null) {
                             // If there are results, update the list of posts
                             // and notify the adapter
+//                            Toast.makeText(TopicActivity.this,question.get(0).get("approval").toString(),Toast.LENGTH_LONG).show();
+                            Log.e("approval",question.get(0).getString("approval"));
                             for (int i = 0; i < question.size() && Questions.size() < 10; i++) {
-                                if (!QuestionsPlayed.contains(question.get(i).getObjectId().toString())) {
+                                if ((!QuestionsPlayed.contains(question.get(i).getObjectId().toString()))&&(!question.get(i).getString("approval").equals("no"))) {
                                     Question question1;
-                                    question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString());
+                                    question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString(),question.get(i).getString("credit"));
                                     Questions.add(question1);
                                 }
 
@@ -337,7 +374,7 @@ public class TopicActivity extends Activity {
 
         ParseUser user = ParseUser.getCurrentUser();
         String email = user.getEmail();
-        final String key = (Subject.toLowerCase()).replaceAll("\\s","")+Class;
+         key = (Subject.toLowerCase()).replaceAll("\\s","")+Class;
         yourscore = user.getInt(key);
 
         ParseQuery<ParseUser> query3 = ParseUser.getQuery();  // for average score

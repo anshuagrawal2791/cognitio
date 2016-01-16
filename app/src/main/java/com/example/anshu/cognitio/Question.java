@@ -14,6 +14,8 @@ public class Question implements Parcelable{
     String optionD;
     String answer;
     String id;
+    String credit;
+
 
     public Question(Parcel input) {
         question = input.readString();
@@ -23,17 +25,24 @@ public class Question implements Parcelable{
         optionD = input.readString();
         answer = input.readString();
         id = input.readString();
+        credit = input.readString();
 
     }
 
-    public Question(String question, String optionA, String optionB, String optionC, String optionD, String answer, String id) {
+    public String getCredit() {
+        return credit;
+    }
+
+    public Question(String question, String optionA, String optionB, String optionC, String optionD, String answer, String id,String credit) {
         this.question = question;
         this.optionA = optionA;
+
         this.optionB = optionB;
         this.optionC = optionC;
         this.optionD = optionD;
         this.answer = answer;
         this.id = id;
+        this.credit=credit;
     }
 
     public String getQuestion() {
@@ -92,6 +101,10 @@ public class Question implements Parcelable{
         this.id = id;
     }
 
+    public void setCredit(String credit) {
+        this.credit = credit;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -106,6 +119,7 @@ public class Question implements Parcelable{
         dest.writeString(optionD);
         dest.writeString(answer);
         dest.writeString(id);
+        dest.writeString(credit);
 
     }
     public static final Parcelable.Creator<Question> CREATOR

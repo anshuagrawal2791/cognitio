@@ -48,6 +48,7 @@ public class QuizActivity extends Activity {
     Button buttonB;
     Button buttonC;
     Button buttonD;
+    TextView creditstv;
     ParseUser user;
     long instscore;
     int numcompright;
@@ -81,6 +82,7 @@ public class QuizActivity extends Activity {
         buttonB = (Button) findViewById(R.id.optionB);
         buttonC = (Button) findViewById(R.id.optionC);
         buttonD = (Button) findViewById(R.id.optionD);
+        creditstv=(TextView)findViewById(R.id.creditstv);
         timer = (CircularProgressBar) findViewById(R.id.timer);
         playerprogressbar = (ProgressBar)findViewById(R.id.playerprogressbar);
         compprogressbar = (ProgressBar)findViewById(R.id.compprogressbar);
@@ -185,6 +187,11 @@ public class QuizActivity extends Activity {
         buttonB.setText(Questions.get(j).getOptionB().toString());
         buttonC.setText(Questions.get(j).getOptionC().toString());
         buttonD.setText(Questions.get(j).getOptionD().toString());
+        if(Questions.get(j).getCredit()!=null)
+        {
+            creditstv.setVisibility(View.VISIBLE);
+            creditstv.setText(Questions.get(j).getCredit().toString());
+        }
 
 
 
