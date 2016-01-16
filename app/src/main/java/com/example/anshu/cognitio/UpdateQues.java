@@ -92,6 +92,7 @@ public class UpdateQues extends AppCompatActivity {
                 } else {
                     ParseUser user = ParseUser.getCurrentUser();
                     email = user.getEmail();
+                    name = user.getString("name");
 
                     final ProgressDialog dialog1 = new ProgressDialog(UpdateQues.this);
                     dialog1.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -114,6 +115,12 @@ public class UpdateQues extends AppCompatActivity {
                     Log.v("mayank1234",corrop);
                     tableName.put("approval", "no");
                     // tableName.saveInBackground();
+                    if(name!= null && !name.isEmpty()){
+                        tableName.put("credit",name);
+                    }
+                    else {
+                        tableName.put("credit",email);
+                    }
 
 
 
@@ -153,9 +160,10 @@ public class UpdateQues extends AppCompatActivity {
                 prev.putExtra("optc_str",optc_str);
                 prev.putExtra("optd_str",optd_str);
 
-                if(name!= null){
+                if(name!= null && !name.isEmpty()){
                     prev.putExtra("name",name);
-                 }
+                }
+
 
                 startActivity(prev);
 

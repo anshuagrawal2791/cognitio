@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class Preview extends AppCompatActivity {
     TextView Question;
-    String  ques_str,opta_str,optb_str,optc_str,optd_str;
+    String  ques_str,opta_str,optb_str,optc_str,optd_str,name;
     Button buttonA;
     Button buttonB;
     Button buttonC;
@@ -37,6 +37,7 @@ public class Preview extends AppCompatActivity {
         optb_str = getIntent().getExtras().getString("optb_str");
         optc_str = getIntent().getExtras().getString("optc_str");
         optd_str = getIntent().getExtras().getString("optd_str");
+        name =  getIntent().getExtras().getString("name");
 
         Question.setText(ques_str);
         buttonA.setText(opta_str);

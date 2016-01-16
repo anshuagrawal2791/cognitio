@@ -25,16 +25,20 @@ public class splashscreen extends Activity {
         setContentView(R.layout.splash);
 
 
-     /*   ParseObject generalknowledge6th = new ParseObject("generalknowledge6th");
+        ParseObject generalknowledge6th = new ParseObject("generalknowledge6th");
         generalknowledge6th.put("optionA","");
         generalknowledge6th.put("optionB","");
         generalknowledge6th.put("optionC","");
         generalknowledge6th.put("optionD", "");
         generalknowledge6th.put("question", "");
         generalknowledge6th.put("rightoption", "");
-        generalknowledge6th.saveInBackground();
+       generalknowledge6th.put("approval", "");
+       generalknowledge6th.saveInBackground();
 
-        ParseObject socialstudies6th = new ParseObject("socialstudies6th");
+      ParseObject english6th = new ParseObject("english6th");
+      english6th.put("approval", "yes");
+
+      /*  ParseObject socialstudies6th = new ParseObject("socialstudies6th");
         socialstudies6th.put("optionA","");
         socialstudies6th.put("optionB","");
         socialstudies6th.put("optionC","");

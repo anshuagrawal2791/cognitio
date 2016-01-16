@@ -140,7 +140,7 @@ public class Profile extends Fragment {
 
         indexy.add(0, 1);
         indexy.add(1, 2);
-        indexy.add(2,3);
+        indexy.add(2, 3);
         sp = getActivity().getSharedPreferences("Details", Context.MODE_PRIVATE);
 
         //    }
@@ -255,6 +255,7 @@ public class Profile extends Fragment {
             l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
             l.setXEntrySpace(7f);
             l.setYEntrySpace(0f);
+            l.setTextColor(Color.WHITE);
             pieChart.setDrawHoleEnabled(true);
             pieChart.setHoleColorTransparent(true);
             pieChart.setCenterText(generateCenterSpannableText());
