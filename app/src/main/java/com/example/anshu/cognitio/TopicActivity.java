@@ -269,6 +269,10 @@ public class TopicActivity extends Activity {
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
                // Toast.makeText(TopicActivity.this,key+rank+usercount,Toast.LENGTH_LONG).show();
+                String ToPut= ""+rank+"/"+usercount;
+                Log.e("TOPUT",ToPut);
+                editor.putString(""+Class + "th "+ Subject,ToPut);
+                editor.commit();
                 query.findInBackground(new FindCallback<ParseObject>() {
 
                     @Override
@@ -278,11 +282,11 @@ public class TopicActivity extends Activity {
                             // If there are results, update the list of posts
                             // and notify the adapter
 //                            Toast.makeText(TopicActivity.this,question.get(0).get("approval").toString(),Toast.LENGTH_LONG).show();
-                            Log.e("approval",question.get(0).getString("approval"));
+                            // Log.e("approval",question.get(0).getString("approval"));
                             for (int i = 0; i < question.size() && Questions.size() < 10; i++) {
-                                if ((!QuestionsPlayed.contains(question.get(i).getObjectId().toString()))&&(!question.get(i).getString("approval").equals("no"))) {
+                                if ((!QuestionsPlayed.contains(question.get(i).getObjectId().toString())) && (!question.get(i).getString("approval").equals("no"))) {
                                     Question question1;
-                                    question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString(),question.get(i).getString("credit"));
+                                    question1 = new Question(question.get(i).getString("question"), question.get(i).getString("optionA"), question.get(i).getString("optionB"), question.get(i).getString("optionC"), question.get(i).getString("optionD"), question.get(i).getString("rightoption"), question.get(i).getObjectId().toString(), question.get(i).getString("credit"));
                                     Questions.add(question1);
                                 }
 
@@ -292,23 +296,23 @@ public class TopicActivity extends Activity {
 
 
                             Log.e("qu", "" + Questions.size());
-                            if(Questions.size()==10){
-                            Intent intent = new Intent(TopicActivity.this, QuizActivity.class);
-                            intent.putParcelableArrayListExtra("Questions", Questions);
-                            intent.putExtra("level", level2);
-                            intent.putExtra("subject", Subject);
-                            intent.putExtra("class", Class);
+                            if (Questions.size() == 10) {
+                                Intent intent = new Intent(TopicActivity.this, QuizActivity.class);
+                                intent.putParcelableArrayListExtra("Questions", Questions);
+                                intent.putExtra("level", level2);
+                                intent.putExtra("subject", Subject);
+                                intent.putExtra("class", Class);
+                                intent.putIntegerArrayListExtra("scores",scores);
 
-                            startActivity(intent);}
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(),"Congratulations!You've completed all the questions!",Toast.LENGTH_LONG).show();
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Congratulations!You've completed all the questions!", Toast.LENGTH_LONG).show();
                             }
 
 
                         } else {
                             dialog.dismiss();
-                            Toast.makeText(getApplicationContext(),"Congratulations!You've completed all the questions!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Congratulations!You've completed all the questions!", Toast.LENGTH_LONG).show();
                             Log.e("Error: ", e.getMessage());
                         }
                     }

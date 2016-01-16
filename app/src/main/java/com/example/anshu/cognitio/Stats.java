@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 /**
@@ -73,6 +76,11 @@ public class Stats extends Fragment {
     int matcheswon;
     int matcheslost;
     int matchestied;
+    SharedPreferences sp2;
+    SharedPreferences.Editor editor2;
+    ListView list;
+    ArrayList<String> ranks = new ArrayList<>();
+    ArrayAdapter<String> adapter;
     // SharedPreferences.Editor editor;
   //  ArrayList<Integer> indexy = new ArrayList<>();
 
@@ -95,6 +103,29 @@ public class Stats extends Fragment {
         indexy.add(2,3);
         v = inflater.inflate(R.layout.fragment_stats, container, false);
         sp = getActivity().getSharedPreferences("Details", getActivity().MODE_PRIVATE);
+
+        sp2=getActivity().getSharedPreferences("ranks", Context.MODE_PRIVATE);
+        editor2=sp2.edit();
+
+        list=(ListView)v.findViewById(R.id.list);
+        Map<String,?> keys = sp2.getAll();
+
+        ranks.clear();
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.e("map values",entry.getKey() + ": " +
+                    entry.getValue().toString());
+            ranks.add(entry.getKey().concat(": ").concat(entry.getValue().toString()));
+        }
+        String [] ranksarray = new String[ranks.size()];
+
+        for(int i=0;i<ranks.size();i++)
+        {
+            ranksarray[i]=ranks.get(i);
+        }
+        adapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1, android.R.id.text1,ranksarray);
+        list.setAdapter(adapter);
+
 
         ParseUser user = ParseUser.getCurrentUser();
         matchesplayed = user.getInt("matchesplayed");
@@ -220,5 +251,16 @@ public class Stats extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Map<String,?> keys = sp2.getAll();
+
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.e("map values",entry.getKey() + ": " +
+                    entry.getValue().toString());
+        }
     }
 }

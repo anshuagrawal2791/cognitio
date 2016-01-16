@@ -65,6 +65,8 @@ public class QuizActivity extends Activity {
     int Class;
     byte[] bitmapdata;
 
+    ArrayList<Integer> scores;
+
 
     int i;
     @Override
@@ -116,6 +118,7 @@ public class QuizActivity extends Activity {
             Class = extras.getInt("class");
             Log.e("dfjd", "" + Questions.size());
             level2 = extras.getInt("level");
+            scores=extras.getIntegerArrayList("scores");
 
         } else {
             Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
@@ -187,11 +190,14 @@ public class QuizActivity extends Activity {
         buttonB.setText(Questions.get(j).getOptionB().toString());
         buttonC.setText(Questions.get(j).getOptionC().toString());
         buttonD.setText(Questions.get(j).getOptionD().toString());
+//        Log.e("credit",Questions.get(0).getCredit().toString());
         if(Questions.get(j).getCredit()!=null)
         {
             creditstv.setVisibility(View.VISIBLE);
-            creditstv.setText(Questions.get(j).getCredit().toString());
+            creditstv.setText("Question Credits:"+Questions.get(j).getCredit().toString());
         }
+        else
+        creditstv.setVisibility(View.GONE);
 
 
 
@@ -382,6 +388,7 @@ public class QuizActivity extends Activity {
                                 intent.putExtra("level", level2);
                                 intent.putExtra("subject", Subject);
                                 intent.putExtra("class",Class);
+                                intent.putIntegerArrayListExtra("scores",scores);
                                // intent.putExtra("score",score);
                                 intent.putIntegerArrayListExtra("response",Response);
                                 startActivity(intent);

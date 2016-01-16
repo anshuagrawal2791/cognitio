@@ -65,6 +65,14 @@ public class ResultActivity extends Activity {
     int matchestied;
     byte[] bitmapdata;
 
+    ArrayList<Integer> scores;
+    int rank;
+    int usercount;
+    SharedPreferences sp2;
+    SharedPreferences.Editor editor2;
+    String key;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +156,7 @@ public class ResultActivity extends Activity {
             level2 = extras.getInt("level");
             Subject=extras.getString("subject");
             Class=extras.getInt("class");
+            scores=extras.getIntegerArrayList("scores");
            // Toast.makeText(ResultActivity.this,Subject+" "+Class,Toast.LENGTH_LONG).show();
             Log.e("Response", Response.toString());
             // Log.e("Response",""+score);
@@ -157,6 +166,9 @@ public class ResultActivity extends Activity {
         } else {
             Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
         }
+
+
+
 
         for (int i = 0; i < 10; i++) {
             if (Response.get(i) > 0) {
@@ -210,9 +222,9 @@ public class ResultActivity extends Activity {
         //level2 = 54;
         sizequesrightlyanswered=Questionsansweredrightly.size();
         level = level2 / 10 + 1;
-        leveltv.setText("Level "+level);
-        compscore2.setText(compscore+"");
-        playerscore2.setText(score+"");
+        leveltv.setText("Level " + level);
+        compscore2.setText(compscore + "");
+        playerscore2.setText(score + "");
 //
 
 
@@ -385,10 +397,32 @@ public class ResultActivity extends Activity {
 
 
 
-        String key = (Subject.toLowerCase()).replaceAll("\\s","")+Class;
-        Log.e("mayankscore",key);
-        user.put(key,level2+sizequesrightlyanswered);
+         key = (Subject.toLowerCase()).replaceAll("\\s","")+Class;
+        Log.e("mayankscore", key);
+        usercount=scores.size();
+        sp2=getSharedPreferences("ranks", MODE_PRIVATE);
+        editor2=sp2.edit();
+        user.put(key, level2 + sizequesrightlyanswered);
         user.saveInBackground();
+
+        rank=1;
+        for(int i=0;i<scores.size();i++)
+        {
+
+            if(scores.get(i)>(level2+sizequesrightlyanswered))
+                rank++;
+        }
+        if(rank>scores.size())
+            rank--;
+        String ToPut= ""+rank+"/"+usercount;
+        Log.e("TOPUT2", ToPut);
+        editor2.putString("" + Class + "th " + Subject, ToPut);
+        editor2.commit();
+
+
+
+
+
 
 
     }
@@ -545,6 +579,10 @@ public class ResultActivity extends Activity {
         dialog.setIndeterminate(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+        String ToPut= ""+rank+"/"+usercount;
+        Log.e("TOPUT", ToPut);
+        editor2.putString("" + Class + "th " + Subject, ToPut);
+        editor2.commit();
         query.findInBackground(new FindCallback<ParseObject>() {
 
             @Override

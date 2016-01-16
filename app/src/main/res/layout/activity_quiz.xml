@@ -181,6 +181,11 @@
                      android:id="@+id/optionD"
                      android:layout_margin="5dp"
                      />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/creditstv"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -197,11 +202,7 @@
 
 
         </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/creditstv"
-        android:visibility="gone"/>
+
 
 
 
