@@ -1,6 +1,7 @@
 package com.example.anshu.cognitio;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,8 +23,9 @@ import com.parse.SaveCallback;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class UpdateQues extends AppCompatActivity {
-    String ques,opta,optb,optc,optd,corrop,email;
-    Button submit;
+    EditText ques,opta,optb,optc,optd;
+    String  ques_str,opta_str,optb_str,optc_str,optd_str,corrop,email;
+    Button submit , preview;
     MaterialSpinner corrop_spn;
     String table;
     @Override
@@ -44,6 +46,7 @@ public class UpdateQues extends AppCompatActivity {
 
 
         submit=(Button)findViewById(R.id.submit_ques);
+        preview=(Button)findViewById(R.id.preview);
 
 
         corrop_spn = (MaterialSpinner) findViewById(R.id.corrop);
@@ -62,45 +65,90 @@ public class UpdateQues extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                ques = ((EditText)findViewById(R.id.ques)).getText().toString();
-                opta = ((EditText)findViewById(R.id.opta)).getText().toString();
-                optb = ((EditText)findViewById(R.id.optb)).getText().toString();
-                optc = ((EditText)findViewById(R.id.optc)).getText().toString();
-                optd = ((EditText)findViewById(R.id.optd)).getText().toString();
-                ParseUser user = ParseUser.getCurrentUser();
-                email = user.getEmail();
-                corrop =  corrop_spn.getSelectedItem().toString();
-                final ProgressDialog dialog1 = new ProgressDialog(UpdateQues.this);
-                dialog1.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                dialog1.setMessage("Opening..");
-                dialog1.setIndeterminate(true);
-                dialog1.setCanceledOnTouchOutside(false);
-                dialog1.show();
-                ParseObject tableName = new ParseObject(table);
-                Log.v("MAYANK789", table);
+                ques = ((EditText) findViewById(R.id.ques));
+                opta = ((EditText) findViewById(R.id.opta));
+                optb = ((EditText) findViewById(R.id.optb));
+                optc = ((EditText) findViewById(R.id.optc));
+                optd = ((EditText) findViewById(R.id.optd));
 
-                Log.v("MAYANK123", tableName + "got");
-                //   ParseQuery<ParseObject> teamQuery = ParseQuery.getQuery("Team");
-                tableName.put("User_email",email);
-                tableName.put("question", ques);
-                tableName.put("optionA", opta);
-                tableName.put("optionB", optb);
-                tableName.put("optionC", optc);
-                tableName.put("optionD", optd);
-                tableName.put("rightoption", corrop);
-                tableName.put("approval", "no");
-                // tableName.saveInBackground();
+                ques_str = ((EditText) findViewById(R.id.ques)).getText().toString();
+                opta_str = ((EditText) findViewById(R.id.opta)).getText().toString();
+                optb_str = ((EditText) findViewById(R.id.optb)).getText().toString();
+                optc_str = ((EditText) findViewById(R.id.optc)).getText().toString();
+                optd_str = ((EditText) findViewById(R.id.optd)).getText().toString();
+                corrop = corrop_spn.getSelectedItem().toString();
+                if (ques_str.equals("")) {
+                    ques.setError("This Field is required");
+                } else if (opta_str.equals("")) {
+                    opta.setError("This Field is required");
+                } else if (optb_str.equals("")) {
+                    optb.setError("This Field is required");
+                } else if (optc_str.equals("")) {
+                    optc.setError("This Field is required");
+                } else if (optd_str.equals("")) {
+                    optd.setError("This Field is required");
+                } else if (corrop.equals("Select Option")) {
+                    corrop_spn.setError("This Field is required");
+                } else {
+                    ParseUser user = ParseUser.getCurrentUser();
+                    email = user.getEmail();
 
-                tableName.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
+                    final ProgressDialog dialog1 = new ProgressDialog(UpdateQues.this);
+                    dialog1.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog1.setMessage("Submitting..");
+                    dialog1.setIndeterminate(true);
+                    dialog1.setCanceledOnTouchOutside(false);
+                    dialog1.show();
+                    ParseObject tableName = new ParseObject(table);
+                    Log.v("MAYANK789", table);
 
-                        dialog1.dismiss();
-                        Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG).show();
-                        if (e != null)
-                            Toast.makeText(UpdateQues.this, "Error", Toast.LENGTH_LONG).show();
-                    }
-                });
+                    Log.v("MAYANK123", tableName + "got");
+                    //   ParseQuery<ParseObject> teamQuery = ParseQuery.getQuery("Team");
+                    tableName.put("User_email", email);
+                    tableName.put("question", ques_str);
+                    tableName.put("optionA", opta_str);
+                    tableName.put("optionB", optb_str);
+                    tableName.put("optionC", optc_str);
+                    tableName.put("optionD", optd_str);
+                    tableName.put("rightoption", corrop);
+                    Log.v("mayank1234",corrop);
+                    tableName.put("approval", "no");
+                    // tableName.saveInBackground();
+
+                    tableName.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            dialog1.dismiss();
+                            Toast.makeText(getApplicationContext(), "Submitted", Toast.LENGTH_LONG).show();
+                            if (e != null)
+                                Toast.makeText(UpdateQues.this, "Error", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+
+
+        preview.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent prev = new Intent(UpdateQues.this,Preview.class);
+                ques_str = ((EditText) findViewById(R.id.ques)).getText().toString();
+                opta_str = ((EditText) findViewById(R.id.opta)).getText().toString();
+                optb_str = ((EditText) findViewById(R.id.optb)).getText().toString();
+                optc_str = ((EditText) findViewById(R.id.optc)).getText().toString();
+                optd_str = ((EditText) findViewById(R.id.optd)).getText().toString();
+                prev.putExtra("ques_str",ques_str);
+                prev.putExtra("opta_str",opta_str);
+                prev.putExtra("optb_str",optb_str);
+                prev.putExtra("optc_str",optc_str);
+                prev.putExtra("optd_str",optd_str);
+                startActivity(prev);
+
+                Log.v("intent100" , ques_str);
+
+
             }
         });
 

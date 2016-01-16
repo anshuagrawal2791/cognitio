@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class Stats extends Fragment {
+    ArrayList<Integer> indexy = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,7 +74,7 @@ public class Stats extends Fragment {
     int matcheslost;
     int matchestied;
     // SharedPreferences.Editor editor;
-    ArrayList<Integer> indexy = new ArrayList<>();
+  //  ArrayList<Integer> indexy = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +90,10 @@ public class Stats extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        indexy.add(0, 1);
+       indexy.add(0, 1);
         indexy.add(1, 2);
         indexy.add(2,3);
         v = inflater.inflate(R.layout.fragment_stats, container, false);
-
         sp = getActivity().getSharedPreferences("Details", getActivity().MODE_PRIVATE);
 
         ParseUser user = ParseUser.getCurrentUser();
@@ -101,13 +102,14 @@ public class Stats extends Fragment {
         matcheslost = user.getInt("matcheslost");
         matchestied = user.getInt("matchestied");
 
-//        if(matchesplayed==0)
-        //          statstv.setText("No Stats");
+        if(matchesplayed==0)
+      //      statstv.setText("No Stats");
 
-        Log.e("ststs", "" + matchesplayed);
+        Log.e("ststs",""+matchesplayed);
         Log.e("ststs",""+matcheswon);
         Log.e("ststs",""+matchestied);
         Log.e("ststs",""+matcheslost);
+
         pieChart = (PieChart) v.findViewById(R.id.piechart_frag);
         // pieChart.setUsePercentValues(true);
         pieChart.setDescription("Statistics");
@@ -181,6 +183,8 @@ public class Stats extends Fragment {
         pieChart.setData(pieData);
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
+
+
     }
     private SpannableString generateCenterSpannableText() {
 

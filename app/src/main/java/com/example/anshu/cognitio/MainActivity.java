@@ -33,6 +33,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.RecyclerViewCacheUtil;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -107,13 +108,11 @@ im1.setOnClickListener(new View.OnClickListener() {
             }
         });
 im2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0);
-            }
-        });
-
-
+    @Override
+    public void onClick(View v) {
+        viewPager.setCurrentItem(0);
+    }
+});
 
 
 

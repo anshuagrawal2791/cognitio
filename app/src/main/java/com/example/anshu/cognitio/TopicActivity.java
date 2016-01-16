@@ -85,9 +85,9 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromvimaths();
             else if(Subject.equals("Science"))
                 QuestionsPlayed=mdbHandler.getfromviscience();
-            else if(Subject.equals("Social Studies"))
+            else if(Subject.equals("SocialStudies"))
                 QuestionsPlayed = mdbHandler.getfromvissc();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromvigk();
         }
         else if(Class==7)
@@ -98,9 +98,9 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviimaths();
             else if(Subject.equals("Science"))
                 QuestionsPlayed=mdbHandler.getfromviiscience();
-            else if(Subject.equals("Social Studies"))
+            else if(Subject.equals("SocialStudies"))
                 QuestionsPlayed = mdbHandler.getfromviissc();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromviigk();
 
         }
@@ -110,7 +110,7 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromviiienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromviiimaths();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromviiigk();
         else if(Subject.equals("Physics"))
                 QuestionsPlayed = mdbHandler.getfromviiiphysics();
@@ -135,7 +135,7 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromixenglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromixmaths();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromixgk();
             else if(Subject.equals("Physics"))
                 QuestionsPlayed = mdbHandler.getfromixphysics();
@@ -158,7 +158,7 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxenglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromxmaths();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromxgk();
             else if(Subject.equals("Physics"))
                 QuestionsPlayed = mdbHandler.getfromxphysics();
@@ -182,7 +182,7 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromximaths();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromxigk();
           else if(Subject.equals("Physics"))
                 QuestionsPlayed = mdbHandler.getfromxiphysics();
@@ -199,7 +199,7 @@ public class TopicActivity extends Activity {
                 QuestionsPlayed=mdbHandler.getfromxiienglish();
             else if(Subject.equals("Maths"))
                 QuestionsPlayed=mdbHandler.getfromxiimaths();
-            else if(Subject.equals("General Knowledge"))
+            else if(Subject.equals("GeneralKnowledge"))
                 QuestionsPlayed = mdbHandler.getfromxiigk();
             else if(Subject.equals("Physics"))
                 QuestionsPlayed = mdbHandler.getfromxiiphysics();

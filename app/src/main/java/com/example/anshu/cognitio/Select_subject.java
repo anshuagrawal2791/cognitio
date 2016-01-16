@@ -87,7 +87,7 @@ iv5.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getApplicationContext(), TopicActivity.class);
-        intent.putExtra("Subject", "General Knowledge");
+        intent.putExtra("Subject", "GeneralKnowledge");
         intent.putExtra("Class", Class);
         startActivity(intent);
     }
@@ -114,7 +114,7 @@ iv4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(),TopicActivity.class);
-                    intent.putExtra("Subject","Social Studies");
+                    intent.putExtra("Subject","SocialStudies");
                     intent.putExtra("Class",Class);
                     startActivity(intent);
                 }
@@ -146,7 +146,7 @@ iv10.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getApplicationContext(), TopicActivity.class);
-        intent.putExtra("Subject", "General Knowledge");
+        intent.putExtra("Subject", "GeneralKnowledge");
         intent.putExtra("Class", Class);
         startActivity(intent);
     }
@@ -288,7 +288,7 @@ iv9.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(), TopicActivity.class);
-                    intent.putExtra("Subject","General Knowledge");
+                    intent.putExtra("Subject","GeneralKnowledge");
                     intent.putExtra("Class", Class);
                     startActivity(intent);
                 }
