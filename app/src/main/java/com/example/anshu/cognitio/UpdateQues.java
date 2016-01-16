@@ -24,7 +24,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class UpdateQues extends AppCompatActivity {
     EditText ques,opta,optb,optc,optd;
-    String  ques_str,opta_str,optb_str,optc_str,optd_str,corrop,email;
+    String  ques_str,opta_str,optb_str,optc_str,optd_str,corrop,email,name;
     Button submit , preview;
     MaterialSpinner corrop_spn;
     String table;
@@ -50,7 +50,7 @@ public class UpdateQues extends AppCompatActivity {
 
 
         corrop_spn = (MaterialSpinner) findViewById(R.id.corrop);
-        String[] optionsforques = {"A", "B", "C" ,"D"};
+        String[] optionsforques = {"a", "b", "c" ,"d"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, optionsforques);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         corrop_spn.setAdapter(adapter);
@@ -115,6 +115,9 @@ public class UpdateQues extends AppCompatActivity {
                     tableName.put("approval", "no");
                     // tableName.saveInBackground();
 
+
+
+
                     tableName.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -133,17 +136,27 @@ public class UpdateQues extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                ParseUser user = ParseUser.getCurrentUser();
                 Intent prev = new Intent(UpdateQues.this,Preview.class);
                 ques_str = ((EditText) findViewById(R.id.ques)).getText().toString();
                 opta_str = ((EditText) findViewById(R.id.opta)).getText().toString();
                 optb_str = ((EditText) findViewById(R.id.optb)).getText().toString();
                 optc_str = ((EditText) findViewById(R.id.optc)).getText().toString();
                 optd_str = ((EditText) findViewById(R.id.optd)).getText().toString();
+                name = user.getString("name");
+
+
                 prev.putExtra("ques_str",ques_str);
                 prev.putExtra("opta_str",opta_str);
                 prev.putExtra("optb_str",optb_str);
                 prev.putExtra("optc_str",optc_str);
                 prev.putExtra("optd_str",optd_str);
+
+                if(name!= null){
+                    prev.putExtra("name",name);
+                 }
+
                 startActivity(prev);
 
                 Log.v("intent100" , ques_str);
