@@ -99,24 +99,78 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(2);
+                ImageView im = (ImageView)findViewById(R.id.im);
+                ImageView im1 = (ImageView)findViewById(R.id.im1);
+                ImageView im2 = (ImageView)findViewById(R.id.im2);
+                im.setImageResource(R.drawable.sta);
+                im2.setImageResource(R.drawable.profile);
             }
         });
 im1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(1);
+                ImageView im = (ImageView)findViewById(R.id.im);
+                ImageView im2 = (ImageView)findViewById(R.id.im2);
+              //  ImageView im1 = (ImageView)findViewById(R.id.im1);
+               // im1.setImageResource(R.drawable.pro);
+                im2.setImageResource(R.drawable.profile);
+                im.setImageResource(R.drawable.stats);
             }
         });
 im2.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         viewPager.setCurrentItem(0);
+
     }
 });
 
 
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==0){
+                    ImageView im = (ImageView)findViewById(R.id.im);
+                    ImageView im1 = (ImageView)findViewById(R.id.im1);
+                    ImageView im2 = (ImageView)findViewById(R.id.im2);
+
+                    im2.setImageResource(R.drawable.pro);
+                    im.setImageResource(R.drawable.stats);
+
+                }
+
+                if(position==1){
+                    ImageView im = (ImageView)findViewById(R.id.im);
+                    ImageView im2 = (ImageView)findViewById(R.id.im2);
+                    im2.setImageResource(R.drawable.profile);
+                    im.setImageResource(R.drawable.stats);
+
+                }
+                if(position==2){
+                    ImageView im = (ImageView)findViewById(R.id.im);
+                    ImageView im1 = (ImageView)findViewById(R.id.im1);
+                    ImageView im2 = (ImageView)findViewById(R.id.im2);
+                    im.setImageResource(R.drawable.sta);
+
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+
+
+        });
 
 
 
