@@ -437,31 +437,70 @@ public class LoginSignupActivity extends AppCompatActivity {
                                             user.put("maths6", 0);
                                             user.put("science6", 0);
                                             user.put("socialstudies6", 0);
+                                            user.put("gk6", 0);
+
                                             user.put("english7", 0);
                                             user.put("maths7", 0);
                                             user.put("science7", 0);
                                             user.put("socialstudies7",0);
+                                            user.put("gk7", 0);
+
                                             user.put("english8", 0);
                                             user.put("maths8", 0);
-                                            user.put("science8", 0);
-                                            user.put("socialstudies8",0);
+                                            // user.put("science8", 0);
+                                            // user.put("socialstudies8",0);
+                                            user.put("physics8",0);
+                                            user.put("chem8",0);
+                                            user.put("bio8",0);
+                                            user.put("history8",0);
+                                            user.put("civic8",0);
+                                            user.put("geo8",0);
+                                            user.put("eco8",0);
+                                            user.put("gk8",0);
+
                                             user.put("english9", 0);
                                             user.put("maths9", 0);
-                                            user.put("science9", 0);
-                                            user.put("socialstudies9",0);
+                                            //  user.put("science9", 0);
+                                            //  user.put("socialstudies9",0);
+                                            user.put("physics9",0);
+                                            user.put("chem9",0);
+                                            user.put("bio9",0);
+                                            user.put("history9",0);
+                                            user.put("civic9",0);
+                                            user.put("geo9",0);
+                                            user.put("eco9",0);
+                                            user.put("gk9",0);
+
                                             user.put("english10", 0);
                                             user.put("maths10", 0);
-                                            user.put("science10", 0);
-                                            user.put("socialstudies10",0);
+                                            // user.put("science10", 0);
+                                            // user.put("socialstudies10",0);
+                                            user.put("physics10",0);
+                                            user.put("chem10",0);
+                                            user.put("bio10",0);
+                                            user.put("history10",0);
+                                            user.put("civic10",0);
+                                            user.put("geo10",0);
+                                            user.put("eco10",0);
+                                            user.put("gk10",0);
+
                                             user.put("english11", 0);
                                             user.put("maths11", 0);
-                                            user.put("science11", 0);
-                                            user.put("socialstudies11",0);
+                                            //  user.put("science11", 0);
+                                            // user.put("socialstudies11",0);
+                                            user.put("physics11",0);
+                                            user.put("chem11",0);
+                                            user.put("bio11",0);
+                                            user.put("gk11",0);
+
                                             user.put("english12", 0);
                                             user.put("maths12", 0);
-                                            user.put("science12", 0);
-                                            user.put("socialstudies12",0);
-
+                                            // user.put("science12", 0);
+                                            // user.put("socialstudies12",0);
+                                            user.put("physics12",0);
+                                            user.put("chem12",0);
+                                            user.put("bio12",0);
+                                            user.put("gk12",0);
                                             user.signUpInBackground(new SignUpCallback() {
                                                 public void done(ParseException e) {
 

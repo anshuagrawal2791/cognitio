@@ -13,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -152,6 +153,11 @@ public class Profile extends Fragment {
         city = (TextView) v.findViewById(R.id.city);
         name = (TextView) v.findViewById(R.id.name);
         statstv = (TextView) v.findViewById(R.id.statstv);
+        Typeface custom_font2 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/font2.ttf");
+        Class.setTypeface(custom_font2);
+        city.setTypeface(custom_font2);
+        name.setTypeface(custom_font2);
+
 
         if (user.getString("name") != null)
             //name.setText("Anshuman Agrawal");
@@ -372,8 +378,8 @@ public class Profile extends Fragment {
     public void onResume() {
         super.onResume();
         if (user.getString("name") != null)
-            name.setText("Anshuman Agrawal");
-            //name.setText(user.getString("name"));
+            //name.setText("Anshuman Agrawal");
+            name.setText(user.getString("name"));
         else
             name.setText(user.getUsername());
 
