@@ -138,7 +138,7 @@ public class ResultActivity extends Activity {
         } else
             playerdp2.setImageResource(R.drawable.userdefault);
         //ImageView image2 = (ImageView)findViewById(R.id.compdp);
-        compdp2.setImageResource(R.drawable.userdefault);
+        compdp2.setImageResource(R.drawable.anonymous);
 
 
         if (user.getString("name") != null)

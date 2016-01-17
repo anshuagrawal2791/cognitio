@@ -49,7 +49,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class ProfileActivity extends AppCompatActivity {
     static String picturePath1;
-    MaterialSpinner spinner1;
+    EditText spinner1;
     MaterialSpinner spinner2;
     PieChart pieChart;
 
@@ -80,11 +80,11 @@ public class ProfileActivity extends AppCompatActivity {
         ParseUser user = ParseUser.getCurrentUser();
 
 
-        String[] ITEMSforcity = {"Ajmer", "Sikar", "Jaipur"};
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforcity);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1 = (MaterialSpinner) findViewById(R.id.citysp);
-        spinner1.setAdapter(adapter1);
+//        String[] ITEMSforcity = {"Ajmer", "Sikar", "Jaipur"};
+//        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforcity);
+//        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1 = (EditText) findViewById(R.id.citysp);
+        //spinner1.setAdapter(adapter1);
         String[] ITEMSforclass = {"Sixth", "Seventh", "Eighth", "Ninth", "Tenth", "Eleventh","Twelth"};;
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMSforclass);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -128,7 +128,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //  Drawable dr = LoginSignupActivity
         // fbimage();
-        ImageView imageView = (ImageView) findViewById(R.id.dp);
+        final ImageView imageView = (ImageView) findViewById(R.id.dp);
         if (imageView.getDrawable() == null){
             new filetoimage().execute();
         }
@@ -139,6 +139,48 @@ public class ProfileActivity extends AppCompatActivity {
         //Button stats = (Button) findViewById(R.id.stats);
         Button updateprofile = (Button) findViewById(R.id.updateprofile);
 
+        ParseFile pf = user.getParseFile("dp");
+        //     Log.d("mayank","fb not linked");
+        //   }
+           /* Log.d("mayank", "asynctask image mayank successful");
+            Log.d("mayank", pf.getUrl());
+            //  return pf.getUrl();
+     //   }
+        */
+
+        if (pf != null)
+
+        {
+            pf.getDataInBackground(new
+
+                                           GetDataCallback() {
+
+                                               public void done(byte[] data,
+                                                                ParseException e) {
+                                                   if (e == null) {
+                                                       // Decode the Byte[] into
+                                                       // Bitmap
+                                                       Bitmap bmp = BitmapFactory
+                                                               .decodeByteArray(
+                                                                       data, 0,
+                                                                       data.length);
+
+                                                       // initialize
+
+
+                                                       // Set the Bitmap into the
+                                                       // ImageView
+                                                       imageView.setImageBitmap(bmp);
+
+                                                   } else {
+                                                       Log.d("test",
+                                                               "Problem load image the data.");
+                                                   }
+                                               }
+                                           }
+
+            );
+        }
 
         if(user!=null){
             update_dp.setOnClickListener(new View.OnClickListener() {
@@ -167,7 +209,7 @@ public class ProfileActivity extends AppCompatActivity {
                     String name = ((EditText) findViewById(R.id.name)).getText().toString();
                    ParseUser user = ParseUser.getCurrentUser();
                     String userclass =  spinner2.getSelectedItem().toString();
-                    String city =  spinner1.getSelectedItem().toString();
+                    String city =  spinner1.getText().toString();
 
                     user.put("name",name);
                     user.put("class",userclass);

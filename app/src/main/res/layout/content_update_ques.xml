@@ -33,7 +33,7 @@ tools:showIn="@layout/activity_update_ques">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/ques"
-                    android:hint="Who is the president of U.S.A. ?"
+                    android:hint="Question"
                     android:layout_margin="5dp" />
 
 
@@ -46,7 +46,7 @@ tools:showIn="@layout/activity_update_ques">
                     android:id="@+id/opta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Manmohan Singh"
+                    android:hint="Option A"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -58,7 +58,7 @@ tools:showIn="@layout/activity_update_ques">
                     android:id="@+id/optb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Barac Hussain Obama"
+                    android:hint="Option B"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -70,7 +70,7 @@ tools:showIn="@layout/activity_update_ques">
                     android:id="@+id/optc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Narendra Modi"
+                    android:hint="Option C"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -82,7 +82,7 @@ tools:showIn="@layout/activity_update_ques">
                     android:id="@+id/optd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Sonia Gandhi"
+                    android:hint="Option D"
                     android:layout_margin="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -96,7 +96,7 @@ tools:showIn="@layout/activity_update_ques">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ms_multiline="false"
-                    app:ms_hint="Select Option"
+                    app:ms_hint="Correct Option"
                     app:ms_enableFloatingLabel="true"
                     app:ms_enableErrorLabel="true"
                     app:ms_floatingLabelText="Option"

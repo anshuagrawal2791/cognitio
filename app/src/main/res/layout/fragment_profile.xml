@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     android:orientation="vertical"
-    android:background="#111111"
+    android:background="#1f2329"
    >
 
 
@@ -109,7 +109,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/edit"
-            app:backgroundTint="#6200ea" />
+            app:backgroundTint="#007ebc" />
     </FrameLayout>
 
 

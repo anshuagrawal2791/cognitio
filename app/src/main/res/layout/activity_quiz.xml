@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#1f2329">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +42,7 @@
             android:layout_weight="1"
             android:singleLine="false"
             android:gravity="left"
-            />
+            android:textColor="#ecebeb" />
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
                 android:text="10"
                 android:textSize="9dp"
                 android:id="@+id/timertv"
+                android:textColor="#ecebeb"
                 android:layout_gravity="center" />
 
         </FrameLayout>
@@ -73,7 +75,8 @@
             android:id="@+id/computer"
             android:text="Computer"
             android:layout_weight="1"
-            android:gravity="right"/>
+            android:gravity="right"
+            android:textColor="#ecebeb" />
 
     </LinearLayout>
     <LinearLayout
@@ -88,7 +91,8 @@
             android:id="@+id/playerscore"
             android:text="0"
             android:layout_weight="1"
-            android:gravity="left"/>
+            android:gravity="left"
+            android:textColor="#ecebeb" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -96,7 +100,8 @@
 
 
             android:layout_weight="1"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:textColor="#ecebeb" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +109,8 @@
             android:text="0"
             android:layout_weight="1"
             android:gravity="right"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="#ecebeb" />
     </LinearLayout>
 
     </LinearLayout>
@@ -125,7 +131,8 @@
         android:id="@+id/question"
         android:layout_margin="20dp"
         android:textSize="20dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:textColor="#ffffff" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.CountDownTimer;
@@ -90,6 +91,13 @@ public class QuizActivity extends Activity {
         compprogressbar = (ProgressBar)findViewById(R.id.compprogressbar);
         timertv=(TextView)findViewById(R.id.timertv);
 
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/font2.ttf");
+        Typeface custom_font2 = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
+        Question.setTypeface(custom_font);
+        buttonA.setTypeface(custom_font);
+        buttonB.setTypeface(custom_font);
+        buttonC.setTypeface(custom_font);
+        buttonD.setTypeface(custom_font);
 
 
         ImageView image = (ImageView) findViewById(R.id.playerdp);
@@ -110,7 +118,7 @@ public class QuizActivity extends Activity {
         else
         image.setImageResource(R.drawable.userdefault);
         ImageView image2 = (ImageView)findViewById(R.id.compdp);
-        image2.setImageResource(R.drawable.userdefault);
+        image2.setImageResource(R.drawable.anonymous);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Questions = extras.getParcelableArrayList("Questions");
@@ -183,10 +191,10 @@ public class QuizActivity extends Activity {
         compscoretv.setText("" + compscore);
         Question.setText(Questions.get(j).getQuestion().toString());
         buttonA.setText(Questions.get(j).getOptionA().toString());
-        buttonA.setBackgroundColor(Color.GRAY);
-        buttonB.setBackgroundColor(Color.GRAY);
-        buttonC.setBackgroundColor(Color.GRAY);
-        buttonD.setBackgroundColor(Color.GRAY);
+        buttonA.setBackgroundColor(Color.parseColor("#a8a7a7"));
+        buttonB.setBackgroundColor(Color.parseColor("#a8a7a7"));
+        buttonC.setBackgroundColor(Color.parseColor("#a8a7a7"));
+        buttonD.setBackgroundColor(Color.parseColor("#a8a7a7"));
         buttonB.setText(Questions.get(j).getOptionB().toString());
         buttonC.setText(Questions.get(j).getOptionC().toString());
         buttonD.setText(Questions.get(j).getOptionD().toString());

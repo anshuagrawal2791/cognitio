@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -268,10 +269,10 @@ public class TopicActivity extends Activity {
                 dialog.setIndeterminate(true);
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
-               // Toast.makeText(TopicActivity.this,key+rank+usercount,Toast.LENGTH_LONG).show();
-                String ToPut= ""+rank+"/"+usercount;
-                Log.e("TOPUT",ToPut);
-                editor.putString(""+Class + "th "+ Subject,ToPut);
+                // Toast.makeText(TopicActivity.this,key+rank+usercount,Toast.LENGTH_LONG).show();
+                String ToPut = "" + rank + "/" + usercount;
+                Log.e("TOPUT", ToPut);
+                editor.putString("" + Class + "th " + Subject, ToPut);
                 editor.commit();
                 query.findInBackground(new FindCallback<ParseObject>() {
 
@@ -302,7 +303,7 @@ public class TopicActivity extends Activity {
                                 intent.putExtra("level", level2);
                                 intent.putExtra("subject", Subject);
                                 intent.putExtra("class", Class);
-                                intent.putIntegerArrayListExtra("scores",scores);
+                                intent.putIntegerArrayListExtra("scores", scores);
 
                                 startActivity(intent);
                             } else {
@@ -363,6 +364,9 @@ public class TopicActivity extends Activity {
         mChart.animateY(2500);
 
 
+
+
+
         XAxis xl = mChart.getXAxis();
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setDrawAxisLine(true);
@@ -419,6 +423,7 @@ public class TopicActivity extends Activity {
                     }
                     setData(usercount, highscore, avgscore, yourscore);
                     dialog.dismiss();
+                    mChart.setSelected(true);
                 }
             }
         });
@@ -437,8 +442,14 @@ public class TopicActivity extends Activity {
         Log.e("mayank",Integer.toString(b)+Integer.toString(c)+Integer.toString(d)+Integer.toString(a));
         BarDataSet set1 = new BarDataSet(yVals1, "Your Stastics");
 
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(0,Color.parseColor("#75d3d2"));
+        colors.add(1,Color.parseColor("#75d3d2"));
+        colors.add(2,Color.parseColor("#75d3d2"));
+        set1.setColors(colors);
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
+
 
         BarData data = new BarData(xVals, dataSets);
         data.setValueTextSize(10f);

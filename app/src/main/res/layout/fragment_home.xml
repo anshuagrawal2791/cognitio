@@ -3,70 +3,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.anshu.cognitio.Home">
+    tools:context="com.example.anshu.cognitio.Home"
+    android:background="#1f2329">
 
     <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose a Class"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/six"
         android:layout_gravity="top"
-        
-        android:layout_marginTop="10dp"
-        android:background="@drawable/six" />
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/nine"
-    android:layout_gravity="center"
-    
-    android:background="@drawable/nine" />
-
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/twelve"
-    android:layout_gravity="bottom|right"
-    
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/twelve" />
-
-    <Button
-           android:layout_width="100dp"
-           android:layout_height="100dp"
-           android:id="@+id/eight"
-        android:layout_gravity="left|center_vertical"
-
-        android:layout_marginTop="10dp"
-        android:background="@drawable/eight" />
+        android:background="@drawable/six"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" />
 
     <Button
            android:layout_width="100dp"
            android:layout_height="100dp"
            android:id="@+id/seven"
+        android:layout_gravity="center_horizontal|top"
+
+        android:background="@drawable/seven"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+           android:layout_width="100dp"
+           android:layout_height="100dp"
+           android:id="@+id/eight"
         android:layout_gravity="right|top"
 
-        android:layout_marginTop="10dp"
-        android:background="@drawable/seven" />
+        android:background="@drawable/eight"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/nine"
+    android:layout_gravity="left|center_vertical"
+
+    android:background="@drawable/nine"
+        android:layout_margin="10dp" />
 
     <Button
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/ten"
-        android:layout_gravity="right|center_vertical"
+        android:layout_gravity="center"
 
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/ten" />
+        android:background="@drawable/ten"
+        android:layout_margin="10dp" />
 
     <Button
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/eleven"
-    android:layout_gravity="left|bottom"
+    android:layout_gravity="right|center_vertical"
 
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/eleven" />
+        android:background="@drawable/eleven"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/twelve"
+    android:layout_gravity="center_horizontal|bottom"
+
+        android:background="@drawable/twelve"
+        android:layout_margin="10dp" />
 
 </FrameLayout>

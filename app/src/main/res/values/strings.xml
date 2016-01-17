@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cognitio</string>
+    <string name="app_name">Quizzie</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login_signup">LoginSignupActivity</string>
     <string name="facebook_app_id">1510669532560587</string>

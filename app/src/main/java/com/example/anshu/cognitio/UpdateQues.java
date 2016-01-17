@@ -35,16 +35,6 @@ public class UpdateQues extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
         submit=(Button)findViewById(R.id.submit_ques);
         preview=(Button)findViewById(R.id.preview);
 
@@ -87,7 +77,7 @@ public class UpdateQues extends AppCompatActivity {
                     optc.setError("This Field is required");
                 } else if (optd_str.equals("")) {
                     optd.setError("This Field is required");
-                } else if (corrop.equals("Select Option")) {
+                } else if (corrop.equals("Correct Option")) {
                     corrop_spn.setError("This Field is required");
                 } else {
                     ParseUser user = ParseUser.getCurrentUser();

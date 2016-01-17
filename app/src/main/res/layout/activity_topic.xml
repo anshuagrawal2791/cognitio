@@ -35,13 +35,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Start Match"
-                android:id="@+id/startmatch"/>
+                android:id="@+id/startmatch"
+                android:textAllCaps="false"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="UPDATE NEW QUESTIONS"
-                android:id="@+id/upd_qes" />
+                android:text="Upload Question"
+                android:id="@+id/upd_qes"
+                android:textAllCaps="false"/>
 
             <TextView
                 android:layout_width="wrap_content"

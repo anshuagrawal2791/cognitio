@@ -154,8 +154,8 @@ public class Profile extends Fragment {
         statstv = (TextView) v.findViewById(R.id.statstv);
 
         if (user.getString("name") != null)
-            name.setText("Anshuman Agrawal");
-            //name.setText(user.getString("name"));
+            //name.setText("Anshuman Agrawal");
+            name.setText(user.getString("name"));
         else
             name.setText(user.getUsername());
 
@@ -249,7 +249,7 @@ public class Profile extends Fragment {
 
             pieChart = (PieChart) v.findViewById(R.id.piechart);
             // pieChart.setUsePercentValues(true);
-            pieChart.setDescription("Statistics");
+            pieChart.setDescription("");
             pieChart.setDragDecelerationFrictionCoef(0.95f);
             pieChart.setExtraRightOffset(20f);
             setData();
@@ -309,14 +309,14 @@ public class Profile extends Fragment {
         {
             xVals.add("Won");
             yVals.add(new Entry(matcheswon, indexy.get(0)));
-            colors.add(indexy.get(0)-1,Color.GREEN);
+            colors.add(indexy.get(0)-1,Color.parseColor("#1ebe12"));
             indexy.remove(0);
         }
         if(matcheslost>0)
         {
             xVals.add("Lost");
             yVals.add(new Entry(matcheslost, indexy.get(0)));
-            colors.add(indexy.get(0)-1,Color.RED);
+            colors.add(indexy.get(0)-1,Color.parseColor("#fe0002"));
             indexy.remove(0);
         }
 

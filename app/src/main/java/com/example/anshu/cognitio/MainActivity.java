@@ -3,6 +3,8 @@ package com.example.anshu.cognitio;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -76,10 +79,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//      toolbar = (Toolbar) findViewById(R.id.app_bar);
+//        setSupportActionBar(toolbar);
+//
 
+        TextView toolbartitle = (TextView)findViewById(R.id.toolbar_title);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/font.ttf");
+        toolbartitle.setTypeface(custom_font);
 
+      //  getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.h));
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -144,14 +152,17 @@ im2.setOnClickListener(new View.OnClickListener() {
 
                     im2.setImageResource(R.drawable.pro);
                     im.setImageResource(R.drawable.stats);
+                   // im1.setColorFilter(Color.argb(255, 238, 238, 238));
 
                 }
 
                 if(position==1){
                     ImageView im = (ImageView)findViewById(R.id.im);
                     ImageView im2 = (ImageView)findViewById(R.id.im2);
+                    ImageView im1 = (ImageView)findViewById(R.id.im1);
                     im2.setImageResource(R.drawable.profile);
                     im.setImageResource(R.drawable.stats);
+                   // im1.setImageResource(R.drawable.home);
 
                 }
                 if(position==2){
@@ -159,6 +170,9 @@ im2.setOnClickListener(new View.OnClickListener() {
                     ImageView im1 = (ImageView)findViewById(R.id.im1);
                     ImageView im2 = (ImageView)findViewById(R.id.im2);
                     im.setImageResource(R.drawable.sta);
+                    im2.setImageResource(R.drawable.profile);
+                    //im1.setColorFilter(Color.argb(255, 238, 238, 238));
+
 
                 }
 
